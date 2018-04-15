@@ -1,0 +1,18 @@
+---
+# Set public token as auth_token
+- name: Set public token as auth_token
+  set_fact:
+    auth_token: "{{ sp_public_auth.results.token }}"
+  when: sp_public_auth is defined and sp_public_auth.skipped is undefined
+
+# Set cached user token as auth_token
+- name: Set cached user token as auth_token
+  set_fact:
+    auth_token: "{{ sp_user_auth.results.token }}"
+  when: _sp_user_auth.skipped is defined and sp_user_auth.results is defined
+
+# Set generated user token as auth_token
+- name: Set generated user token as auth_token
+  set_fact:
+    auth_token: "{{ _sp_user_auth.results.token }}"
+  when: _sp_user_auth.skipped is undefined

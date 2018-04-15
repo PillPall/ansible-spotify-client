@@ -1,0 +1,30 @@
+---
+# Get related artists by artists_file
+
+- name: Get related artists from file with default settings
+  spotify_related_artists:
+    auth_token: "{{ auth_token }}"
+    artists_file: "{{ get_related_artists_from_file }}"
+  when: get_related_dest_file is undefined and get_related_artists_output is undefined
+
+- name: Get related artists from file with defined output_format
+  spotify_related_artists:
+    auth_token: "{{ auth_token }}"
+    artists_file: "{{ get_related_artists_from_file }}"
+    output_format: "{{ get_related_artists_output }}"
+  when: get_related_dest_file is undefined and get_related_artists_output is defined
+
+- name: Get related artists from file with defined dest_file
+  spotify_related_artists:
+    auth_token: "{{ auth_token }}"
+    artists_file: "{{ get_related_artists_from_file }}"
+    dest_file: "{{ get_related_dest_file }}"
+  when: get_related_dest_file is defined and get_related_artists_output is undefined
+
+- name: Get related artists from file with defined output_format and dest_file
+  spotify_related_artists:
+    auth_token: "{{ auth_token }}"
+    artists_file: "{{ get_related_artists_from_file }}"
+    output_format: "{{ get_related_artists_output }}"
+    dest_file: "{{ get_related_dest_file }}"
+  when: get_related_dest_file is defined and get_related_artists_output is defined

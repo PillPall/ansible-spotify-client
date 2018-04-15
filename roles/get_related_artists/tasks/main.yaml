@@ -1,0 +1,5 @@
+---
+- import_tasks: get_related_artists_from_file.yaml
+  when: get_related_artists_from_file is defined
+- import_tasks: get_related_artists_by_name.yaml
+  when: get_related_artists_for is defined and get_related_artists_from_file is undefined

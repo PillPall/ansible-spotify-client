@@ -1,0 +1,44 @@
+- name: Get related artists
+  hosts: all
+  gather_facts: no
+  connection: local
+
+  tasks:
+    - debug: msg="{{ lookup('env','PYTHONPATH') }}"
+
+    - name: Spotify authentication
+      spotify_authentication:
+        # username: bloch-m
+        # config_file: "{{playbook_dir}}/../inventory/group_vars/all.yaml"
+        config_file: "{{playbook_dir}}/../inventory/group_vars/public.yaml"
+      environment:
+        PYTHONPATH: "{{ playbook_dir }}/../library/lib/spotipy_connection:{{ lookup('env','PYTHONPATH') }}"
+      register: spot_auth
+
+    - pause:
+        prompt: "Please type in the SP API User Code"
+        echo: yes
+      register: _sp_api_user_code
+      when: spot_auth.results.cached is defined and spot_auth.results.cached == 0
+
+    - set_fact:
+        sp_api_user_code: "{{_sp_api_user_code.user_input}}"
+      when: _sp_api_user_code.skipped is undefined
+
+    - name: Create user token
+      spotify_authentication_create_user_token:
+        user_code: "{{ sp_api_user_code }}"
+        username: bloch-m
+        config_file: "{{playbook_dir}}/../inventory/group_vars/all.yaml"
+      environment:
+        PYTHONPATH: "{{ playbook_dir }}/../library/lib/spotipy_connection:{{ lookup('env','PYTHONPATH') }}"
+      register: _spot_auth
+      when: sp_api_user_code is defined
+
+    - set_fact:
+        auth_token: "{{ spot_auth.results.token }}"
+      when: _spot_auth.skipped is defined
+
+    - set_fact:
+        auth_token: "{{ _spot_auth.results.token }}"
+      when: _spot_auth.skipped is undefined

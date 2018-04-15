@@ -1,0 +1,3 @@
+---
+# Get related artists from artists_name
+- debug: msg="{{ user_playlists_name }}"

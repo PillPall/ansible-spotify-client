@@ -1,0 +1,54 @@
+---
+# Get related artists from artists_file
+
+- name: Get Top Tracks for artists in artists_file with default settings
+  spotify_artists_top_tracks:
+    auth_token: "{{ auth_token }}"
+    artists_file: "{{ get_top_tracks_from_artists_file }}"
+  when: get_top_tracks_for_country is undefined and get_top_tracks_output is undefined and get_top_tracks_dest_file is undefined
+
+- name: Get Top Tracks for artists in artists_file for defined country
+  spotify_artists_top_tracks:
+    auth_token: "{{ auth_token }}"
+    artists_file: "{{ get_top_tracks_from_artists_file }}"
+    country_code: "{{ get_top_tracks_for_country }}"
+  when: get_top_tracks_for_country is defined and get_top_tracks_output is undefined and get_top_tracks_dest_file is undefined
+
+- name: Get Top Tracks for artists in artists_file with defined output_format
+  spotify_artists_top_tracks:
+    auth_token: "{{ auth_token }}"
+    artists_file: "{{ get_top_tracks_from_artists_file }}"
+    output_format: "{{ get_top_tracks_output }}"
+  when: get_top_tracks_for_country is undefined and get_top_tracks_output is defined and get_top_tracks_dest_file is undefined
+
+- name: Get Top Tracks for artists in artists_file with defined dest_file
+  spotify_artists_top_tracks:
+    auth_token: "{{ auth_token }}"
+    artists_file: "{{ get_top_tracks_from_artists_file }}"
+    dest_file: "{{ get_top_tracks_dest_file }}"
+  when: get_top_tracks_for_country is undefined and get_top_tracks_output is undefined and get_top_tracks_dest_file is defined
+
+- name: Get Top Tracks for artists in artists_file for defined country with defined output_format
+  spotify_artists_top_tracks:
+    auth_token: "{{ auth_token }}"
+    artists_file: "{{ get_top_tracks_from_artists_file }}"
+    country_code: "{{ get_top_tracks_for_country }}"
+    output_format: "{{ get_top_tracks_output }}"
+  when: get_top_tracks_for_country is defined and get_top_tracks_output is defined and get_top_tracks_dest_file is undefined
+
+- name: Get Top Tracks for artists in artists_file for defined country with defined dest_file
+  spotify_artists_top_tracks:
+    auth_token: "{{ auth_token }}"
+    artists_file: "{{ get_top_tracks_from_artists_file }}"
+    country_code: "{{ get_top_tracks_for_country }}"
+    dest_file: "{{ get_top_tracks_dest_file }}"
+  when: get_top_tracks_for_country is defined and get_top_tracks_output is undefined and get_top_tracks_dest_file is defined
+
+- name: Get Top Tracks for artists in artists_file for defined country with defined output_format and dest_file
+  spotify_artists_top_tracks:
+    auth_token: "{{ auth_token }}"
+    artists_file: "{{ get_top_tracks_from_artists_file }}"
+    country_code: "{{ get_top_tracks_for_country }}"
+    output_format: "{{ get_top_tracks_output }}"
+    dest_file: "{{ get_top_tracks_dest_file }}"
+  when: get_top_tracks_for_country is defined and get_top_tracks_output is defined and get_top_tracks_dest_file is defined

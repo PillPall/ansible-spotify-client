@@ -1,0 +1,7 @@
+---
+- import_tasks: get_artists_top_tracks_from_file.yaml
+  when: get_top_tracks_from_artists_file is defined
+- import_tasks: get_artists_top_tracks_artists_uri.yaml
+  when: get_top_tracks_from_artists_file is undefined and get_top_tracks_for_artists_uri is defined
+- import_tasks: get_artists_top_tracks_artists_name.yaml
+  when: get_top_tracks_from_artists_file is undefined and get_top_tracks_for_artists_name is defined

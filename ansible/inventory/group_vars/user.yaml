@@ -1,0 +1,4 @@
+client_id: 550ccd7bc5504fa29542d26bc1848822
+client_secret: 
+redirect_uri: https://example.com/callback/
+scope: playlist-modify-private

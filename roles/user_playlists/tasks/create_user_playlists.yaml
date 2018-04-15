@@ -1,0 +1,28 @@
+---
+# Get related artists from artists_name
+
+- name: Create public user playlist
+  spotify_user_playlists:
+    auth_token: "{{ auth_token }}"
+    username: "{{ user_playlists_for_user }}"
+    playlist_name: "{{ user_playlists_name }}"
+    public: "{{ user_playlists_public }}"
+    state: "{{ user_playlists_state }}"
+  when: user_playlists_public is defined and user_playlists_public == "yes"
+
+- name: Create non public user playlist
+  spotify_user_playlists:
+    auth_token: "{{ auth_token }}"
+    username: "{{ user_playlists_for_user }}"
+    playlist_name: "{{ user_playlists_name }}"
+    public: "{{ user_playlists_public }}"
+    state: "{{ user_playlists_state }}"
+  when: user_playlists_public is defined and user_playlists_public == "no"
+
+- name: Create non public user playlist
+  spotify_user_playlists:
+    auth_token: "{{ auth_token }}"
+    username: "{{ user_playlists_for_user }}"
+    playlist_name: "{{ user_playlists_name }}"
+    state: "{{ user_playlists_state }}"
+  when: user_playlists_public is undefined

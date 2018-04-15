@@ -1,0 +1,5 @@
+---
+- import_tasks: auth.yaml
+- import_tasks: create_user_token.yaml
+  when: username is defined
+- import_tasks: save_token.yaml
