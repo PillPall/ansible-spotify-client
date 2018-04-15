@@ -7,8 +7,8 @@
     username: bloch-m
     user_playlists_for_user: "{{ username }}"
     user_playlists_state: create
-    user_playlists_name: ansible-playlist
-    user_playlists_public: no
+    user_playlists_name: ansible-playlist2
+    # user_playlists_public: no
   environment:
     PYTHONPATH: "{{ playbook_dir }}/ansible/library/lib/spotipy_connection:{{ lookup('env','PYTHONPATH') }}"
   roles:

@@ -7,7 +7,7 @@
     get_related_artists_for: young the giant
     get_related_artists_output: short
     get_related_dest_file: "{{ playbook_dir }}/files/related_artists.json"
-    get_related_artists_from_file: "{{ playbook_dir }}/files/related_artists.json"
+    # get_related_artists_from_file: "{{ playbook_dir }}/files/related_artists.json"
   environment:
     PYTHONPATH: "{{ playbook_dir }}/ansible/library/lib/spotipy_connection:{{ lookup('env','PYTHONPATH') }}"
   roles:
