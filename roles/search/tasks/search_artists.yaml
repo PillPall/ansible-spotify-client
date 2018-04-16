@@ -1,0 +1,70 @@
+---
+# Search for artists name
+
+- name: Search for artists with default settings
+  spotify_search:
+    auth_token: "{{ auth_token }}"
+    state: "{{ search_for }}"
+    artists_name: "{{ search_for_artists_name }}"
+  when: search_result_output is undefined and search_result_limit is undefined and search_dest_file is undefined
+
+- name: Search for artists with defined search_dest_file
+  spotify_search:
+    auth_token: "{{ auth_token }}"
+    state: "{{ search_for }}"
+    artists_name: "{{ search_for_artists_name }}"
+    dest_file: "{{ search_dest_file }}"
+  when: search_result_output is undefined and search_result_limit is undefined and search_dest_file is defined
+
+- name: Search for artists with defined output_format
+  spotify_search:
+    auth_token: "{{ auth_token }}"
+    state: "{{ search_for }}"
+    artists_name: "{{ search_for_artists_name }}"
+    output_format: "{{ search_result_output }}"
+  when: search_result_output is defined and search_result_limit is undefined and search_dest_file is undefined
+
+- name: Search for artists with defined output_format and dest_file
+  spotify_search:
+    auth_token: "{{ auth_token }}"
+    state: "{{ search_for }}"
+    artists_name: "{{ search_for_artists_name }}"
+    output_format: "{{ search_result_output }}"
+    dest_file: "{{ search_dest_file }}"
+  when: search_result_output is defined and search_result_limit is undefined and search_dest_file is defined
+
+- name: Search for artists with defined limit
+  spotify_search:
+    auth_token: "{{ auth_token }}"
+    state: "{{ search_for }}"
+    artists_name: "{{ search_for_artists_name }}"
+    limit: "{{ search_result_limit }}"
+  when: search_result_output is undefined and search_result_limit is defined and search_dest_file is undefined
+
+- name: Search for artists with defined limit and dest_file
+  spotify_search:
+    auth_token: "{{ auth_token }}"
+    state: "{{ search_for }}"
+    artists_name: "{{ search_for_artists_name }}"
+    limit: "{{ search_result_limit }}"
+    dest_file: "{{ search_dest_file }}"
+  when: search_result_output is undefined and search_result_limit is defined and search_dest_file is defined
+
+- name: Search for artists with defined limit and output_format
+  spotify_search:
+    auth_token: "{{ auth_token }}"
+    state: "{{ search_for }}"
+    artists_name: "{{ search_for_artists_name }}"
+    output_format: "{{ search_result_output }}"
+    limit: "{{ search_result_limit }}"
+  when: search_result_output is defined and search_result_limit is defined and search_dest_file is undefined
+
+- name: Search for artists with defined limit and output_format and dest_file
+  spotify_search:
+    auth_token: "{{ auth_token }}"
+    state: "{{ search_for }}"
+    artists_name: "{{ search_for_artists_name }}"
+    output_format: "{{ search_result_output }}"
+    limit: "{{ search_result_limit }}"
+    dest_file: "{{ search_dest_file }}"
+  when: search_result_output is defined and search_result_limit is defined and search_dest_file is defined

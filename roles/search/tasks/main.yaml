@@ -1,0 +1,13 @@
+---
+- import_tasks: search_artists.yaml
+  when: search_for == "artists"
+- import_tasks: search_tracks.yaml
+  when: search_for == "tracks"
+- import_tasks: search_playlists.yaml
+  when: search_for == "playlists"
+- import_tasks: search_albums.yaml
+  when: search_for == "albums"
+- import_tasks: search_artists_and_albums.yaml
+  when: search_for == "artists_and_albums"
+- import_tasks: search_artists_and_tracks.yaml
+  when: search_for == "artists_and_tracks"

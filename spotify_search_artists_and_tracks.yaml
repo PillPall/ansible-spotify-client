@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    config_file: "{{inventory_dir}}/group_vars/public.yaml"
+    search_for: artists_and_tracks
+    search_for_artists_name: Young the Giant
+    #search_for_artists_name: Youn*
+    search_for_tracks_name: Cough Syrup
+    # search_for_tracks_name: Cough*
+    search_result_output: full
+    # search_result_output: short
+    search_result_limit: 20
+    # search_result_limit: 10
+    search_dest_file: "{{ playbook_dir }}/files/search_result_{{ search_for }}.json"
+  environment:
+    PYTHONPATH: "{{ playbook_dir }}/ansible/library/lib/spotipy_connection:{{ lookup('env','PYTHONPATH') }}"
+  roles:
+    - authentication
+    - search

@@ -3,7 +3,7 @@
   connection: local
   gather_facts: false
   vars:
-    config_file: "{{inventory_dir}}/group_vars/all.yaml"
+    config_file: "{{inventory_dir}}/group_vars/public.yaml"
     get_top_tracks_for_artists_name: Young the Giant
     get_top_tracks_for_country: AU
     get_top_tracks_output: short

@@ -1,0 +1,19 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    config_file: "{{inventory_dir}}/group_vars/public.yaml"
+    search_for: playlists
+    search_for_playlists_name: Colombia
+    search_result_output: full
+    # search_result_output: short
+    search_result_limit: 20
+    # search_result_limit: 10
+    search_dest_file: "{{ playbook_dir }}/files/search_result_{{ search_for }}.json"
+    # search_dest_file: "{{ playbook_dir }}/files/search_result.json"
+  environment:
+    PYTHONPATH: "{{ playbook_dir }}/ansible/library/lib/spotipy_connection:{{ lookup('env','PYTHONPATH') }}"
+  roles:
+    - authentication
+    - search

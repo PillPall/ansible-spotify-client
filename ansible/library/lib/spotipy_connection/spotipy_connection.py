@@ -46,15 +46,16 @@ def read_config(config_file):
 
     return conf
 
-def sp_search(client, q, offset=0, type='artist', market=None):
-    try:
-        if type is 'artist':
-            return client.search(q=q, offset=offset, type=type, market=market)
-        elif type is 'album':
-            return client.search(q=q, offset=offset, type=type, market=market)
-        elif type is 'playlist':
-            return client.search(q=q, offset=offset, type=type, market=market)
-        elif type is 'track':
-            return client.search(q=q, offset=offset, type=type, market=market)
-    except Exception as e:
-      module.fail_json(msg="Error: Can't execute search for " + type + " - " + str(e))
+def sp_search(client, q, limit=10, offset=0, type='artist', market=None):
+    if type is 'artist':
+        return client.search(q=q, limit=limit, offset=offset, type=type, market=market)
+    elif type is 'album':
+        return client.search(q=q, limit=limit, offset=offset, type=type, market=market)
+    elif type is 'playlist':
+        return client.search(q=q, limit=limit, offset=offset, type=type, market=market)
+    elif type is 'track':
+        return client.search(q=q, limit=limit, offset=offset, type=type, market=market)
+    elif type is 'artists_and_album':
+        return client.search(q=q, limit=limit, offset=offset, type='artist,album', market=market)
+    elif type is 'artists_and_tracks':
+        return client.search(q=q, limit=limit, offset=offset, type='artist,track', market=market)

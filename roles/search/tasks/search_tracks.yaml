@@ -1,0 +1,70 @@
+---
+# Search for tracks name
+
+- name: Search for track with default settings
+  spotify_search:
+    auth_token: "{{ auth_token }}"
+    state: "{{ search_for }}"
+    tracks_name: "{{ search_for_tracks_name }}"
+  when: search_result_output is undefined and search_result_limit is undefined and search_dest_file is undefined
+
+- name: Search for track with defined dest_file
+  spotify_search:
+    auth_token: "{{ auth_token }}"
+    state: "{{ search_for }}"
+    tracks_name: "{{ search_for_tracks_name }}"
+    dest_file: "{{ search_dest_file }}"
+  when: search_result_output is undefined and search_result_limit is undefined and search_dest_file is defined
+
+- name: Search for track with defined output_format
+  spotify_search:
+    auth_token: "{{ auth_token }}"
+    state: "{{ search_for }}"
+    tracks_name: "{{ search_for_tracks_name }}"
+    output_format: "{{ search_result_output }}"
+  when: search_result_output is defined and search_result_limit is undefined and search_dest_file is undefined
+
+- name: Search for track with defined output_format
+  spotify_search:
+    auth_token: "{{ auth_token }}"
+    state: "{{ search_for }}"
+    tracks_name: "{{ search_for_tracks_name }}"
+    output_format: "{{ search_result_output }}"
+    dest_file: "{{ search_dest_file }}"
+  when: search_result_output is defined and search_result_limit is undefined and search_dest_file is defined
+
+- name: Search for track with defined limit
+  spotify_search:
+    auth_token: "{{ auth_token }}"
+    state: "{{ search_for }}"
+    tracks_name: "{{ search_for_tracks_name }}"
+    limit: "{{ search_result_limit }}"
+  when: search_result_output is undefined and search_result_limit is defined and search_dest_file is undefined
+
+- name: Search for track with defined limit
+  spotify_search:
+    auth_token: "{{ auth_token }}"
+    state: "{{ search_for }}"
+    tracks_name: "{{ search_for_tracks_name }}"
+    limit: "{{ search_result_limit }}"
+    dest_file: "{{ search_dest_file }}"
+  when: search_result_output is undefined and search_result_limit is defined and search_dest_file is defined
+
+- name: Search for track with defined limit and output_format
+  spotify_search:
+    auth_token: "{{ auth_token }}"
+    state: "{{ search_for }}"
+    tracks_name: "{{ search_for_tracks_name }}"
+    output_format: "{{ search_result_output }}"
+    limit: "{{ search_result_limit }}"
+  when: search_result_output is defined and search_result_limit is defined and search_dest_file is undefined
+
+- name: Search for track with defined limit and output_format
+  spotify_search:
+    auth_token: "{{ auth_token }}"
+    state: "{{ search_for }}"
+    tracks_name: "{{ search_for_tracks_name }}"
+    output_format: "{{ search_result_output }}"
+    limit: "{{ search_result_limit }}"
+    dest_file: "{{ search_dest_file }}"
+  when: search_result_output is defined and search_result_limit is defined and search_dest_file is defined
