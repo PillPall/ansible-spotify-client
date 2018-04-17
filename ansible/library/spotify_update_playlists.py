@@ -58,23 +58,29 @@ class UserPlaylist:
 
         self.client = spotipy_connection.client(self.module)
 
-    def get(self):
-        limit = self.module.params.get("limit")
+    def get_track_uri(self, artists_name = None):
+        if artists_name is None:
+            artists_name = self.module.params.get("artists_name")
+
+        result = spotipy_connection.sp_search(self.client, q='artist:' + artists_name, type='artist')
 
         try:
-            result = self.client.current_user_playlists(limit=1)
+          artists_uri = result['artists']['items'][0]['uri']
+          self.module.params.update(artists_uri=artists_uri)
+
+        except Exception as e:
+          self.module.fail_json(msg="Error: Getting URI for artist" + artist_name + " - " + str(e))
+
+
+
+    def get(self):
+        username = self.module.params.get("username")
+
+        try:
+            result = self.client.user_playlists(username)
             return result
         except Exception as e:
-          self.module.fail_json(msg="Error: Can't get user playlists - " + str(e))
-
-    def search(self, playlists_dict):
-        playlist_name = self.module.params.get("playlist_name")
-        playlist_found_dict = {'items': []}
-
-        for playlist in playlists_dict['items']:
-            if playlist_name in playlist['name']:
-                playlist_found_dict['items'].append(playlist)
-        return playlist_found_dict
+          self.module.fail_json(msg="Error: Can't get playlists for user" + username + " - " + str(e))
 
     def create(self):
         username = self.module.params.get("username")
@@ -108,29 +114,28 @@ def main():
         username=dict(required=True, type='str'),
         output_format=dict(required=False, default='short', choices=['short', 'full'], type='str'),
         dest_file=dict(required=False, type='str'),
-        state=dict(required=True, choices=['get_all', 'create', 'search'], type='str'),
+        state=dict(required=True, choices=['add', 'remove'], type='str'),
         playlist_name=dict(required=False, type='str'),
-        public=dict(required=False, default='no', choices=['yes', 'no'], type='str'),
-        limit=dict(required=False, default=50, type='int')
+        playlist_id=dict(required=False, type='str'),
+        track_name=dict(required=False, type='str'),
+        track_id=dict(required=False, type='str'),
+        public=dict(required=False, default='no', choices=['yes', 'no'], type='str')
     ))
-
+ results = sp.user_playlist_add_tracks(username, playlist_id, track_ids)
     module = AnsibleModule(argument_spec=argument_spec)
     output_format = module.params.get("output_format")
     state = module.params.get("state")
-    playlist_name =  module.params.get("playlist_name")
 
     playlists = UserPlaylist(module)
 
-    if state == 'get_all':
-        results = playlists.get()
+    if state == 'get':
+        playlists_dict = playlists.get()
+        if output_format == 'short':
+            results = playlists.playlists_to_list(playlists_dict)
+        else:
+            results = playlists_dict
     elif state == 'create':
         results = playlists.create()
-    elif state =='search':
-        playlists_get_all = playlists.get()
-        results = playlists.search(playlists_get_all)
-
-    if output_format == 'short':
-        results = playlists.playlists_to_list(results)
 
     if module.params.get("dest_file"):
         file = module.params.get("dest_file")

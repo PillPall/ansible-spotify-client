@@ -5,12 +5,12 @@
   vars:
     config_file: "{{inventory_dir}}/group_vars/user.yaml"
     username: bloch-m
-    user_playlists_for_user: "{{ username }}"
-    user_playlists_state: get
-    user_playlists_output: full
-    user_playlists_dest_file: "{{ playbook_dir }}/files/{{ username }}_playlists.json"
+    # user_tracks_output: full
+    user_tracks_limit: 50
+    # user_tracks_dest_file: "{{ playbook_dir }}/files/{{ username }}_user_info.json"
+    user_tracks_state: recently_played
   environment:
     PYTHONPATH: "{{ playbook_dir }}/ansible/library/lib/spotipy_connection:{{ lookup('env','PYTHONPATH') }}"
   roles:
     - authentication
-    - user_playlists
+    - user_tracks

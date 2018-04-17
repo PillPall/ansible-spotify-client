@@ -175,21 +175,19 @@ def main():
         top_tracks.get_artists_uri()
 
     if module.params.get("artists_file"):
-        top_tracks_dict = top_tracks.get_top_tracks_from_file()
+        results = top_tracks.get_top_tracks_from_file()
     else:
-        top_tracks_dict = top_tracks.get_top_tracks()
+        results = top_tracks.get_top_tracks()
 
     if output_format == 'short':
-        result = top_tracks.tracks_to_list(top_tracks_dict)
-    else:
-        result = top_tracks_dict
+        results = top_tracks.tracks_to_list(results)
 
     if module.params.get("dest_file"):
         file = module.params.get("dest_file")
         with open(file, 'w') as f:
             json.dump(result, f)
 
-    module.exit_json(changed=True, results=result)
+    module.exit_json(changed=True, results=results)
 
 if __name__ == '__main__':
     main()

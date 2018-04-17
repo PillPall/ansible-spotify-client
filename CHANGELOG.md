@@ -1,4 +1,13 @@
-# 0.0.2 - 04-15-2018
+# 0.0.3 - 04-17-2018
+### MODIFIED
+* Updated module documentation
+
+### ADDED
+* Spotify Player role for tasks play, pause, next, previous, set volume, toggle shuffle, toggle repeat
+* Get User info
+* Get Current played track, recently played tracks, get top played artists, get top played tracks
+
+# 0.0.2 - 04-16-2018
 ### ADDED
 * Search for Artists
 * Search for Tracks

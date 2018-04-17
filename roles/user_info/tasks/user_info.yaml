@@ -1,0 +1,54 @@
+---
+# Get related artists from artists_name
+
+- name: Get User information with default settings
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+  when: user_info_output is undefined and user_info_dest_file is undefined and user_info_username is undefined
+
+- name: Get User information with defined output_format
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    output_format: "{{ user_info_output }}"
+  when: user_info_output is defined and user_info_dest_file is undefined and user_info_username is undefined
+
+- name: Get User information with defined dest_file
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    dest_file: "{{ user_info_dest_file }}"
+  when: user_info_output is undefined and user_info_dest_file is defined and user_info_username is undefined
+
+- name: Get User information with defined username
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    username: "{{ user_info_username }}"
+  when: user_info_output is undefined and user_info_dest_file is undefined and user_info_username is defined
+
+- name: Get User information with defined output_format and dest_file
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    output_format: "{{ user_info_output }}"
+    dest_file: "{{ user_info_dest_file }}"
+  when: user_info_output is defined and user_info_dest_file is defined and user_info_username is undefined
+
+- name: Get User information with defined output_format and username
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    output_format: "{{ user_info_output }}"
+    username: "{{ user_info_username }}"
+  when: user_info_output is defined and user_info_dest_file is undefined and user_info_username is defined
+
+- name: Get User information with defined dest_file and username
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    dest_file: "{{ user_info_dest_file }}"
+    username: "{{ user_info_username }}"
+  when: user_info_output is undefined and user_info_dest_file is defined and user_info_username is defined
+
+- name: Get User information with defined output_format and dest_file and username
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    dest_file: "{{ user_info_dest_file }}"
+    output_format: "{{ user_info_output }}"
+    username: "{{ user_info_username }}"
+  when: user_info_output is defined and user_info_dest_file is defined and user_info_username is defined

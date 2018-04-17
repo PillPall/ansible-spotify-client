@@ -148,14 +148,12 @@ def main():
     artists = RelatedArtists(module)
 
     if module.params.get("artists_file"):
-        artists_dict = artists.get_related_from_file()
+        results = artists.get_related_from_file()
     else:
-        artists_dict = artists.get_related_for_artists()
+        results = artists.get_related_for_artists()
 
     if output_format == 'short':
-        results = artists.name_to_list(artists_dict)
-    else:
-        results = artists_dict
+        results = artists.name_to_list(results)
 
     if module.params.get("dest_file"):
         file = module.params.get("dest_file")

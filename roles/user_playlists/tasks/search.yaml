@@ -1,0 +1,79 @@
+---
+# Get related artists from artists_name
+
+- name: Get User playlists with default settings
+  spotify_user_playlists:
+    auth_token: "{{ auth_token }}"
+    username: "{{ user_playlists_for_user }}"
+    playlist_name: "{{ user_playlist_name }}"
+    state: "{{ user_playlists_state }}"
+  when: user_playlists_output is undefined and user_playlists_dest_file is undefined and user_playlists_limit is undefined
+
+- name: Get User playlists with defined output_format
+  spotify_user_playlists:
+    auth_token: "{{ auth_token }}"
+    username: "{{ user_playlists_for_user }}"
+    playlist_name: "{{ user_playlist_name }}"
+    output_format: "{{ user_playlists_output }}"
+    state: "{{ user_playlists_state }}"
+  when: user_playlists_output is defined and user_playlists_dest_file is undefined and user_playlists_limit is undefined
+
+- name: Get User playlists with and save to dest_file
+  spotify_user_playlists:
+    auth_token: "{{ auth_token }}"
+    username: "{{ user_playlists_for_user }}"
+    playlist_name: "{{ user_playlist_name }}"
+    dest_file: "{{ user_playlists_dest_file }}"
+    state: "{{ user_playlists_state }}"
+  when: user_playlists_output is undefined and user_playlists_dest_file is defined and user_playlists_limit is undefined
+
+- name: Get User playlists with defined limit
+  spotify_user_playlists:
+    auth_token: "{{ auth_token }}"
+    username: "{{ user_playlists_for_user }}"
+    playlist_name: "{{ user_playlist_name }}"
+    limit: "{{ user_playlists_limit }}"
+    state: "{{ user_playlists_state }}"
+  when: user_playlists_output is undefined and user_playlists_dest_file is undefined and user_playlists_limit is defined
+
+- name: Get User playlists with defined output_format and save to dest_file
+  spotify_user_playlists:
+    auth_token: "{{ auth_token }}"
+    username: "{{ user_playlists_for_user }}"
+    playlist_name: "{{ user_playlist_name }}"
+    output_format: "{{ user_playlists_output }}"
+    dest_file: "{{ user_playlists_dest_file }}"
+    state: "{{ user_playlists_state }}"
+  when: user_playlists_output is defined and user_playlists_dest_file is defined and user_playlists_limit is undefined
+
+- name: Get User playlists with defined output_format and limit
+  spotify_user_playlists:
+    auth_token: "{{ auth_token }}"
+    username: "{{ user_playlists_for_user }}"
+    playlist_name: "{{ user_playlist_name }}"
+    output_format: "{{ user_playlists_output }}"
+    limit: "{{ user_playlists_limit }}"
+    state: "{{ user_playlists_state }}"
+  when: user_playlists_output is defined and user_playlists_dest_file is undefined and user_playlists_limit is defined
+
+- name: Get User playlists with defined limit and dest_file
+  spotify_user_playlists:
+    auth_token: "{{ auth_token }}"
+    username: "{{ user_playlists_for_user }}"
+    playlist_name: "{{ user_playlist_name }}"
+    output_format: "{{ user_playlists_output }}"
+    limit: "{{ user_playlists_limit }}"
+    dest_file: "{{ user_playlists_dest_file }}"
+    state: "{{ user_playlists_state }}"
+  when: user_playlists_output is undefined and user_playlists_dest_file is defined and user_playlists_limit is defined
+
+- name: Get User playlists with defined output_format and dest_file and limit
+  spotify_user_playlists:
+    auth_token: "{{ auth_token }}"
+    username: "{{ user_playlists_for_user }}"
+    playlist_name: "{{ user_playlist_name }}"
+    output_format: "{{ user_playlists_output }}"
+    limit: "{{ user_playlists_limit }}"
+    dest_file: "{{ user_playlists_dest_file }}"
+    state: "{{ user_playlists_state }}"
+  when: user_playlists_output is defined and user_playlists_dest_file is defined and user_playlists_limit is defined

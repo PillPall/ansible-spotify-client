@@ -1,0 +1,17 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    config_file: "{{inventory_dir}}/group_vars/user.yaml"
+    username: bloch-m
+    user_playlists_for_user: "{{ username }}"
+    user_playlists_state: get_all
+    user_playlists_limit: 10
+    user_playlists_output: full
+    user_playlists_dest_file: "{{ playbook_dir }}/files/{{ username }}_playlists.json"
+  environment:
+    PYTHONPATH: "{{ playbook_dir }}/ansible/library/lib/spotipy_connection:{{ lookup('env','PYTHONPATH') }}"
+  roles:
+    - authentication
+    - user_playlists

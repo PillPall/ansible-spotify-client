@@ -239,22 +239,20 @@ def main():
     search = SpotifySearch(module)
 
     if state == 'artists':
-        search_results = search.artists()
+        results = search.artists()
     elif state == 'tracks':
-        search_results = search.tracks()
+        results = search.tracks()
     elif state == 'playlists':
-        search_results = search.playlists()
+        results = search.playlists()
     elif state == 'albums':
-        search_results = search.albums()
+        results = search.albums()
     elif state == 'artists_and_albums':
-        search_results = search.artists_and_albums()
+        results = search.artists_and_albums()
     elif state == 'artists_and_tracks':
-        search_results = search.artists_and_tracks()
+        results = search.artists_and_tracks()
 
     if output_format == 'short':
-        results = search.search_results_to_list(search_results)
-    else:
-        results = search_results
+        results = search.search_results_to_list(results)
 
     if module.params.get("dest_file"):
         file = module.params.get("dest_file")

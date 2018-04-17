@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    config_file: "{{inventory_dir}}/group_vars/user.yaml"
+    username: bloch-m
+    user_tracks_output: full
+    user_tracks_dest_file: "{{ playbook_dir }}/files/{{ username }}_curent_playback.json"
+    user_tracks_state: current_playback
+  environment:
+    PYTHONPATH: "{{ playbook_dir }}/ansible/library/lib/spotipy_connection:{{ lookup('env','PYTHONPATH') }}"
+  roles:
+    - authentication
+    - user_tracks

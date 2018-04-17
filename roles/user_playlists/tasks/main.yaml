@@ -1,5 +1,7 @@
 ---
-- import_tasks: create_user_playlists.yaml
+- import_tasks: create.yaml
   when: user_playlists_state == "create"
-- import_tasks: get_user_playlists.yaml
-  when: user_playlists_state == "get"
+- import_tasks: get_all.yaml
+  when: user_playlists_state == "get_all"
+- import_tasks: search.yaml
+  when: user_playlists_state == "search"

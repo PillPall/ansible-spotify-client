@@ -4,36 +4,63 @@
 ANSIBLE_METADATA = {'metadata_version': '1.1'}
 DOCUMENTATION = '''
 ---
-module: spotipy_related_artists
-Ansible module for getting related artists for one artist
+module: sp_auth
+Ansible module for authentication to the Spotify API. This module will response with an
 requirements:
   - python >= 2.6
+  - spotipy >= 2.4.4
 options:
     client_id:
         description:
           - Spotify API Client ID
         required: false
-
+        Type: String
+    client_secret:
+        description:
+          - Spotify API Client Secret Key
+        required: false
+        Type: String
+    config_file:
+        description:
+          - Configuration file containing Spotify API Authentication parameters
+        required: false
+        Type: String
+    redirect_uri:
+        description:
+          - Redirect URL, required for user authentication
+        required: false
+        Type: String
+    scope:
+        description:
+          - Scope, required for User authentication. For avaiable scopes see here:
+            https://developer.spotify.com/web-api/using-scopes/
+        required: false
+        Type: String
+    username:
+        description:
+          - Spotify Username, required for user authentication
+        required: false
+        Type: String
 '''
 
 EXAMPLES = '''
-- name: Get top ten tracks for an artist in australia and save it to file
-  spotipy_related_artists:
+- name: Provide client ID and client secret for Public authentication token
+  sp_auth:
     client_id=0123456789ABCDEFGHI
     client_secret=JKLMNOPQRSTUVWXZY
-    artist_name=young the giant
-    country=au
-    dest_file=artists.json
-    output_format=short
 
-- name: Get top ten tracks for an artist in germany
-  spotipy_related_artists:
-    config_file: "{{playbook_dir}}/../inventory/group_vars/all.yaml"
-    artist_name=young the giant
-    country=de
-    output_format=long
-  register: results
+- name: Provide all options for user authentication token
+  sp_auth:
+    username: spotify_user
+    client_id=0123456789ABCDEFGHI
+    client_secret=JKLMNOPQRSTUVWXZY
+    redirect_uri=https://example.com/callback/
+    scope=user-top-read,playlist-read-private
 
+- name: Provide all configuration parameters via config file
+  sp_auth:
+    username: spotify_user
+    config_file="{{ inventory_dir}}/user.yaml"
 '''
 
 
@@ -112,11 +139,9 @@ def main():
     sp_auth = SpotifyAuthentication(module)
 
     if module.params.get("username"):
-        user_client_token = sp_auth.user_client()
-        results = user_client_token
+        results = sp_auth.user_client()
     else:
-        public_client_token = sp_auth.public_client()
-        results = public_client_token
+        results = sp_auth.public_client()
 
     module.exit_json(changed=True, results=results)
 
