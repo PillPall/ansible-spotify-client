@@ -77,22 +77,21 @@ import json
 from ansible.module_utils.basic import *
 
 try:
-    import spotipy_connection
+    import spotipy
 except ImportError as e:
     module.fail_json(msg="Error: Can't import required libraries - " + str(e))
 
 class ArtistsTopTracks:
     def __init__(self, module):
         self.module = module
-        self.top_tracks_list = []
 
-        self.client = spotipy_connection.client(self.module)
+        self.client = spotipy.Spotify(self.module.params.get("auth_token"))
 
     def get_artists_uri(self, artists_name = None):
         if artists_name is None:
             artists_name = self.module.params.get("artists_name")
 
-        result = spotipy_connection.sp_search(self.client, q='artist:' + artists_name, type='artist')
+        result = self.client.search(q='artist:' + artists_name, type='artist')
 
         try:
           artists_uri = result['artists']['items'][0]['uri']
@@ -150,9 +149,10 @@ class ArtistsTopTracks:
         return tracks_dict
 
     def tracks_to_list(self, track_list):
+        artists_name_dict_short = {'tracks': []}
         for track in track_list['tracks']:
-          self.top_tracks_list.append(track['name'])
-        return self.top_tracks_list
+          artists_name_dict_short['tracks'].append({'track': track['name'], 'uri': track['uri']})
+        return artists_name_dict_short
 
 def main():
     argument_spec = {}
@@ -162,7 +162,7 @@ def main():
         artists_name=dict(required=False, type='str'),
         artists_file=dict(required=False, type='str'),
         country_code=dict(default='AU', required=False, type='str'),
-        output_format=dict(default='short', choices=['short', 'full'], type='str'),
+        output_format=dict(default='full', choices=['short', 'full'], type='str'),
         dest_file=dict(required=False, type='str')
     ))
 
@@ -185,7 +185,7 @@ def main():
     if module.params.get("dest_file"):
         file = module.params.get("dest_file")
         with open(file, 'w') as f:
-            json.dump(result, f)
+            json.dump(results, f)
 
     module.exit_json(changed=True, results=results)
 

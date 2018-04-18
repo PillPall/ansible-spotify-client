@@ -1,10 +1,11 @@
 ---
+
 - name: Wait for input Spotify API user code
   pause:
     prompt: "Please type in the SP API User Code"
     echo: yes
   register: _sp_api_user_code
-  when: sp_user_auth.results.cached == 0
+  when: not sp_user_auth.results.cached
 
 - name: Set Spotify API user code
   set_fact:
@@ -13,7 +14,7 @@
 
 - name: Create user token from Spotify API user code
   sp_auth_create_user_token:
-    user_code: "{{ sp_api_user_code }}"
+    api_user_code: "{{ sp_api_user_code }}"
     username: "{{ username }}"
     config_file: "{{ config_file }}"
   register: _sp_user_auth

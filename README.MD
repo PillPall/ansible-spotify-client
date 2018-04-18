@@ -15,6 +15,7 @@ An Ansible client to interact with the Spotify API
   - client_secret = Spotify API Client secret
   - redirect_uri: For testing purpose use https://example.com/callback/
   - scope: Depends on role using[More information](https://developer.spotify.com/web-api/using-scopes/)
+  - Update Ansible Playbooks to your own need
 
 
 

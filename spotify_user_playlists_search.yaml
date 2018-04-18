@@ -4,12 +4,13 @@
   gather_facts: false
   vars:
     config_file: "{{inventory_dir}}/group_vars/user.yaml"
+    auth_token: "{{ auth_token }}"
     username: bloch-m
     user_playlists_for_user: "{{ username }}"
     user_playlists_state: search
-    user_playlist_name: Liked
-    user_playlists_limit: 10
-    user_playlists_output: short
+    user_playlist_name: Lik
+    user_playlists_limit: 40
+    user_playlists_output: full
     user_playlists_dest_file: "{{ playbook_dir }}/files/{{ username }}_playlists.json"
   environment:
     PYTHONPATH: "{{ playbook_dir }}/ansible/library/lib/spotipy_connection:{{ lookup('env','PYTHONPATH') }}"

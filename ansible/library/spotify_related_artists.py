@@ -65,16 +65,15 @@ import json
 from ansible.module_utils.basic import *
 
 try:
-    import spotipy_connection
+    import spotipy
 except ImportError as e:
     module.fail_json(msg="Error: Can't import required libraries - " + str(e))
 
 class RelatedArtists:
     def __init__(self, module):
         self.module = module
-        self.artists_name_list = []
 
-        self.client = spotipy_connection.client(self.module)
+        self.client = spotipy.Spotify(self.module.params.get("auth_token"))
 
     def get_related_from_file(self):
         artists_file = self.module.params.get("artists_file")
@@ -109,7 +108,7 @@ class RelatedArtists:
         if artists_name is None:
             artists_name = self.module.params.get("artists_name")
 
-        result = spotipy_connection.sp_search(self.client, q='artist:' + artists_name, type='artist')
+        result = self.client.search(q='artist:' + artists_name, type='artist')
 
         try:
           uri = result['artists']['items'][0]['uri']
@@ -128,9 +127,10 @@ class RelatedArtists:
         return artists_dict
 
     def name_to_list(self, artists_dict):
+        artists_name_dict_short = {'artists': []}
         for artist in artists_dict['artists']:
-          self.artists_name_list.append(artist['name'])
-        return self.artists_name_list
+          artists_name_dict_short['artists'].append({'artist': artist['name'], 'uri': artist['uri']})
+        return artists_name_dict_short
 
 def main():
     argument_spec = {}
@@ -139,7 +139,7 @@ def main():
         artists_name=dict(required=False, type='str'),
         artists_file=dict(required=False, type='str'),
         dest_file=dict(required=False, type='str'),
-        output_format=dict(default='short', choices=['short', 'full'], type='str')
+        output_format=dict(default='full', choices=['short', 'full'], type='str')
     ))
     module = AnsibleModule(argument_spec=argument_spec)
 

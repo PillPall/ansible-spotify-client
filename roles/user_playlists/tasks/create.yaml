@@ -1,28 +1,78 @@
 ---
 # Get related artists from artists_name
 
-- name: Create public user playlist
+- name: Create user playlist with default settings
+  spotify_user_playlists:
+    auth_token: "{{ auth_token }}"
+    username: "{{ user_playlists_for_user }}"
+    playlist_name: "{{ user_playlists_name }}"
+    state: "{{ user_playlists_state }}"
+  when: user_playlists_public is undefined and user_playlist_descripton is undefined and user_playlists_dest_file is undefined
+
+- name: Create user playlist with defined user_playlists_public
   spotify_user_playlists:
     auth_token: "{{ auth_token }}"
     username: "{{ user_playlists_for_user }}"
     playlist_name: "{{ user_playlists_name }}"
     public: "{{ user_playlists_public }}"
     state: "{{ user_playlists_state }}"
-  when: user_playlists_public is defined and user_playlists_public == "yes"
+  when: user_playlists_public is defined and user_playlist_descripton is undefined and user_playlists_dest_file is undefined
 
-- name: Create non public user playlist
+- name: Create user playlist with defined user_playlist_descripton
   spotify_user_playlists:
     auth_token: "{{ auth_token }}"
     username: "{{ user_playlists_for_user }}"
     playlist_name: "{{ user_playlists_name }}"
+    playlist_description: "{{ user_playlist_descripton }}"
+    state: "{{ user_playlists_state }}"
+  when: user_playlists_public is undefined and user_playlist_descripton is defined and user_playlists_dest_file is undefined
+
+- name: Create user playlist with defined user_playlists_dest_file
+  spotify_user_playlists:
+    auth_token: "{{ auth_token }}"
+    username: "{{ user_playlists_for_user }}"
+    playlist_name: "{{ user_playlists_name }}"
+    dest_file: "{{ user_playlists_dest_file }}"
+    state: "{{ user_playlists_state }}"
+  when: user_playlists_public is undefined and user_playlist_descripton is undefined and user_playlists_dest_file is defined
+
+- name: Create user playlist with defined user_playlist_descripton and user_playlists_public
+  spotify_user_playlists:
+    auth_token: "{{ auth_token }}"
+    username: "{{ user_playlists_for_user }}"
+    playlist_name: "{{ user_playlists_name }}"
+    playlist_description: "{{ user_playlist_descripton }}"
     public: "{{ user_playlists_public }}"
     state: "{{ user_playlists_state }}"
-  when: user_playlists_public is defined and user_playlists_public == "no"
+  when: user_playlists_public is defined and user_playlist_descripton is defined and user_playlists_dest_file is undefined
 
-- name: Create non public user playlist
+- name: Create user playlist with defined user_playlists_public and user_playlists_dest_file
   spotify_user_playlists:
     auth_token: "{{ auth_token }}"
     username: "{{ user_playlists_for_user }}"
     playlist_name: "{{ user_playlists_name }}"
+    dest_file: "{{ user_playlists_dest_file }}"
+    public: "{{ user_playlists_public }}"
     state: "{{ user_playlists_state }}"
-  when: user_playlists_public is undefined
+  when: user_playlists_public is defined and user_playlist_descripton is undefined and user_playlists_dest_file is defined
+
+- name: Create user playlist with defined user_playlist_descripton and user_playlists_dest_file
+  spotify_user_playlists:
+    auth_token: "{{ auth_token }}"
+    username: "{{ user_playlists_for_user }}"
+    playlist_name: "{{ user_playlists_name }}"
+    dest_file: "{{ user_playlists_dest_file }}"
+    playlist_description: "{{ user_playlist_descripton }}"
+    state: "{{ user_playlists_state }}"
+  when: user_playlists_public is undefined and user_playlist_descripton is defined and user_playlists_dest_file is defined
+
+- name: Create user playlist with defined user_playlists_public and user_playlist_descripton and user_playlists_dest_file
+  spotify_user_playlists:
+    auth_token: "{{ auth_token }}"
+    username: "{{ user_playlists_for_user }}"
+    playlist_name: "{{ user_playlists_name }}"
+    dest_file: "{{ user_playlists_dest_file }}"
+    playlist_description: "{{ user_playlist_descripton }}"
+    public: "{{ user_playlists_public }}"
+    state: "{{ user_playlists_state }}"
+  when: user_playlists_public is defined and user_playlist_descripton is defined and user_playlists_dest_file is defined

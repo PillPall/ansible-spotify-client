@@ -1,7 +1,7 @@
 ---
 # Search for albums name
 
-- name: Search for albums with default settings
+- name: Search for artists and track with default settings
   spotify_search:
     auth_token: "{{ auth_token }}"
     state: "{{ search_for }}"
@@ -9,7 +9,7 @@
     tracks_name: "{{ search_for_tracks_name }}"
   when: search_result_output is undefined and search_result_limit is undefined and search_dest_file is undefined
 
-- name: Search for albums with defined output_format
+- name: Search for artists and track with defined output_format
   spotify_search:
     auth_token: "{{ auth_token }}"
     state: "{{ search_for }}"
@@ -18,7 +18,7 @@
     output_format: "{{ search_result_output }}"
   when: search_result_output is defined and search_result_limit is undefined and search_dest_file is undefined
 
-- name: Search for albums with defined output_format and dest_file
+- name: Search for artists and track with defined output_format and dest_file
   spotify_search:
     auth_token: "{{ auth_token }}"
     state: "{{ search_for }}"
@@ -28,7 +28,7 @@
     dest_file: "{{ search_dest_file }}"
   when: search_result_output is defined and search_result_limit is undefined and search_dest_file is defined
 
-- name: Search for albums with defined limit
+- name: Search for artists and track with defined limit
   spotify_search:
     auth_token: "{{ auth_token }}"
     state: "{{ search_for }}"
@@ -37,7 +37,7 @@
     limit: "{{ search_result_limit }}"
   when: search_result_output is undefined and search_result_limit is defined and search_dest_file is undefined
 
-- name: Search for albums with defined dest_file
+- name: Search for artists and track with defined dest_file
   spotify_search:
     auth_token: "{{ auth_token }}"
     state: "{{ search_for }}"
@@ -46,7 +46,7 @@
     dest_file: "{{ search_dest_file }}"
   when: search_result_output is undefined and search_result_limit is undefined and search_dest_file is defined
 
-- name: Search for albums with defined output_format and limit
+- name: Search for artists and track with defined output_format and limit
   spotify_search:
     auth_token: "{{ auth_token }}"
     state: "{{ search_for }}"
@@ -56,7 +56,7 @@
     limit: "{{ search_result_limit }}"
   when: search_result_output is defined and search_result_limit is defined and search_dest_file is undefined
 
-- name: Search for albums with defined dest_file and limit
+- name: Search for artists and track with defined dest_file and limit
   spotify_search:
     auth_token: "{{ auth_token }}"
     state: "{{ search_for }}"
@@ -66,7 +66,7 @@
     limit: "{{ search_result_limit }}"
   when: search_result_output is undefined and search_result_limit is defined and search_dest_file is defined
 
-- name: Search for albums with defined limit and output_format
+- name: Search for artists and track with defined limit and output_format
   spotify_search:
     auth_token: "{{ auth_token }}"
     state: "{{ search_for }}"

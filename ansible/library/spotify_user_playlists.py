@@ -44,25 +44,25 @@ EXAMPLES = '''
 import sys
 import os
 import json
+
 from ansible.module_utils.basic import *
 
 try:
-    import spotipy_connection
+    import spotipy
 except ImportError as e:
     module.fail_json(msg="Error: Can't import required libraries - " + str(e))
 
 class UserPlaylist:
     def __init__(self, module):
         self.module = module
-        self.playlists_list = []
 
-        self.client = spotipy_connection.client(self.module)
+        self.client = spotipy.Spotify(self.module.params.get("auth_token"))
 
-    def get(self):
+    def get_all(self):
         limit = self.module.params.get("limit")
 
         try:
-            result = self.client.current_user_playlists(limit=1)
+            result = self.client.current_user_playlists(limit=limit)
             return result
         except Exception as e:
           self.module.fail_json(msg="Error: Can't get user playlists - " + str(e))
@@ -74,6 +74,7 @@ class UserPlaylist:
         for playlist in playlists_dict['items']:
             if playlist_name in playlist['name']:
                 playlist_found_dict['items'].append(playlist)
+
         return playlist_found_dict
 
     def create(self):
@@ -85,10 +86,7 @@ class UserPlaylist:
         else:
             public = False
 
-        if self.module.params.get("playlist_description"):
-            playlist_description = self.module.params.get("playlist_description")
-        else:
-            playlist_description = ''
+        playlist_description = self.module.params.get("playlist_description")
 
         try:
             result = self.client.user_playlist_create(username, playlist_name, public, playlist_description)
@@ -97,19 +95,21 @@ class UserPlaylist:
           self.module.fail_json(msg="Error: Can't create playlists for user" + username + " - " + str(e))
 
     def playlists_to_list(self, playlists_dict):
+        playlists_result_dict = {'playlists': []}
         for playlist in playlists_dict['items']:
-          self.playlists_list.append(playlist['name'])
-        return self.playlists_list
+          playlists_result_dict['playlists'].append({'name': playlist['name'], 'uri': playlist['uri']})
+        return playlists_result_dict
 
 def main():
     argument_spec = {}
     argument_spec.update(dict(
         auth_token=dict(required=True, type='str'),
         username=dict(required=True, type='str'),
-        output_format=dict(required=False, default='short', choices=['short', 'full'], type='str'),
+        output_format=dict(required=False, default='full', choices=['short', 'full'], type='str'),
         dest_file=dict(required=False, type='str'),
         state=dict(required=True, choices=['get_all', 'create', 'search'], type='str'),
         playlist_name=dict(required=False, type='str'),
+        playlist_description=dict(required=False, default='', type='str'),
         public=dict(required=False, default='no', choices=['yes', 'no'], type='str'),
         limit=dict(required=False, default=50, type='int')
     ))
@@ -117,16 +117,15 @@ def main():
     module = AnsibleModule(argument_spec=argument_spec)
     output_format = module.params.get("output_format")
     state = module.params.get("state")
-    playlist_name =  module.params.get("playlist_name")
 
     playlists = UserPlaylist(module)
 
     if state == 'get_all':
-        results = playlists.get()
+        results = playlists.get_all()
     elif state == 'create':
         results = playlists.create()
     elif state =='search':
-        playlists_get_all = playlists.get()
+        playlists_get_all = playlists.get_all()
         results = playlists.search(playlists_get_all)
 
     if output_format == 'short':

@@ -4,11 +4,13 @@
   gather_facts: false
   vars:
     config_file: "{{inventory_dir}}/group_vars/user.yaml"
+    auth_token: "{{ auth_token }}"
     username: bloch-m
     user_playlists_for_user: "{{ username }}"
     user_playlists_state: create
-    user_playlists_name: ansible-playlist2
-    # user_playlists_public: no
+    user_playlists_name: ansible-playlist1234
+    user_playlists_public: no
+    user_playlists_dest_file: "{{ playbook_dir }}/files/create_playlist_{{ user_playlists_name }}.json"
   environment:
     PYTHONPATH: "{{ playbook_dir }}/ansible/library/lib/spotipy_connection:{{ lookup('env','PYTHONPATH') }}"
   roles:

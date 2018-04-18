@@ -4,10 +4,11 @@
   gather_facts: false
   vars:
     config_file: "{{inventory_dir}}/group_vars/public.yaml"
+    auth_token: "{{ auth_token }}"
     search_for: albums
-    search_for_albums_name: Tenacious D
+    search_for_albums_name: Tenac*
     # search_for_albums_name: Ten*
-    search_result_output: full
+    search_result_output: short
     # search_result_output: short
     search_result_limit: 20
     # search_result_limit: 10

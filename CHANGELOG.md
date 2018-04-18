@@ -1,3 +1,12 @@
+# 0.0.4 - 04-18-2018
+### MODIFIED
+* Improved module documentation
+* Improved module JSON short format output
+* Changed default Ansible module output behaviour to full output
+
+### Removed
+* Dependency to custom python library
+
 # 0.0.3 - 04-17-2018
 ### MODIFIED
 * Updated module documentation

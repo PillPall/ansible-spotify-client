@@ -56,7 +56,7 @@ import json
 from ansible.module_utils.basic import *
 
 try:
-    import spotipy_connection
+    import spotipy
 except ImportError as e:
     module.fail_json(msg="Error: Can't import required libraries - " + str(e))
 
@@ -64,7 +64,7 @@ class SpotifyPlayer:
     def __init__(self, module):
         self.module = module
 
-        self.client = spotipy_connection.client(self.module)
+        self.client = spotipy.Spotify(self.module.params.get("auth_token"))
     def play(self):
         self.client.start_playback()
 

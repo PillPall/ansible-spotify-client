@@ -44,10 +44,11 @@ EXAMPLES = '''
 import sys
 import os
 import json
+
 from ansible.module_utils.basic import *
 
 try:
-    import spotipy_connection
+    import spotipy
 except ImportError as e:
     module.fail_json(msg="Error: Can't import required libraries - " + str(e))
 
@@ -55,7 +56,7 @@ class UserTracks:
     def __init__(self, module):
         self.module = module
 
-        self.client = spotipy_connection.client(self.module)
+        self.client = spotipy.Spotify(self.module.params.get("auth_token"))
 
     def current_playback(self):
         return self.client.current_playback()
@@ -79,26 +80,27 @@ class UserTracks:
             output_dict = {}
             output_dict.update({'album': results['item']['album']['name']})
             output_dict.update({'artists': results['item']['artists'][0]['name']})
-            output_dict.update({'Track': results['item']['name']})
+            output_dict.update({'track': results['item']['name']})
+            output_dict.update({'uri': results['item']['uri']})
         elif self.module.params.get("state") == 'recently_played':
             output_dict = ({'recently_played': []})
             for recently_played in results['items']:
-                output_dict['recently_played'].append({'album': recently_played['track']['album']['name'], 'artists': recently_played['track']['artists'][0]['name'], 'Track': recently_played['track']['name']})
+                output_dict['recently_played'].append({'album': recently_played['track']['album']['name'], 'artists': recently_played['track']['artists'][0]['name'], 'track': recently_played['track']['name'], 'uri': recently_played['track']['uri']})
         elif self.module.params.get("state") == 'top_tracks':
             output_dict = ({'top_tracks': []})
             for top_tracks in results['items']:
-                output_dict['top_tracks'].append({'album': top_tracks['album']['name'], 'artists': top_tracks['artists'][0]['name'], 'Track': top_tracks['name']})
+                output_dict['top_tracks'].append({'album': top_tracks['album']['name'], 'artists': top_tracks['artists'][0]['name'], 'track': top_tracks['name'], 'uri': top_tracks['uri']})
         elif self.module.params.get("state") == 'top_artists':
             output_dict = ({'top_artists': []})
             for top_artists in results['items']:
-                output_dict['top_artists'].append(top_artists['name'])
+                output_dict['top_artists'].append({'artists': top_artists['name'], 'uri': top_artists['uri']})
         return output_dict
 
 def main():
     argument_spec = {}
     argument_spec.update(dict(
         auth_token=dict(required=True, type='str'),
-        output_format=dict(required=False, default='short', choices=['short', 'full'], type='str'),
+        output_format=dict(required=False, default='full', choices=['short', 'full'], type='str'),
         dest_file=dict(required=False, type='str'),
         limit=dict(required=False, default=50, type='int'),
         time_range=dict(required=False, default='medium_term', choices=['short_term', 'medium_term', 'long_term'] , type='str'),

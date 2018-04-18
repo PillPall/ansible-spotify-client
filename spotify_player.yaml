@@ -4,6 +4,7 @@
   gather_facts: false
   vars:
     config_file: "{{inventory_dir}}/group_vars/user.yaml"
+    auth_token: "{{ auth_token }}"
     username: bloch-m
     # spotify_player_state: play
     # spotify_player_state: pause

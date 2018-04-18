@@ -4,6 +4,7 @@
   gather_facts: false
   vars:
     config_file: "{{inventory_dir}}/group_vars/public.yaml"
+    auth_token: "{{ auth_token }}"
     get_related_artists_for: young the giant
     get_related_artists_output: short
     get_related_dest_file: "{{ playbook_dir }}/files/related_artists.json"

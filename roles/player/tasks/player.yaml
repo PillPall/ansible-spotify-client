@@ -1,7 +1,7 @@
 ---
 # Get related artists from artists_name
 
-- name: Ansible Spotify Player
+- name: "Ansible Spotify Player {{ spotify_player_state }}"
   spotify_player:
     auth_token: "{{ auth_token }}"
     state: "{{ spotify_player_state }}"
@@ -14,7 +14,7 @@
     volume_level: "{{ volume_level_percent }}"
   when: volume_level_percent is defined and spotify_player_toggle_shuffle is undefined and spotify_player_repeat is undefined
 
-- name: Ansible Spotify Player set Volume
+- name: Ansible Spotify Player toogle shuffle
   spotify_player:
     auth_token: "{{ auth_token }}"
     state: "{{ spotify_player_state }}"

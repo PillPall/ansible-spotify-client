@@ -47,7 +47,7 @@ import json
 from ansible.module_utils.basic import *
 
 try:
-    import spotipy_connection
+    import spotipy
 except ImportError as e:
     module.fail_json(msg="Error: Can't import required libraries - " + str(e))
 
@@ -56,7 +56,7 @@ class UserInfo:
         self.module = module
         self.user_list = []
 
-        self.client = spotipy_connection.client(self.module)
+        self.client = spotipy.Spotify(self.module.params.get("auth_token"))
 
     def get(self):
         if self.module.params.get("username"):
@@ -85,7 +85,7 @@ def main():
     argument_spec.update(dict(
         auth_token=dict(required=True, type='str'),
         username=dict(required=False, type='str'),
-        output_format=dict(required=False, default='short', choices=['short', 'full'], type='str'),
+        output_format=dict(required=False, default='full', choices=['short', 'full'], type='str'),
         dest_file=dict(required=False, type='str')
     ))
 
