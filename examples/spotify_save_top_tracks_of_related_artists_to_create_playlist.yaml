@@ -1,0 +1,41 @@
+---
+# An Example of an more complicated playbook to use several roles for creating a new playlist.
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    config_file: "{{inventory_dir}}/group_vars/user.yaml"
+    username: bloch-m
+    user_playlists_for_user: "{{ username }}"
+    get_related_artists_for: Passion Pit
+    get_related_dest_file: "{{ playbook_dir }}/files/related_artists2.json"
+    get_related_artists_output: short
+    get_top_tracks_dest_file: "{{ playbook_dir }}/files/artists_top_tracks.json"
+    user_playlists_state: create
+    user_playlists_name: ansible playlist
+    user_playlists_public: no
+    user_playlists_dest_file: "{{ playbook_dir }}/files/create_playlist_{{ user_playlists_name }}.json"
+    update_playlist_track_file: "{{ get_top_tracks_dest_file }}"
+    update_playlist_file: "{{ user_playlists_dest_file }}"
+    update_playlist_state: add
+
+  tasks:
+  - debug:
+      msg: "Do nested related artists query and find all top tracks with all artists found. \
+      After create a new playlist and add all found top tracks to it."
+  - include_role:
+      name: authentication
+  - include_role:
+      name: get_related_artists
+  - include_role:
+      name: get_related_artists
+    vars:
+      get_related_artists_from_file: "{{ get_related_dest_file }}"
+  - include_role:
+      name: get_artists_top_tracks
+    vars:
+      get_top_tracks_from_artists_file: "{{ get_related_dest_file }}"
+  - include_role:
+      name: user_playlists
+  - include_role:
+      name: update_playlists

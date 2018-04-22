@@ -1,0 +1,123 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    config_file: "{{inventory_dir}}/group_vars/public.yaml"
+    auth_token: "{{ auth_token }}"
+
+  tasks:
+  - include_role:
+      name: authentication
+  - include_role:
+      name: get_artists_top_tracks
+    vars:
+      get_top_tracks_for_artists_name: Young the Giant
+  - include_role:
+      name: get_artists_top_tracks
+    vars:
+      get_top_tracks_for_artists_name: Young the Giant
+      get_top_tracks_for_country: AU
+  - include_role:
+      name: get_artists_top_tracks
+    vars:
+      get_top_tracks_for_artists_name: Young the Giant
+      get_top_tracks_output: short
+  - include_role:
+      name: get_artists_top_tracks
+    vars:
+      get_top_tracks_for_artists_name: Young the Giant
+      get_top_tracks_output: long
+  - include_role:
+      name: get_artists_top_tracks
+    vars:
+      get_top_tracks_for_artists_name: Young the Giant
+      get_top_tracks_dest_file: "{{ playbook_dir }}/files/artists_top_tracks_integration_tests.json"
+  - include_role:
+      name: get_artists_top_tracks
+    vars:
+      get_top_tracks_for_artists_name: Young the Giant
+      get_top_tracks_for_country: AU
+      get_top_tracks_output: short
+  - include_role:
+      name: get_artists_top_tracks
+    vars:
+      get_top_tracks_for_artists_name: Young the Giant
+      get_top_tracks_for_country: AU
+      get_top_tracks_output: long
+  - include_role:
+      name: get_artists_top_tracks
+    vars:
+      get_top_tracks_for_artists_name: Young the Giant
+      get_top_tracks_for_country: AU
+      get_top_tracks_dest_file: "{{ playbook_dir }}/files/artists_top_tracks_integration_tests.json"
+  - include_role:
+      name: get_artists_top_tracks
+    vars:
+      get_top_tracks_for_artists_name: Young the Giant
+      get_top_tracks_for_country: AU
+      get_top_tracks_dest_file: "{{ playbook_dir }}/files/artists_top_tracks_integration_tests_short.json"
+      get_top_tracks_output: short
+  - include_role:
+      name: get_artists_top_tracks
+    vars:
+      get_top_tracks_for_artists_name: Young the Giant
+      get_top_tracks_for_country: AU
+      get_top_tracks_dest_file: "{{ playbook_dir }}/files/artists_top_tracks_integration_tests.json"
+      get_top_tracks_output: long
+  - include_role:
+      name: get_artists_top_tracks
+    vars:
+      get_top_tracks_from_artists_file: "{{ playbook_dir }}/files/related_artists_from_file_integration_test.json"
+  - include_role:
+      name: get_artists_top_tracks
+    vars:
+      get_top_tracks_from_artists_file: "{{ playbook_dir }}/files/related_artists_from_file_integration_test.json"
+      get_top_tracks_for_country: AU
+  - include_role:
+      name: get_artists_top_tracks
+    vars:
+      get_top_tracks_from_artists_file: "{{ playbook_dir }}/files/related_artists_from_file_integration_test_short.json"
+      get_top_tracks_output: short
+  - include_role:
+      name: get_artists_top_tracks
+    vars:
+      get_top_tracks_from_artists_file: "{{ playbook_dir }}/files/related_artists_from_file_integration_test.json"
+      get_top_tracks_output: long
+  - include_role:
+      name: get_artists_top_tracks
+    vars:
+      get_top_tracks_from_artists_file: "{{ playbook_dir }}/files/related_artists_from_file_integration_test.json"
+      get_top_tracks_dest_file: "{{ playbook_dir }}/files/artists_top_tracks_integration_tests.json"
+  - include_role:
+      name: get_artists_top_tracks
+    vars:
+      get_top_tracks_from_artists_file: "{{ playbook_dir }}/files/related_artists_from_file_integration_test_short.json"
+      get_top_tracks_for_country: AU
+      get_top_tracks_output: short
+  - include_role:
+      name: get_artists_top_tracks
+    vars:
+      get_top_tracks_from_artists_file: "{{ playbook_dir }}/files/related_artists_from_file_integration_test.json"
+      get_top_tracks_for_country: AU
+      get_top_tracks_output: long
+  - include_role:
+      name: get_artists_top_tracks
+    vars:
+      get_top_tracks_from_artists_file: "{{ playbook_dir }}/files/related_artists_from_file_integration_test.json"
+      get_top_tracks_for_country: AU
+      get_top_tracks_dest_file: "{{ playbook_dir }}/files/artists_top_tracks_integration_tests.json"
+  - include_role:
+      name: get_artists_top_tracks
+    vars:
+      get_top_tracks_from_artists_file: "{{ playbook_dir }}/files/related_artists_from_file_integration_test_short.json"
+      get_top_tracks_for_country: AU
+      get_top_tracks_dest_file: "{{ playbook_dir }}/files/artists_top_tracks_integration_tests.json"
+      get_top_tracks_output: short
+  - include_role:
+      name: get_artists_top_tracks
+    vars:
+      get_top_tracks_from_artists_file: "{{ playbook_dir }}/files/related_artists_from_file_integration_test.json"
+      get_top_tracks_for_country: AU
+      get_top_tracks_dest_file: "{{ playbook_dir }}/files/artists_top_tracks_integration_tests.json"
+      get_top_tracks_output: long

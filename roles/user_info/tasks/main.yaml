@@ -1,2 +1,13 @@
 ---
+- import_tasks: current_playback.yaml
+  when: user_info_state == "current_playback"
+- import_tasks: devices.yaml
+  when: user_info_state == "devices"
+- import_tasks: recently_played.yaml
+  when: user_info_state == "recently_played"
+- import_tasks: top_artists.yaml
+  when: user_info_state == "top_artists"
+- import_tasks: top_tracks.yaml
+  when: user_info_state == "top_tracks"
 - import_tasks: user_info.yaml
+  when: user_info_state == "user_info"

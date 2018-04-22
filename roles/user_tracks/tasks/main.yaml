@@ -1,9 +1,0 @@
----
-- import_tasks: current_playback.yaml
-  when: user_tracks_state == "current_playback"
-- import_tasks: recently_played.yaml
-  when: user_tracks_state == "recently_played"
-- import_tasks: top_artists.yaml
-  when: user_tracks_state == "top_artists"
-- import_tasks: top_tracks.yaml
-  when: user_tracks_state == "top_tracks"

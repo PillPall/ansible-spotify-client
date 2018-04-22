@@ -1,54 +1,98 @@
 #!/usr/bin/python
 # -*- coding: utf8 -*-
 
-ANSIBLE_METADATA = {'metadata_version': '1.1'}
+ANSIBLE_METADATA = {
+    'metadata_version': '1.1',
+    'status': ['preview'],
+    'supported_by': 'community'
+}
+
 DOCUMENTATION = '''
 ---
 module: spotify_player
-Ansible module for getting related artists for one artist
-requirements:
-  - python >= 2.6
-  - spotipy >= 2.4.4
+short_description: Ansible module for controlling your spotify.
+description:
+    - "Ansible module for controlling your spotify. Play or pause a song, toggle shuffle on/off or set the volume."
+
+version_added: "2.5"
+
+author:
+    - Michael Bloch (github@mbloch.de)
+
 options:
-   auth_token:
+    auth_token:
        description:
          - Authentication token for Spotify API
        required: True
        type: String
-   state:
+
+    device_Id:
+       description:
+         - Device ID to transfer a User's Playback
+       required: True
+       type: String
+
+    repeat_mode:
+       description:
+          - Set shuffle on or off
+       type: String
+       choices: ['track', 'context', 'off']
+
+    state:
        description:
          - Player action to execute
        required: True
        type: String
-       Choices: play, pause, next, previous, repeat, shuffle, volume
-   volume_level:
+       choices: ['play', 'pause', 'next', 'previous', 'repeat', 'shuffle', 'volume']
+
+    toggle_shuffle:
+       description:
+          - Set shuffle on or off
+       type: String
+       choices: ['on', 'off']
+
+    volume_level:
        description:
           - Set volume level in percent
        type: int
-   toggle_shuffle:
-       description:
-          - Set shuffle on or off
-       type: String
-       Choices: on, off
-   repeat_mode:
-       description:
-          - Set shuffle on or off
-       type: String
-       Choices: track, context, off
+
+requirements:
+- python >= 2.7.10
+- spotipy >= 2.4.4
 '''
 
 EXAMPLES = '''
-- name: Execute play track
+- name: Play track
   spotify_player:
-    auth_token=0123456789ABCDEFGHI
-    state=play
+    auth_token: 0123456789ABCDEFGHI
+    state: play
 
-- name: Execute next track
+- name: Play next track
   spotify_player:
-    auth_token=0123456789ABCDEFGHI
-    state=next
+    auth_token: 0123456789ABCDEFGHI
+    state: next
+
+- name: Play previous track
+  spotify_player:
+    auth_token: 0123456789ABCDEFGHI
+    state: next
+
+- name: Transfer playback to a new device
+  spotify_player:
+    auth_token: 0123456789ABCDEFGHI
+    device_id: 0123456789ABCDEFGHI
+    state: transfer_playback
 '''
-
+RETURN = '''
+---
+output:
+  description: "Returns null."
+  returned: on success
+  sample:
+    changed: True
+    result: null
+  type: null
+'''
 
 import sys
 import os
@@ -77,28 +121,35 @@ class SpotifyPlayer:
     def previous(self):
         self.client.previous_track()
 
-    def volume(self):
-        self.client.volume(self.module.params.get("volume_level"))
+    def repeat(self):
+        self.client.repeat(self.module.params.get("repeat_mode"))
 
     def shuffle(self):
         if self.module.params.get("toggle_shuffle") == 'on':
             toggle = True
         else:
             toggle = False
+
         self.client.shuffle(toggle)
 
-    def repeat(self):
-        self.client.repeat(self.module.params.get("repeat_mode"))
+    def transfer_playback(self):
+        if self.module.params.get("device_id"):
+            device_id = self.module.params.get("device_id")
+        else:
+            module.fail_json(msg="Error: Can't transfer song to device. No Device ID was given")
+        self.client.transfer_playback(device_id)
 
+    def volume(self):
+        self.client.volume(self.module.params.get("volume_level"))
 def main():
     argument_spec = {}
     argument_spec.update(dict(
         auth_token=dict(required=True, type='str'),
-        state=dict(required=True, choices=['play', 'pause', 'next', 'previous', 'repeat', 'shuffle', 'volume']),
-        volume_level=dict(required=False, type='int'),
-        toggle_shuffle=dict(required=False, choices=['on', 'off'], type='str'),
+        device_id=dict(required=False, type='str'),
         repeat_mode=dict(required=False, choices=['track', 'context', 'off'], type='str'),
-
+        state=dict(required=True, choices=['play', 'pause', 'next', 'previous', 'repeat', 'shuffle', 'transfer_playback', 'volume']),
+        toggle_shuffle=dict(required=False, choices=['on', 'off'], type='str'),
+        volume_level=dict(required=False, type='int')
     ))
 
     module = AnsibleModule(argument_spec=argument_spec)
@@ -118,6 +169,8 @@ def main():
         results = player.volume()
     elif module.params.get("state") == 'shuffle':
         results = player.shuffle()
+    elif module.params.get("state") == 'transfer_playback':
+        results = player.transfer_playback()
     elif module.params.get("state") == 'repeat':
         results = player.repeat()
 

@@ -1,0 +1,17 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    config_file: "{{inventory_dir}}/group_vars/user.yaml"
+    auth_token: "{{ auth_token }}"
+    username: bloch-m
+    update_playlist_state: add
+    # dest_file: "{{ playbook_dir }}/files/update_playlist_{{ update_state }}.json"
+    update_playlist_id: spotify:user:bloch-m:playlist:0FEpCJRlkZuUwVVhzwy6p7
+    # update_playlist_file: "{{ playbook_dir }}/files/create_playlist_ansible-playlist.json"
+    # update_playlist_track_id: spotify:track:4Sfa7hdVkqlM8UW5LsSY3F
+    update_playlist_track_file: "{{ playbook_dir }}/files/artists_top_tracks.json"
+  roles:
+    - authentication
+    - update_playlists

@@ -1,0 +1,59 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    config_file: "{{inventory_dir}}/group_vars/user.yaml"
+    auth_token: "{{ auth_token }}"
+    device_id: 29faf1376363f1d9559f99ea65a4a95cc67f6307
+  tasks:
+  - include_role:
+      name: authentication
+    vars:
+      username: bloch-m
+  - include_role:
+      name: player
+    vars:
+      spotify_player_state: play
+  - include_role:
+      name: player
+    vars:
+      spotify_player_state: pause
+  - include_role:
+      name: player
+    vars:
+      spotify_player_state: next
+  - include_role:
+      name: player
+    vars:
+      spotify_player_state: previous
+  - include_role:
+      name: player
+    vars:
+      spotify_player_state: volume
+      volume_level_percent: 20
+  - include_role:
+      name: player
+    vars:
+      spotify_player_state: shuffle
+      spotify_player_toggle_shuffle: on
+  - include_role:
+      name: player
+    vars:
+      spotify_player_state: shuffle
+      spotify_player_toggle_shuffle: off
+  - include_role:
+      name: player
+    vars:
+      spotify_player_state: repeat
+      spotify_player_toggle_shuffle: on
+  - include_role:
+      name: player
+    vars:
+      spotify_player_state: repeat
+      spotify_player_toggle_shuffle: off
+  - include_role:
+      name: player
+    vars:
+      spotify_player_state: transfer_playback
+      spotify_player_device_id: "{{ device_id }}"

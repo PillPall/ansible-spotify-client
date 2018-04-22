@@ -1,0 +1,500 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    config_file: "{{inventory_dir}}/group_vars/user.yaml"
+    auth_token: "{{ auth_token }}"
+    username: bloch-m
+  tasks:
+  - include_role:
+      name: authentication
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: current_playback
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: current_playback
+      user_info_output: short
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: current_playback
+      user_info_output: long
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: current_playback
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_current_playback_integration_test.json"
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: current_playback
+      user_info_output: short
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_current_playback_integration_test_short.json"
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: current_playback
+      user_info_output: long
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_current_playback_integration_test.json"
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: devices
+      user_info_output: short
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: devices
+      user_info_output: long
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: devices
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_devices_integration_test.json"
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: devices
+      user_info_output: short
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_devices_integration_test_short.json"
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: devices
+      user_info_output: long
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_devices_integration_test.json"
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: recently_played
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: recently_played
+      user_info_output: short
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: recently_played
+      user_info_output: long
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: recently_played
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_recently_played_integration_test.json"
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: recently_played
+      user_info_limit: 10
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: recently_played
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_recently_played_integration_test_short.json"
+      user_info_output: short
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: recently_played
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_recently_played_integration_test.json"
+      user_info_output: long
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: recently_played
+      user_info_limit: 10
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_recently_played_integration_test.json"
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: recently_played
+      user_info_limit: 10
+      user_info_output: short
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: recently_played
+      user_info_limit: 10
+      user_info_output: long
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: recently_played
+      user_info_limit: 10
+      user_info_output: short
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_recently_played_integration_test_short.json"
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: recently_played
+      user_info_limit: 10
+      user_info_output: long
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_recently_played_integration_test.json"
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_output: short
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_output: long
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_tracks_integration_test.json"
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_limit: 10
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_time_range: short_term
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_time_range: medium_term
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_time_range: long_term
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_tracks_integration_test_short.json"
+      user_info_output: short
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_tracks_integration_test.json"
+      user_info_output: long
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_time_range: short_term
+      user_info_output: short
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_time_range: short_term
+      user_info_output: long
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_time_range: medium_term
+      user_info_output: short
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_time_range: medium_term
+      user_info_output: long
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_time_range: long_term
+      user_info_output: short
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_time_range: long_term
+      user_info_output: long
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_time_range: short_term
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_tracks_integration_test.json"
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_time_range: medium_term
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_tracks_integration_test.json"
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_time_range: long_term
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_tracks_integration_test.json"
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_time_range: short_term
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_tracks_integration_test_short.json"
+      user_info_output: short
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_time_range: short_term
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_tracks_integration_test.json"
+      user_info_output: long
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_time_range: medium_term
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_tracks_integration_test_short.json"
+      user_info_output: short
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_time_range: medium_term
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_tracks_integration_test.json"
+      user_info_output: long
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_time_range: long_term
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_tracks_integration_test_short.json"
+      user_info_output: short
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_time_range: long_term
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_tracks_integration_test.json"
+      user_info_output: long
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_time_range: short_term
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_tracks_integration_test_short.json"
+      user_info_output: short
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_time_range: short_term
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_tracks_integration_test.json"
+      user_info_output: long
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_time_range: medium_term
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_tracks_integration_test_short.json"
+      user_info_output: short
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_time_range: medium_term
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_tracks_integration_test.json"
+      user_info_output: long
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_time_range: long_term
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_tracks_integration_test_short.json"
+      user_info_output: short
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_tracks
+      user_info_time_range: long_term
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_tracks_integration_test.json"
+      user_info_output: long
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_artists
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_artists
+      user_info_output: short
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_artists
+      user_info_output: long
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_artists
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_artists_integration_test.json"
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_artists
+      user_info_limit: 10
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_artists
+      user_info_time_range: short_term
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_artists
+      user_info_time_range: medium_term
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_artists
+      user_info_time_range: long_term
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_artists
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_artists_integration_test_short.json"
+      user_info_output: short
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_artists
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_artists_integration_test.json"
+      user_info_output: long
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_artists
+      user_info_time_range: short_term
+      user_info_output: short
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_artists
+      user_info_time_range: short_term
+      user_info_output: long
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_artists
+      user_info_time_range: medium_term
+      user_info_output: short
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_artists
+      user_info_time_range: medium_term
+      user_info_output: long
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_artists
+      user_info_time_range: long_term
+      user_info_output: short
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_artists
+      user_info_time_range: long_term
+      user_info_output: long
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_artists
+      user_info_time_range: short_term
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_artists_integration_test.json"
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_artists
+      user_info_time_range: medium_term
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_artists_integration_test.json"
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_artists
+      user_info_time_range: long_term
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_artists_integration_test.json"
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_artists
+      user_info_time_range: short_term
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_artists_integration_test_short.json"
+      user_info_output: short
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_artists
+      user_info_time_range: short_term
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_artists_integration_test.json"
+      user_info_output: long
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_artists
+      user_info_time_range: medium_term
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_artists_integration_test_short.json"
+      user_info_output: short
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_artists
+      user_info_time_range: medium_term
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_artists_integration_test.json"
+      user_info_output: long
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_artists
+      user_info_time_range: long_term
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_artists_integration_test_short.json"
+      user_info_output: short
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: top_artists
+      user_info_time_range: long_term
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_top_artists_integration_test.json"
+      user_info_output: long
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: user_info
+      user_info_output: short
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: user_info
+      user_info_output: long
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: user_info
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_integration_test.json"
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: user_info
+      user_info_output: short
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_integration_test_short.json"
+  - include_role:
+      name: user_info
+    vars:
+      user_info_state: user_info
+      user_info_output: long
+      user_info_dest_file: "{{ playbook_dir }}/files/user_info_integration_test.json"

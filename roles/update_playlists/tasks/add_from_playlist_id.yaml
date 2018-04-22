@@ -1,0 +1,38 @@
+---
+- name: Add songs to playlist with playlist_id and defined track id
+  spotify_update_playlists:
+    auth_token: "{{ auth_token }}"
+    username: "{{ username }}"
+    state: "{{ update_playlist_state }}"
+    playlist_id: "{{ update_playlist_id }}"
+    track_id: "{{ update_playlist_track_id }}"
+  when: update_playlist_id is defined and update_playlist_file is undefined and update_playlist_track_id is defined and update_playlist_track_file is undefined and update_playlist_dest_file is undefined
+
+- name: Add songs to playlist with playlist_id and defined track id and dest_file
+  spotify_update_playlists:
+    auth_token: "{{ auth_token }}"
+    username: "{{ username }}"
+    state: "{{ update_playlist_state }}"
+    playlist_id: "{{ update_playlist_id }}"
+    track_id: "{{ update_playlist_track_id }}"
+    dest_file: "{{ update_playlist_dest_file }}"
+  when: update_playlist_id is defined and update_playlist_file is undefined and update_playlist_track_id is defined and update_playlist_track_file is undefined and update_playlist_dest_file is defined
+
+- name: Add songs to playlist with playlist_id and defined track_file
+  spotify_update_playlists:
+    auth_token: "{{ auth_token }}"
+    username: "{{ username }}"
+    state: "{{ update_playlist_state }}"
+    playlist_id: "{{ update_playlist_id }}"
+    track_file: "{{ update_playlist_track_file }}"
+  when: update_playlist_id is defined and update_playlist_file is undefined and update_playlist_track_id is undefined and update_playlist_track_file is defined and update_playlist_dest_file is undefined
+
+- name: Add songs to playlist with playlist_id with defined track_file and dest_file
+  spotify_update_playlists:
+    auth_token: "{{ auth_token }}"
+    username: "{{ username }}"
+    state: "{{ update_playlist_state }}"
+    playlist_id: "{{ update_playlist_id }}"
+    track_file: "{{ update_playlist_track_file }}"
+    dest_file: "{{ update_playlist_dest_file }}"
+  when: update_playlist_id is defined and update_playlist_file is undefined and update_playlist_track_id is undefined and update_playlist_track_file is defined and update_playlist_dest_file is defined

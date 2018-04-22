@@ -1,3 +1,22 @@
+# 0.0.5 - 04-21-2018
+### ADDED
+* New Ansible module to update a user playlist (Add & remove tracks)
+* Feature to transfer playback to a different device with module spotify_player
+* Added Ansible module documentation
+* Integration test of all roles and states
+
+
+### MODIFIED
+* Renamed Ansible module sp_auth to sptify_auth
+* Renamed Ansible module sp_auth_create_user_token to spotify_auth_create_user_token
+* Improved Ansible module documentation
+* Renamed Ansible module option for output format full to long
+* Moved tasks from Ansible module user_tracks module to module spotify_user_info
+* Moved example playbooks to folder examples
+
+### Removed
+* Ansible user_tracks module
+
 # 0.0.4 - 04-18-2018
 ### MODIFIED
 * Improved module documentation

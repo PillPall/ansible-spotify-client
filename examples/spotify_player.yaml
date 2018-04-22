@@ -1,0 +1,23 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    config_file: "{{inventory_dir}}/group_vars/user.yaml"
+    auth_token: "{{ auth_token }}"
+    username: bloch-m
+    # spotify_player_state: transfer_playback
+    # spotify_player_device_id: 29faf1376363f1d9559f99ea65a4a95cc67f6307
+    spotify_player_state: play
+    # spotify_player_state: pause
+    # spotify_player_state: next
+    # spotify_player_state: previous
+    # spotify_player_state: volume
+    # volume_level_percent: 50
+    # spotify_player_state: shuffle
+    # spotify_player_toggle_shuffle: off
+    # spotify_player_state: repeat
+    # spotify_player_repeat: context
+  roles:
+    - authentication
+    - player

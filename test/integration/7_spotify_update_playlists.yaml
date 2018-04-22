@@ -1,0 +1,69 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    config_file: "{{inventory_dir}}/group_vars/user.yaml"
+    auth_token: "{{ auth_token }}"
+    username: bloch-m
+    playlist_id: spotify:user:bloch-m:playlist:0rmFzcIXjEG8TF2bDiJqdO
+    track_id: spotify:track:1MzFmVDSl7Vm00f3Hw4Xfx
+    track_file: "{{ playbook_dir }}/files/artists_top_tracks_integration_tests.json"
+    playlist_file: "{{ playbook_dir }}/files/create_public_playlist_integration_test.json"
+  tasks:
+  - include_role:
+      name: authentication
+    vars:
+      username: bloch-m
+  - include_role:
+      name: update_playlists
+    vars:
+      update_playlist_state: add
+      update_playlist_id: "{{ playlist_id }}"
+      update_playlist_track_id: "{{ track_id }}"
+  - include_role:
+      name: update_playlists
+    vars:
+      update_playlist_state: add
+      update_playlist_id: "{{ playlist_id }}"
+      update_playlist_track_id: "{{ track_id }}"
+      update_playlist_dest_file: "{{ playbook_dir }}/files/update_playlist_integration_test.json"
+  - include_role:
+      name: update_playlists
+    vars:
+      update_playlist_state: add
+      update_playlist_id: "{{ playlist_id }}"
+      update_playlist_track_file: "{{ track_file }}"
+  - include_role:
+      name: update_playlists
+    vars:
+      update_playlist_state: add
+      update_playlist_id: "{{ playlist_id }}"
+      update_playlist_track_file: "{{ track_file }}"
+      update_playlist_dest_file: "{{ playbook_dir }}/files/update_playlist_integration_test.json"
+  - include_role:
+      name: update_playlists
+    vars:
+      update_playlist_state: add
+      update_playlist_file: "{{ playlist_file }}"
+      update_playlist_track_id: "{{ track_id }}"
+  - include_role:
+      name: update_playlists
+    vars:
+      update_playlist_state: add
+      update_playlist_file: "{{ playbook_dir }}/files/create_non_public_playlist_integration_test.json"
+      update_playlist_track_id: "{{ track_id }}"
+      update_playlist_dest_file: "{{ playbook_dir }}/files/update_playlist_integration_test.json"
+  - include_role:
+      name: update_playlists
+    vars:
+      update_playlist_state: add
+      update_playlist_file: "{{ playlist_file }}"
+      update_playlist_track_file: "{{ track_file }}"
+  - include_role:
+      name: update_playlists
+    vars:
+      update_playlist_state: add
+      update_playlist_file: "{{ playbook_dir }}/files/create_non_public_playlist_integration_test.json"
+      update_playlist_track_file: "{{ track_file }}"
+      update_playlist_dest_file: "{{ playbook_dir }}/files/update_playlist_integration_test.json"

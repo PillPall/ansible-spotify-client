@@ -1,45 +1,152 @@
 #!/usr/bin/python
 # -*- coding: utf8 -*-
 
-ANSIBLE_METADATA = {'metadata_version': '1.1'}
+ANSIBLE_METADATA = {
+    'metadata_version': '1.1',
+    'status': ['preview'],
+    'supported_by': 'community'
+}
+
 DOCUMENTATION = '''
 ---
-module: spotify_get_user_playlist
-Ansible module for getting related artists for one artist
-requirements:
-  - python >= 2.6
- - spotipy >= 2.4.4
+module: spotify_user_playlists
+short_description: Get information about users playlist or create one.
+description:
+    - "Get information about the current User."
+version_added: "2.5"
+
+author:
+    - Michael Bloch (github@mbloch.de)
+
 options:
-    username:
-        description:
-          - Username to get the playlist from
-        required: True
-        type: String
-   dest_file:
-       description:
-         - Destination file to save the output to
-   output_format:
-       description:
-         - Output format
-       Default: short
-       type: String
-       Choices: short, full
    auth_token:
        description:
-         - Authentication token for Spotify API
+         - Authentication token for Spotify API.
        required: True
        type: String
+
+   dest_file:
+       description:
+         - Destination file to save the output to.
+       type: String
+
+   limit:
+       description:
+         - Limit the amount of the user playlists to get or to search for.
+       default: 50
+       type: String
+
+   output_format:
+       description:
+         - Control Ansible output.
+       choices: ['short', 'long']
+       default: long
+       type: String
+
+   playlist_description:
+       description:
+         - Playlist description for creating a new playlist.
+       default: ""
+       type: String
+
+   playlist_name:
+       description:
+         - Name of the playlist to search for or to create.
+       type: String
+
+   public:
+       description:
+         - Parameter to make a created playlist public or non-public
+       default: no
+       choices: ['yes', 'no']
+       type: String
+
+   state:
+       description:
+         - Playlist action.
+       choices: ['get_all', 'create', 'search']
+       type: String
+
+   username:
+      description:
+        - Create the playlist for the user defined in username.
+      type: String
 '''
 
 EXAMPLES = '''
-- name: Get user playlists for user muster and save to dest_file
+- name: Get the first 20 user playlists for user muster and save the output to dest_file
   spotify_get_user_playlist:
-    auth_token=0123456789ABCDEFGHI
-    username: muster
-    dest_file=artists.json
-    output_format=short
+    auth_token: 0123456789ABCDEFGHI
+    dest_file: artists.json
+    state: get_all
+    limit: 20
+
+- name: Get the first 100 user playlists for user muster and save the output to dest_file
+  spotify_get_user_playlist:
+    auth_token: 0123456789ABCDEFGHI
+    dest_file: artists.json
+    state: get_all
+    limit: 100
+
+- name: Create a non-pbulic playlist with defined playlist_description
+  spotify_get_user_playlist:
+    auth_token: 0123456789ABCDEFGHI
+    playlist_description: Playlist created with Ansible
+    playlist_name: Ansible_Playlist
+    public: no
+    state: create
+
+- name: Create a pbulic playlist with defined playlist_description
+  spotify_get_user_playlist:
+    auth_token: 0123456789ABCDEFGHI
+    playlist_description: Playlist created with Ansible
+    playlist_name: Ansible_Playlist
+    public: yes
+    state: create
+
+- name: Search in the first 20 User playlists for a Playlist named Ansible_Playlist
+  spotify_get_user_playlist:
+    auth_token: 0123456789ABCDEFGHI
+    limit: 20
+    playlist_name: Ansible_Playlist
+    state: search
 '''
 
+RETURN = '''
+---
+output:
+  description: "returns a dict with the snapshot_ids of the updated playlists"
+  returned: on success
+  sample:
+    changed: True
+    result:
+        href: https://api.spotify.com/v1/users/USER/playlists?offset=0&limit=50
+        items:
+        - collaborative: false
+          external_urls:
+            spotify: https://open.spotify.com/user/USER/playlist/ABCDEFGHIJKL
+          href: https://api.spotify.com/v1/users/USER/playlists/ABCDEFGHIJKL
+          id: ABCDEFGHIJKL
+          images: []
+          name: Ansible integration test nonpublic3
+          owner:
+            display_name:
+            external_urls:
+              spotify: https://open.spotify.com/user/USER
+            href: https://api.spotify.com/v1/users/USER
+            id: USER
+            type: user
+            uri: spotify:user:USER
+          primary_color:
+          public: false
+          snapshot_id: ABCDEFGHIJKL1234567890
+          tracks:
+            href: https://api.spotify.com/v1/users/USER/playlists/ABCDEFGHIJKL/tracks
+            total: 0
+          type: playlist
+          uri: spotify:user:USER:playlist:ABCDEFGHIJKL
+  type: dict
+'''
 
 import sys
 import os
@@ -94,24 +201,24 @@ class UserPlaylist:
         except Exception as e:
           self.module.fail_json(msg="Error: Can't create playlists for user" + username + " - " + str(e))
 
-    def playlists_to_list(self, playlists_dict):
-        playlists_result_dict = {'playlists': []}
+    def output_shortener(self, playlists_dict):
+        output_shortener_dict = {'playlists': []}
         for playlist in playlists_dict['items']:
-          playlists_result_dict['playlists'].append({'name': playlist['name'], 'uri': playlist['uri']})
-        return playlists_result_dict
+          output_shortener_dict['playlists'].append({'name': playlist['name'], 'uri': playlist['uri']})
+        return output_shortener_dict
 
 def main():
     argument_spec = {}
     argument_spec.update(dict(
         auth_token=dict(required=True, type='str'),
-        username=dict(required=True, type='str'),
-        output_format=dict(required=False, default='full', choices=['short', 'full'], type='str'),
         dest_file=dict(required=False, type='str'),
-        state=dict(required=True, choices=['get_all', 'create', 'search'], type='str'),
+        limit=dict(required=False, default=50, type='int'),
+        output_format=dict(required=False, default='long', choices=['short', 'long'], type='str'),
         playlist_name=dict(required=False, type='str'),
         playlist_description=dict(required=False, default='', type='str'),
         public=dict(required=False, default='no', choices=['yes', 'no'], type='str'),
-        limit=dict(required=False, default=50, type='int')
+        state=dict(required=True, choices=['get_all', 'create', 'search'], type='str'),
+        username=dict(required=False, type='str')
     ))
 
     module = AnsibleModule(argument_spec=argument_spec)
@@ -129,7 +236,7 @@ def main():
         results = playlists.search(playlists_get_all)
 
     if output_format == 'short':
-        results = playlists.playlists_to_list(results)
+        results = playlists.output_shortener(results)
 
     if module.params.get("dest_file"):
         file = module.params.get("dest_file")

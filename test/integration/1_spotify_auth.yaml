@@ -1,0 +1,16 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+  - name: Public authentication
+    include_role:
+      name: authentication
+    vars:
+      config_file: "{{inventory_dir}}/group_vars/public.yaml"
+  - name: User authentication
+    include_role:
+      name: authentication
+    vars:
+      config_file: "{{inventory_dir}}/group_vars/user.yaml"
+      username: bloch-m

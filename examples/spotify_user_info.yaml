@@ -1,0 +1,17 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    config_file: "{{inventory_dir}}/group_vars/user.yaml"
+    auth_token: "{{ auth_token }}"
+    username: bloch-m
+    # user_info_state: top_tracks
+    user_info_state: devices
+    user_info_output: short
+    # user_info_time_range: long_term
+    # user_info_limit: 2
+    # user_info_dest_file: "{{ playbook_dir }}/files/{{ username }}_user_info.json"
+  roles:
+    - authentication
+    - user_info

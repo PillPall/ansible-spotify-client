@@ -5,25 +5,32 @@
   spotify_player:
     auth_token: "{{ auth_token }}"
     state: "{{ spotify_player_state }}"
-  when: volume_level_percent is undefined and spotify_player_toggle_shuffle is undefined and spotify_player_repeat is undefined
+  when: volume_level_percent is undefined and spotify_player_toggle_shuffle is undefined and spotify_player_repeat is undefined and spotify_player_device_id is undefined
 
 - name: Ansible Spotify Player set Volume
   spotify_player:
     auth_token: "{{ auth_token }}"
     state: "{{ spotify_player_state }}"
     volume_level: "{{ volume_level_percent }}"
-  when: volume_level_percent is defined and spotify_player_toggle_shuffle is undefined and spotify_player_repeat is undefined
+  when: volume_level_percent is defined and spotify_player_toggle_shuffle is undefined and spotify_player_repeat is undefined and spotify_player_device_id is undefined
 
 - name: Ansible Spotify Player toogle shuffle
   spotify_player:
     auth_token: "{{ auth_token }}"
     state: "{{ spotify_player_state }}"
     toggle_shuffle: "{{ spotify_player_toggle_shuffle }}"
-  when: volume_level_percent is undefined and spotify_player_toggle_shuffle is defined and spotify_player_repeat is undefined
+  when: volume_level_percent is undefined and spotify_player_toggle_shuffle is defined and spotify_player_repeat is undefined and spotify_player_device_id is undefined
 
 - name: Ansible Spotify Player set Repeat
   spotify_player:
     auth_token: "{{ auth_token }}"
     state: "{{ spotify_player_state }}"
     repeat_mode: "{{ spotify_player_repeat }}"
-  when: volume_level_percent is undefined and spotify_player_toggle_shuffle is undefined and spotify_player_repeat is defined
+  when: volume_level_percent is undefined and spotify_player_toggle_shuffle is undefined and spotify_player_repeat is defined and spotify_player_device_id is undefined
+
+- name: Ansible Spotify Player transfer playback
+  spotify_player:
+    auth_token: "{{ auth_token }}"
+    state: "{{ spotify_player_state }}"
+    device_id: "{{ spotify_player_device_id }}"
+  when: volume_level_percent is undefined and spotify_player_toggle_shuffle is undefined and spotify_player_repeat is undefined and spotify_player_device_id is defined

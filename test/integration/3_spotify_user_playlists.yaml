@@ -1,0 +1,268 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    config_file: "{{inventory_dir}}/group_vars/user.yaml"
+    auth_token: "{{ auth_token }}"
+    playlist_to_search_for: Like
+    username: bloch-m
+  tasks:
+  - include_role:
+      name: authentication
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: create
+      user_playlists_name: Ansible integration test
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: create
+      user_playlists_name: Ansible integration test non-public
+      user_playlists_public: no
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: create
+      user_playlists_name: Ansible integration test non-public
+      user_playlists_public: no
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: create
+      user_playlists_name: Ansible integration test
+      user_playlist_description: "Test description"
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: create
+      user_playlists_name: Ansible integration test
+      user_playlists_dest_file: "{{ playbook_dir }}/files/create_playlist_integration_test.json"
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: create
+      user_playlists_name: Ansible integration test non-public2
+      user_playlists_public: no
+      user_playlist_description: "Test description"
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: create
+      user_playlists_name: Ansible integration test public2
+      user_playlists_public: yes
+      user_playlist_description: "Test description"
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: create
+      user_playlists_name: Ansible integration test public2
+      user_playlists_public: yes
+      user_playlists_dest_file: "{{ playbook_dir }}/files/create_public_playlist_integration_test.json"
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: create
+      user_playlists_name: Ansible integration test nonpublic2
+      user_playlists_public: no
+      user_playlists_dest_file: "{{ playbook_dir }}/files/create_non_public_playlist_integration_test.json"
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: create
+      user_playlists_name: Ansible integration test public3
+      user_playlists_public: yes
+      user_playlist_description: "Test description"
+      user_playlists_dest_file: "{{ playbook_dir }}/files/create_public_playlist_integration_test.json"
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: create
+      user_playlists_name: Ansible integration test nonpublic3
+      user_playlists_public: no
+      user_playlist_description: "Test description"
+      user_playlists_dest_file: "{{ playbook_dir }}/files/create_non_public_playlist_integration_test.json"
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: get_all
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: get_all
+      user_playlists_output: short
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: get_all
+      user_playlists_output: long
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: get_all
+      user_playlists_dest_file: "{{ playbook_dir }}/files/get_all_playlist_integration_test.json"
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: get_all
+      user_playlists_limit: 10
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: get_all
+      user_playlists_output: short
+      user_playlists_dest_file: "{{ playbook_dir }}/files/get_all_playlist_integration_test_short.json"
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: get_all
+      user_playlists_output: long
+      user_playlists_dest_file: "{{ playbook_dir }}/files/get_all_playlist_integration_test.json"
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: get_all
+      user_playlists_output: short
+      user_playlists_limit: 10
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: get_all
+      user_playlists_output: long
+      user_playlists_limit: 10
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: get_all
+      user_playlists_dest_file: "{{ playbook_dir }}/files/get_all_playlist_integration_test.json"
+      user_playlists_limit: 10
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: get_all
+      user_playlists_dest_file: "{{ playbook_dir }}/files/get_all_playlist_integration_test_short.json"
+      user_playlists_limit: 10
+      user_playlists_output: short
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: get_all
+      user_playlists_dest_file: "{{ playbook_dir }}/files/get_all_playlist_integration_test.json"
+      user_playlists_limit: 10
+      user_playlists_output: long
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: search
+      user_playlist_name: "{{ playlist_to_search_for }}"
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: search
+      user_playlist_name: "{{ playlist_to_search_for }}"
+      user_playlists_output: short
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: search
+      user_playlist_name: "{{ playlist_to_search_for }}"
+      user_playlists_output: long
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: search
+      user_playlist_name: "{{ playlist_to_search_for }}"
+      user_playlists_dest_file: "{{ playbook_dir }}/files/search_playlist_integration_test.json"
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: search
+      user_playlist_name: "{{ playlist_to_search_for }}"
+      user_playlists_limit: 50
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: search
+      user_playlist_name: "{{ playlist_to_search_for }}"
+      user_playlists_output: short
+      user_playlists_dest_file: "{{ playbook_dir }}/files/search_playlist_integration_test_short.json"
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: search
+      user_playlist_name: "{{ playlist_to_search_for }}"
+      user_playlists_output: long
+      user_playlists_dest_file: "{{ playbook_dir }}/files/search_playlist_integration_test.json"
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: search
+      user_playlist_name: "{{ playlist_to_search_for }}"
+      user_playlists_output: short
+      user_playlists_limit: 50
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: search
+      user_playlist_name: "{{ playlist_to_search_for }}"
+      user_playlists_output: long
+      user_playlists_limit: 50
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: search
+      user_playlist_name: "{{ playlist_to_search_for }}"
+      user_playlists_dest_file: "{{ playbook_dir }}/files/search_playlist_integration_test.json"
+      user_playlists_limit: 50
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: search
+      user_playlist_name: "{{ playlist_to_search_for }}"
+      user_playlists_dest_file: "{{ playbook_dir }}/files/search_playlist_integration_test_short.json"
+      user_playlists_limit: 50
+      user_playlists_output: short
+  - include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: search
+      user_playlist_name: "{{ playlist_to_search_for }}"
+      user_playlists_dest_file: "{{ playbook_dir }}/files/search_playlist_integration_test.json"
+      user_playlists_limit: 50
+      user_playlists_output: long

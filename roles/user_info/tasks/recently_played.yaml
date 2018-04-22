@@ -1,0 +1,63 @@
+---
+# Get related artists from artists_name
+
+- name: Get Users recently played somgs with default settings
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    state: "{{ user_info_state }}"
+  when: user_info_output is undefined and user_info_dest_file is undefined and user_info_limit is undefined
+
+- name: Get Users recently played somgs with defined output_format
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    output_format: "{{ user_info_output }}"
+    state: "{{ user_info_state }}"
+  when: user_info_output is defined and user_info_dest_file is undefined and user_info_limit is undefined
+
+- name: Get Users recently played somgs with defined dest_file
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    dest_file: "{{ user_info_dest_file }}"
+    state: "{{ user_info_state }}"
+  when: user_info_output is undefined and user_info_dest_file is defined and user_info_limit is undefined
+
+
+- name: Get Users recently played somgs with defined limit
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    limit: "{{ user_info_limit }}"
+    state: "{{ user_info_state }}"
+  when: user_info_output is undefined and user_info_dest_file is undefined and user_info_limit is defined
+
+- name: Get Users recently played somgs with defined dest_file and output_format
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    output_format: "{{ user_info_output }}"
+    dest_file: "{{ user_info_dest_file }}"
+    state: "{{ user_info_state }}"
+  when: user_info_output is defined and user_info_dest_file is defined and user_info_limit is undefined
+
+- name: Get Users recently played somgs with defined limit and output_format
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    output_format: "{{ user_info_output }}"
+    limit: "{{ user_info_limit }}"
+    state: "{{ user_info_state }}"
+  when: user_info_output is defined and user_info_dest_file is undefined and user_info_limit is defined
+
+- name: Get Users recently played somgs with defined limit and output_format
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    dest_file: "{{ user_info_dest_file }}"
+    limit: "{{ user_info_limit }}"
+    state: "{{ user_info_state }}"
+  when: user_info_output is undefined and user_info_dest_file is defined and user_info_limit is defined
+
+- name: Get Users recently played somgs with defined limit and output_format
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    output_format: "{{ user_info_output }}"
+    dest_file: "{{ user_info_dest_file }}"
+    limit: "{{ user_info_limit }}"
+    state: "{{ user_info_state }}"
+  when: user_info_output is defined and user_info_dest_file is defined and user_info_limit is defined

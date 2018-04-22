@@ -9,7 +9,7 @@ ANSIBLE_METADATA = {
 
 DOCUMENTATION = '''
 ---
-module: sp_search
+module: spotify_search
 short_description: Searching Spotify via Spotify API.
 description:
     - "Ansible module to search in Spotify for Artists, Tracks, Albums, Artists & Track, Artists & Album or public Playlists via the Spotify API."
@@ -20,140 +20,133 @@ author:
     - Michael Bloch (github@mbloch.de)
 
 options:
+
+    albums_name:
+        description:
+          - Album name to search for.
+        type: String
+
+    artists_name:
+        description:
+          - Artists name to search for.
+        type: String
+
     auth_token:
         description:
           - Spotify API authentication token
-        required: false
-        Type: String
-
-    output_format:
-        description:
-          - Control Ansible output.
-        required: false
-        default: full
-        choices: ['short', 'full']
-        Type: String
+        required: True
+        type: String
 
     dest_file:
         description:
           - Path to file to save the search result.
-        required: false
-        Type: String
+        type: String
+
+    limit:
+        description:
+          - Limit the playlist get_all to
+        default: 10
+        type: Integer
+
+    output_format:
+        description:
+          - Control Ansible output.
+        choices: ['short', 'long']
+        default: long
+        type: String
+
+    playlists_name:
+        description:
+          - Playlist name to search for.
+        type: String
 
     state:
         description:
           - Parameter to define what to search for.
         choices: ['artists', 'tracks', 'playlists', 'albums', 'artists_and_albums', 'artists_and_tracks']
         required: true
-        Type: String
-
-    limit:
-        description:
-          - Limit the search result  to X results.
-        required: false
-        default: 10
-        Type: Integer
-
-    artists_name:
-        description:
-          - Artists name to search for.
-        required: false
-        Type: String
-
-    albums_name:
-        description:
-          - Album name to search for.
-        required: false
-        Type: String
+        type: String
 
     tracks_name:
         description:
           - Track name to search for.
-        required: false
-        Type: String
-
-    playlists_name:
-        description:
-          - Playlist name to search for.
-        required: false
-        Type: String
+        type: String
 
 requirements:
 - python >= 2.7.10
 - spotipy >= 2.4.4
 '''
 
-
 EXAMPLES = '''
 - name: Search for artist Young the Giant and return maximum 10 search results
   spotify_search:
-    auth_token=0123456789ABCDEFGHI
-    output_format=full
-    state=artists
-    artists_name=Young the Giant
-    limit=10
+    auth_token: 0123456789ABCDEFGHI
+    output_format: long
+    state: artists
+    artists_name: Young the Giant
+    limit: 10
   register: artists_search_result
 
 - name: Search for artists start with Young maximum 50 search results
   spotify_search:
-    auth_token=0123456789ABCDEFGHI
-    output_format=full
-    state=artists
-    artists_name=Young
-    limit=50
+    auth_token: 0123456789ABCDEFGHI
+    output_format: long
+    state: artists
+    artists_name: Young
+    limit: 50
   register: artists_search_result
 
 - name: Search for track cough syrup, return maximum 20 search results and save it to search_result_tracks.json
   spotify_search:
-    auth_token=0123456789ABCDEFGHI
-    dest_file=search_result_tracks.json
-    output_format=short
-    state=tracks
-    tracks_name=cough syrup
-    limit=20
+    auth_token: 0123456789ABCDEFGHI
+    dest_file: search_result_tracks.json
+    output_format: short
+    state: tracks
+    tracks_name: cough syrup
+    limit: 20
 
 - name: Search for track containing Coug*, return maximum 20 search results and save it to search_result_tracks.json
   spotify_search:
-    auth_token=0123456789ABCDEFGHI
-    dest_file=search_result_tracks.json
-    output_format=short
-    state=tracks
-    tracks_name=Coug*
-    limit=20
+    auth_token: 0123456789ABCDEFGHI
+    dest_file: search_result_tracks.json
+    output_format: short
+    state: tracks
+    tracks_name: Coug*
+    limit: 20
 
 - name: Search for playlist Colombia with wildcard at the end and return maximum 20 search results
   spotify_search:
-    auth_token=0123456789ABCDEFGHI
-    output_format=full
-    state=playlists
-    playlists_name=Colombia*
-    limit=20
+    auth_token: 0123456789ABCDEFGHI
+    output_format: long
+    state: playlists
+    playlists_name: Colombia*
+    limit: 20
 
 - name: Search for Albums Arrival and return maximum 20 search results
   spotify_search:
-    auth_token=0123456789ABCDEFGHI
-    dest_file=search_result_albums.json
-    output_format=full
-    state=tracks
-    albums_name=Arrival
-    limit=20
+    auth_token: 0123456789ABCDEFGHI
+    dest_file: search_result_albums.json
+    output_format: long
+    state: tracks
+    albums_name: Arrival
+    limit: 20
 
 - name: Search for Artists starts with Ab* and all Albums Start with Arr and return maximum 20 search results
   spotify_search:
-    auth_token=0123456789ABCDEFGHI
-    dest_file=search_result_albums.json
-    output_format=full
-    state=tracks
-    artists_name=Ab*
-    albums_name=Arr*
-    limit=20
+    auth_token: 0123456789ABCDEFGHI
+    dest_file: search_result_albums.json
+    output_format: long
+    state: tracks
+    artists_name: Ab*
+    albums_name: Arr*
+    limit: 20
 '''
 RETURN = '''
 ---
 output:
   description: "returns a dict with the search result.
   More information about the search result output can be found here https://developer.spotify.com/web-api/search-item/"
-  returned: always
+  returned: on success
   sample:
     changed: True
     result:
@@ -194,6 +187,7 @@ output:
           offset: 0
           previous:
           total: 1
+  type: dict
 '''
 
 import sys
@@ -281,41 +275,43 @@ class SpotifySearch:
 
         return results
 
-    def search_results_to_list(self, results):
+    def output_shortener(self, results):
         if self.module.params.get("state") == 'artists_and_albums':
-            search_result_dict = {}
-            if  results['albums']['items'][0]['name']:
-                search_result_dict.update({'albums': []})
-                for result in results['albums']['items']:
-                    album_name = result['name']
-                    album_uri = result['uri']
-                    for album_result in result['artists']:
-                        artists_name = album_result['name']
-                    search_result_dict['albums'].append({'artist': artists_name, 'album': album_name, 'uri': album_uri})
-            elif results['artists']['items'][0]['name']:
-                search_result_dict.update({'artists': []})
-                for result in results['artists']['items']:
-                  search_result_dict['artists'].append({'artist': result['name'], 'uri': result['uri']})
-            else:
-                search_result_dict = {}
-            result = search_result_dict
+            output_shortener_dict = {}
+            if results.has_key('albums'):
+                if results['albums']['items'][0]:
+                    output_shortener_dict.update({'albums': []})
+                    for result in results['albums']['items']:
+                        album_name = result['name']
+                        album_uri = result['uri']
+                        for album_result in result['artists']:
+                            artists_name = album_result['name']
+                        output_shortener_dict['albums'].append({'artist': artists_name, 'album': album_name, 'uri': album_uri})
+            elif results.has_key('artists'):
+                if results['artists']['items'][0]:
+                    output_shortener_dict.update({'artists': []})
+                    for result in results['artists']['items']:
+                      output_shortener_dict['artists'].append({'artist': result['name'], 'uri': result['uri']})
+
+            result = output_shortener_dict
         elif self.module.params.get("state") == 'artists_and_tracks':
-            search_result_dict = {}
-            if  results['tracks']['items'][0]['name']:
-                search_result_dict.update({'tracks': []})
-                for result in results['tracks']['items']:
-                    tracks_name = result['name']
-                    tracks_uri = result['uri']
-                    for tracks_result in result['artists']:
-                        artists_name = tracks_result['name']
-                    search_result_dict['tracks'].append({'artist': artists_name, 'track': tracks_name, 'uri': tracks_uri})
-            elif results['artists']['items'][0]['name']:
-                search_result_dict.update({'artists': []})
-                for result in results['artists']['items']:
-                  search_result_dict['artists'].append({'artist': result['name'], 'uri': result['uri']})
-            else:
-                search_result_dict = { }
-            result = search_result_dict
+            output_shortener_dict = {}
+            if results.has_key('tracks'):
+                if results['tracks']['items'][0]:
+                    output_shortener_dict.update({'tracks': []})
+                    for result in results['tracks']['items']:
+                        tracks_name = result['name']
+                        tracks_uri = result['uri']
+                        for tracks_result in result['artists']:
+                            artists_name = tracks_result['name']
+                        output_shortener_dict['tracks'].append({'artist': artists_name, 'track': tracks_name, 'uri': tracks_uri})
+            elif results.has_key('artists'):
+                if results['artists']['items'][0]:
+                    output_shortener_dict.update({'artists': []})
+                    for result in results['artists']['items']:
+                      output_shortener_dict['artists'].append({'artist': result['name'], 'uri': result['uri']})
+
+            result = output_shortener_dict
         else:
             search_result_list = {self.module.params.get("state"): []}
             for result in results[self.module.params.get("state")]['items']:
@@ -341,15 +337,15 @@ class SpotifySearch:
 def main():
     argument_spec = {}
     argument_spec.update(dict(
-        auth_token=dict(required=True, type='str'),
-        output_format=dict(required=False, default='full', choices=['short', 'full'], type='str'),
-        dest_file=dict(required=False, type='str'),
-        state=dict(required=True, choices=['artists', 'tracks', 'playlists', 'albums', 'artists_and_albums', 'artists_and_tracks'], type='str'),
-        artists_name=dict(required=False, type='str'),
         albums_name=dict(required=False, type='str'),
-        tracks_name=dict(required=False, type='str'),
+        artists_name=dict(required=False, type='str'),
+        auth_token=dict(required=True, type='str'),
+        dest_file=dict(required=False, type='str'),
+        limit=dict(required=False, default=10, type='int'),
+        output_format=dict(required=False, default='long', choices=['short', 'long'], type='str'),
         playlists_name=dict(required=False, type='str'),
-        limit=dict(required=False, default=10, type='int')
+        state=dict(required=True, choices=['artists', 'tracks', 'playlists', 'albums', 'artists_and_albums', 'artists_and_tracks'], type='str'),
+        tracks_name=dict(required=False, type='str')
     ))
 
     module = AnsibleModule(argument_spec=argument_spec)
@@ -372,7 +368,7 @@ def main():
         results = search.artists_and_tracks()
 
     if output_format == 'short':
-        results = search.search_results_to_list(results)
+        results = search.output_shortener(results)
 
     if module.params.get("dest_file"):
         file = module.params.get("dest_file")

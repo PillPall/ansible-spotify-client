@@ -1,0 +1,9 @@
+---
+- import_tasks: add_from_playlist_file.yaml
+  when: update_playlist_state == "add" and update_playlist_file is defined and update_playlist_id is undefined
+- import_tasks: add_from_playlist_id.yaml
+  when: update_playlist_state == "add" and update_playlist_file is undefined and update_playlist_id is defined
+- import_tasks: remove_from_playlist_file.yaml
+  when: update_playlist_state == "remove" and update_playlist_file is defined and update_playlist_id is undefined
+- import_tasks: remove_from_playlist_id.yaml
+  when: update_playlist_state == "remove" and update_playlist_file is undefined and update_playlist_id is defined

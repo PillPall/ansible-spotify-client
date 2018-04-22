@@ -1,0 +1,462 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    config_file: "{{inventory_dir}}/group_vars/public.yaml"
+    auth_token: "{{ auth_token }}"
+    search_for: albums
+  tasks:
+  - include_role:
+      name: authentication
+    vars:
+  - include_role:
+      name: search
+    vars:
+      search_for_albums_name: Coexist
+  - include_role:
+      name: search
+    vars:
+      search_for_albums_name: Coexist
+      search_dest_file: "{{ playbook_dir }}/files/search_result_albums_integration_test.json"
+  - include_role:
+      name: search
+    vars:
+      search_for_albums_name: Coexist
+      search_result_output: short
+  - include_role:
+      name: search
+    vars:
+      search_for_albums_name: Coexist
+      search_result_output: long
+  - include_role:
+      name: search
+    vars:
+      search_for_albums_name: Coexist
+      search_result_limit: 10
+  - include_role:
+      name: search
+    vars:
+      search_for_albums_name: Coexist
+      search_result_limit: 10
+      search_result_output: short
+  - include_role:
+      name: search
+    vars:
+      search_for_albums_name: Coexist
+      search_result_limit: 10
+      search_result_output: long
+  - include_role:
+      name: search
+    vars:
+      search_for_albums_name: Coexist
+      search_dest_file: "{{ playbook_dir }}/files/search_result_albums_integration_test_short.json"
+      search_result_output: short
+  - include_role:
+      name: search
+    vars:
+      search_for_albums_name: Coexist
+      search_dest_file: "{{ playbook_dir }}/files/search_result_albums_integration_test.json"
+      search_result_output: long
+  - include_role:
+      name: search
+    vars:
+      search_for_albums_name: Coexist
+      search_dest_file: "{{ playbook_dir }}/files/search_result_albums_integration_test.json"
+      search_result_limit: 10
+  - include_role:
+      name: search
+    vars:
+      search_for_albums_name: Coexist
+      search_dest_file: "{{ playbook_dir }}/files/search_result_albums_integration_test_short.json"
+      search_result_limit: 10
+      search_result_output: short
+  - include_role:
+      name: search
+    vars:
+      search_for_albums_name: Coexist
+      search_dest_file: "{{ playbook_dir }}/files/search_result_albums_integration_test.json"
+      search_result_limit: 10
+      search_result_output: long
+  - include_role:
+      name: search
+    vars:
+      search_for: artists_and_albums
+      search_for_albums_name: Coexist
+      search_for_artists_name: The xx
+  - include_role:
+      name: search
+    vars:
+      search_for: artists_and_albums
+      search_for_albums_name: Coexist
+      search_for_artists_name: The xx
+      search_dest_file: "{{ playbook_dir }}/files/search_result_artists_albums_integration_test.json"
+  - include_role:
+      name: search
+    vars:
+      search_for: artists_and_albums
+      search_for_albums_name: Coexist
+      search_for_artists_name: The xx
+      search_result_limit: 10
+  - include_role:
+      name: search
+    vars:
+      search_for: artists_and_albums
+      search_for_albums_name: Coexist
+      search_for_artists_name: The xx
+      search_result_output: short
+  - include_role:
+      name: search
+    vars:
+      search_for: artists_and_albums
+      search_for_albums_name: Coexist
+      search_for_artists_name: The xx
+      search_result_output: long
+  - include_role:
+      name: search
+    vars:
+      search_for: artists_and_albums
+      search_for_albums_name: Coexist
+      search_for_artists_name: The xx
+      search_dest_file: "{{ playbook_dir }}/files/search_result_artists_albums_integration_test_short.json"
+      search_result_output: short
+  - include_role:
+      name: search
+    vars:
+      search_for: artists_and_albums
+      search_for_albums_name: Coexist
+      search_for_artists_name: The xx
+      search_dest_file: "{{ playbook_dir }}/files/search_result_artists_albums_integration_test.json"
+      search_result_output: long
+  - include_role:
+      name: search
+    vars:
+      search_for: artists_and_albums
+      search_for_albums_name: Coexist
+      search_for_artists_name: The xx
+      search_dest_file: "{{ playbook_dir }}/files/search_result_artists_albums_integration_test.json"
+      search_result_limit: 10
+  - include_role:
+      name: search
+    vars:
+      search_for: artists_and_albums
+      search_for_albums_name: Coexist
+      search_for_artists_name: The xx
+      search_result_output: short
+      search_result_limit: 10
+  - include_role:
+      name: search
+    vars:
+      search_for: artists_and_albums
+      search_for_albums_name: Coexist
+      search_for_artists_name: The xx
+      search_result_output: long
+      search_result_limit: 10
+  - include_role:
+      name: search
+    vars:
+      search_for: artists_and_albums
+      search_for_albums_name: Coexist
+      search_for_artists_name: The xx
+      search_result_output: long
+      search_result_limit: 10
+      search_dest_file: "{{ playbook_dir }}/files/search_result_artists_albums_integration_test.json"
+  - include_role:
+      name: search
+    vars:
+      search_for: artists_and_tracks
+      search_for_tracks_name: Fiction
+      search_for_artists_name: The xx
+  - include_role:
+      name: search
+    vars:
+      search_for: artists_and_tracks
+      search_for_tracks_name: Fiction
+      search_for_artists_name: The xx
+      search_dest_file: "{{ playbook_dir }}/files/search_result_artists_tracks_integration_test.json"
+  - include_role:
+      name: search
+    vars:
+      search_for: artists_and_tracks
+      search_for_tracks_name: Fiction
+      search_for_artists_name: The xx
+      search_result_limit: 10
+  - include_role:
+      name: search
+    vars:
+      search_for: artists_and_tracks
+      search_for_tracks_name: Fiction
+      search_for_artists_name: The xx
+      search_result_output: short
+  - include_role:
+      name: search
+    vars:
+      search_for: artists_and_tracks
+      search_for_tracks_name: Fiction
+      search_for_artists_name: The xx
+      search_result_output: long
+  - include_role:
+      name: search
+    vars:
+      search_for: artists_and_tracks
+      search_for_tracks_name: Fiction
+      search_for_artists_name: The xx
+      search_dest_file: "{{ playbook_dir }}/files/search_result_artists_tracks_integration_test_short.json"
+      search_result_output: short
+  - include_role:
+      name: search
+    vars:
+      search_for: artists_and_tracks
+      search_for_tracks_name: Fiction
+      search_for_artists_name: The xx
+      search_dest_file: "{{ playbook_dir }}/files/search_result_artists_tracks_integration_test.json"
+      search_result_output: long
+  - include_role:
+      name: search
+    vars:
+      search_for: artists_and_tracks
+      search_for_tracks_name: Fiction
+      search_for_artists_name: The xx
+      search_dest_file: "{{ playbook_dir }}/files/search_result_artists_tracks_integration_test.json"
+      search_result_limit: 10
+  - include_role:
+      name: search
+    vars:
+      search_for: artists_and_tracks
+      search_for_tracks_name: Fiction
+      search_for_artists_name: The xx
+      search_result_output: short
+      search_result_limit: 10
+  - include_role:
+      name: search
+    vars:
+      search_for: artists_and_tracks
+      search_for_tracks_name: Fiction
+      search_for_artists_name: The xx
+      search_result_output: long
+      search_result_limit: 10
+  - include_role:
+      name: search
+    vars:
+      search_for: artists_and_tracks
+      search_for_tracks_name: Fiction
+      search_for_artists_name: The xx
+      search_result_output: long
+      search_result_limit: 10
+      search_dest_file: "{{ playbook_dir }}/files/search_result_artists_tracks_integration_test.json"
+  - include_role:
+      name: search
+    vars:
+      search_for: artists
+      search_for_artists_name: The xx
+  - include_role:
+      name: search
+    vars:
+      search_for: artists
+      search_for_artists_name: The xx
+      search_dest_file: "{{ playbook_dir }}/files/search_result_artists_integration_test.json"
+  - include_role:
+      name: search
+    vars:
+      search_for: artists
+      search_for_artists_name: The xx
+      search_result_limit: 10
+  - include_role:
+      name: search
+    vars:
+      search_for: artists
+      search_for_artists_name: The xx
+      search_result_output: short
+  - include_role:
+      name: search
+    vars:
+      search_for: artists
+      search_for_artists_name: The xx
+      search_result_output: long
+  - include_role:
+      name: search
+    vars:
+      search_for: artists
+      search_for_artists_name: The xx
+      search_dest_file: "{{ playbook_dir }}/files/search_result_artists_integration_test_short.json"
+      search_result_output: short
+  - include_role:
+      name: search
+    vars:
+      search_for: artists
+      search_for_artists_name: The xx
+      search_dest_file: "{{ playbook_dir }}/files/search_result_artists_integration_test.json"
+      search_result_output: long
+  - include_role:
+      name: search
+    vars:
+      search_for: artists
+      search_for_artists_name: The xx
+      search_dest_file: "{{ playbook_dir }}/files/search_result_artists_integration_test.json"
+      search_result_limit: 10
+  - include_role:
+      name: search
+    vars:
+      search_for: artists
+      search_for_artists_name: The xx
+      search_result_output: short
+      search_result_limit: 10
+  - include_role:
+      name: search
+    vars:
+      search_for: artists
+      search_for_artists_name: The xx
+      search_result_output: long
+      search_result_limit: 10
+  - include_role:
+      name: search
+    vars:
+      search_for: artists
+      search_for_artists_name: The xx
+      search_result_output: long
+      search_result_limit: 10
+      search_dest_file: "{{ playbook_dir }}/files/search_result_artists_integration_test.json"
+  - include_role:
+      name: search
+    vars:
+      search_for: playlists
+      search_for_playlists_name: Pop
+  - include_role:
+      name: search
+    vars:
+      search_for: playlists
+      search_for_playlists_name: Pop
+      search_dest_file: "{{ playbook_dir }}/files/search_result_playlists_integration_test.json"
+  - include_role:
+      name: search
+    vars:
+      search_for: playlists
+      search_for_playlists_name: Pop
+      search_result_limit: 10
+  - include_role:
+      name: search
+    vars:
+      search_for: playlists
+      search_for_playlists_name: Pop
+      search_result_output: short
+  - include_role:
+      name: search
+    vars:
+      search_for: playlists
+      search_for_playlists_name: Pop
+      search_result_output: long
+  - include_role:
+      name: search
+    vars:
+      search_for: playlists
+      search_for_playlists_name: Pop
+      search_dest_file: "{{ playbook_dir }}/files/search_result_playlists_integration_test_short.json"
+      search_result_output: short
+  - include_role:
+      name: search
+    vars:
+      search_for: playlists
+      search_for_playlists_name: Pop
+      search_dest_file: "{{ playbook_dir }}/files/search_result_playlists_integration_test.json"
+      search_result_output: long
+  - include_role:
+      name: search
+    vars:
+      search_for: playlists
+      search_for_playlists_name: Pop
+      search_dest_file: "{{ playbook_dir }}/files/search_result_playlists_integration_test.json"
+      search_result_limit: 10
+  - include_role:
+      name: search
+    vars:
+      search_for: playlists
+      search_for_playlists_name: Pop
+      search_result_output: short
+      search_result_limit: 10
+  - include_role:
+      name: search
+    vars:
+      search_for: playlists
+      search_for_playlists_name: Pop
+      search_result_output: long
+      search_result_limit: 10
+  - include_role:
+      name: search
+    vars:
+      search_for: playlists
+      search_for_playlists_name: Pop
+      search_result_output: long
+      search_result_limit: 10
+      search_dest_file: "{{ playbook_dir }}/files/search_result_playlists_integration_test.json"
+  - include_role:
+      name: search
+    vars:
+      search_for: tracks
+      search_for_tracks_name: Reunion
+  - include_role:
+      name: search
+    vars:
+      search_for: tracks
+      search_for_tracks_name: Reunion
+      search_dest_file: "{{ playbook_dir }}/files/search_result_tracks_integration_test.json"
+  - include_role:
+      name: search
+    vars:
+      search_for: tracks
+      search_for_tracks_name: Reunion
+      search_result_limit: 10
+  - include_role:
+      name: search
+    vars:
+      search_for: tracks
+      search_for_tracks_name: Reunion
+      search_result_output: short
+  - include_role:
+      name: search
+    vars:
+      search_for: tracks
+      search_for_tracks_name: Reunion
+      search_result_output: long
+  - include_role:
+      name: search
+    vars:
+      search_for: tracks
+      search_for_tracks_name: Reunion
+      search_dest_file: "{{ playbook_dir }}/files/search_result_tracks_integration_test_short.json"
+      search_result_output: short
+  - include_role:
+      name: search
+    vars:
+      search_for: tracks
+      search_for_tracks_name: Reunion
+      search_dest_file: "{{ playbook_dir }}/files/search_result_tracks_integration_test.json"
+      search_result_output: long
+  - include_role:
+      name: search
+    vars:
+      search_for: tracks
+      search_for_tracks_name: Reunion
+      search_dest_file: "{{ playbook_dir }}/files/search_result_tracks_integration_test.json"
+      search_result_limit: 10
+  - include_role:
+      name: search
+    vars:
+      search_for: tracks
+      search_for_tracks_name: Reunion
+      search_result_output: short
+      search_result_limit: 10
+  - include_role:
+      name: search
+    vars:
+      search_for: tracks
+      search_for_tracks_name: Reunion
+      search_result_output: long
+      search_result_limit: 10
+  - include_role:
+      name: search
+    vars:
+      search_for: tracks
+      search_for_tracks_name: Reunion
+      search_result_output: long
+      search_result_limit: 10
+      search_dest_file: "{{ playbook_dir }}/files/search_result_tracks_integration_test.json"

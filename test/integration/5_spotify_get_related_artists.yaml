@@ -1,0 +1,74 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    config_file: "{{inventory_dir}}/group_vars/public.yaml"
+    auth_token: "{{ auth_token }}"
+    artists_from_file: "{{ playbook_dir }}/files/search_result_artists_integration_test.json"
+  tasks:
+  - include_role:
+      name: authentication
+    vars:
+  - include_role:
+      name: get_related_artists
+    vars:
+      get_related_artists_for: young the giant
+  - include_role:
+      name: get_related_artists
+    vars:
+      get_related_artists_output: short
+      get_related_artists_for: young the giant
+  - include_role:
+      name: get_related_artists
+    vars:
+      get_related_artists_output: long
+      get_related_artists_for: young the giant
+  - include_role:
+      name: get_related_artists
+    vars:
+      get_related_dest_file: "{{ playbook_dir }}/files/related_artists_integration_test.json"
+      get_related_artists_for: young the giant
+  - include_role:
+      name: get_related_artists
+    vars:
+      get_related_dest_file: "{{ playbook_dir }}/files/related_artists_integration_test_short.json"
+      get_related_artists_output: short
+      get_related_artists_for: young the giant
+  - include_role:
+      name: get_related_artists
+    vars:
+      get_related_dest_file: "{{ playbook_dir }}/files/related_artists_integration_test.json"
+      get_related_artists_output: long
+      get_related_artists_for: young the giant
+  - include_role:
+      name: get_related_artists
+    vars:
+      get_related_artists_from_file: "{{ artists_from_file }}"
+  - include_role:
+      name: get_related_artists
+    vars:
+      get_related_artists_from_file: "{{ artists_from_file }}"
+      get_related_artists_output: short
+  - include_role:
+      name: get_related_artists
+    vars:
+      get_related_artists_from_file: "{{ artists_from_file }}"
+      get_related_artists_output: long
+  - include_role:
+      name: get_related_artists
+    vars:
+      get_related_artists_from_file: "{{ artists_from_file }}"
+      get_related_dest_file: "{{ playbook_dir }}/files/related_artists_from_file_integration_test.json"
+  - include_role:
+      name: get_related_artists
+    vars:
+      get_related_artists_from_file: "{{ artists_from_file }}"
+      get_related_dest_file: "{{ playbook_dir }}/files/related_artists_from_file_integration_test_short.json"
+      get_related_artists_output: short
+  - include_role:
+      name: get_related_artists
+    vars:
+      get_related_artists_from_file: "{{ artists_from_file }}"
+      get_related_dest_file: "{{ playbook_dir }}/files/related_artists_from_file_integration_test.json"
+      get_related_artists_output: long

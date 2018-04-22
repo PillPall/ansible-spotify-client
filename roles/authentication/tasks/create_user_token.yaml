@@ -13,7 +13,7 @@
   when: _sp_api_user_code.skipped is undefined
 
 - name: Create user token from Spotify API user code
-  sp_auth_create_user_token:
+  spotify_auth_create_user_token:
     api_user_code: "{{ sp_api_user_code }}"
     username: "{{ username }}"
     config_file: "{{ config_file }}"

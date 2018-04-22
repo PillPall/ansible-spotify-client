@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    config_file: "{{inventory_dir}}/group_vars/user.yaml"
+    auth_token: "{{ auth_token }}"
+    username: bloch-m
+    user_tracks_output: short
+    user_tracks_limit: 5
+    # user_tracks_dest_file: "{{ playbook_dir }}/files/{{ username }}_user_info.json"
+    user_tracks_state: recently_played
+  roles:
+    - authentication
+    - user_tracks

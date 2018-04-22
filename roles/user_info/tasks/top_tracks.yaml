@@ -1,0 +1,131 @@
+---
+# Get related artists from artists_name
+
+- name: Get Users top tracks with default settings
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    state: "{{ user_info_state }}"
+  when: user_info_output is undefined and user_info_dest_file is undefined and user_info_limit is undefined and user_info_time_range is undefined
+
+- name: Get Users top tracks with defined output_format
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    output_format: "{{ user_info_output }}"
+    state: "{{ user_info_state }}"
+  when: user_info_output is defined and user_info_dest_file is undefined and user_info_limit is undefined and user_info_time_range is undefined
+
+- name: Get Users top tracks with defined dest_file
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    dest_file: "{{ user_info_dest_file }}"
+    state: "{{ user_info_state }}"
+  when: user_info_output is undefined and user_info_dest_file is defined and user_info_limit is undefined and user_info_time_range is undefined
+
+
+- name: Get Users top tracks with defined limit
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    limit: "{{ user_info_limit }}"
+    state: "{{ user_info_state }}"
+  when: user_info_output is undefined and user_info_dest_file is undefined and user_info_limit is defined and user_info_time_range is undefined
+
+- name: Get Users top tracks with defined time_range
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    time_range: "{{ user_info_time_range }}"
+    state: "{{ user_info_state }}"
+  when: user_info_output is undefined and user_info_dest_file is undefined and user_info_limit is undefined and user_info_time_range is defined
+
+- name: Get Users top tracks with defined dest_file and output_format
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    dest_file: "{{ user_info_dest_file }}"
+    output_format: "{{ user_info_output }}"
+    state: "{{ user_info_state }}"
+  when: user_info_output is defined and user_info_dest_file is defined and user_info_limit is undefined and user_info_time_range is undefined
+
+- name: Get Users top tracks with defined limit and output_format
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    limit: "{{ user_info_limit }}"
+    output_format: "{{ user_info_output }}"
+    state: "{{ user_info_state }}"
+  when: user_info_output is defined and user_info_dest_file is undefined and user_info_limit is defined and user_info_time_range is undefined
+
+- name: Get Users top tracks with defined output_format and time_range
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    output_format: "{{ user_info_output }}"
+    time_range: "{{ user_info_time_range }}"
+    state: "{{ user_info_state }}"
+  when: user_info_output is defined and user_info_dest_file is undefined and user_info_limit is undefined and user_info_time_range is defined
+
+- name: Get Users top tracks with defined dest_file and limit
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    dest_file: "{{ user_info_dest_file }}"
+    limit: "{{ user_info_limit }}"
+    state: "{{ user_info_state }}"
+  when: user_info_output is undefined and user_info_dest_file is defined and user_info_limit is defined and user_info_time_range is undefined
+
+- name: Get Users top tracks with defined dest_file and time_range
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    dest_file: "{{ user_info_dest_file }}"
+    time_range: "{{ user_info_time_range }}"
+    state: "{{ user_info_state }}"
+  when: user_info_output is undefined and user_info_dest_file is defined and user_info_limit is undefined and user_info_time_range is defined
+
+- name: Get Users top tracks with defined limit and time_range
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    limit: "{{ user_info_limit }}"
+    time_range: "{{ user_info_time_range }}"
+    state: "{{ user_info_state }}"
+  when: user_info_output is undefined and user_info_dest_file is undefined and user_info_limit is defined and user_info_time_range is defined
+
+- name: Get Users top tracks with defined dest_file and limit and output_format
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    dest_file: "{{ user_info_dest_file }}"
+    limit: "{{ user_info_limit }}"
+    output_format: "{{ user_info_output }}"
+    state: "{{ user_info_state }}"
+  when: user_info_output is defined and user_info_dest_file is defined and user_info_limit is defined and user_info_time_range is undefined
+
+- name: Get Users top tracks with defined limit and output_format and time_range
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    limit: "{{ user_info_limit }}"
+    output_format: "{{ user_info_output }}"
+    time_range: "{{ user_info_time_range }}"
+    state: "{{ user_info_state }}"
+  when: user_info_output is defined and user_info_dest_file is undefined and user_info_limit is defined and user_info_time_range is defined
+
+- name: Get Users top artists with defined limit and dest_file and time_range
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    dest_file: "{{ user_info_dest_file }}"
+    limit: "{{ user_info_limit }}"
+    time_range: "{{ user_info_time_range }}"
+    state: "{{ user_info_state }}"
+  when: user_info_output is undefined and user_info_dest_file is defined and user_info_limit is defined and user_info_time_range is defined
+
+- name: Get Users top tracks with defined dest_file and output_format and time_range
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    dest_file: "{{ user_info_dest_file }}"
+    output_format: "{{ user_info_output }}"
+    time_range: "{{ user_info_time_range }}"
+    state: "{{ user_info_state }}"
+  when: user_info_output is defined and user_info_dest_file is defined and user_info_limit is undefined and user_info_time_range is defined
+
+- name: Get Users top tracks with defined dest_file and limit and output_format and time_range
+  spotify_user_info:
+    auth_token: "{{ auth_token }}"
+    dest_file: "{{ user_info_dest_file }}"
+    limit: "{{ user_info_limit }}"
+    output_format: "{{ user_info_output }}"
+    time_range: "{{ user_info_time_range }}"
+    state: "{{ user_info_state }}"
+  when: user_info_output is defined and user_info_dest_file is defined and user_info_limit is defined and user_info_time_range is defined

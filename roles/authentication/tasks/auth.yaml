@@ -1,7 +1,7 @@
 ---
 # When username is defined get Spotify user authentication token
 - name: Spotify user authentication
-  sp_auth:
+  spotify_auth:
     username: "{{ username }}"
     config_file: "{{ config_file }}"
   register: sp_user_auth
@@ -9,7 +9,7 @@
 
 # When no username is defined get Spotify public authentication token
 - name: Spotify public authentication
-  sp_auth:
+  spotify_auth:
     config_file: "{{ config_file }}"
   register: sp_public_auth
   when: username is undefined
