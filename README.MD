@@ -1,7 +1,7 @@
 # Synopsis:
 An Ansible client to interact with the Spotify API
 
-# Prerequisets:
+# Prerequisites:
 * Ansible 2.5
 * Python 2.7.10
 * Spotipy 2.4.4 from [Spotipy](https://github.com/plamere/spotipy)
@@ -23,7 +23,7 @@ An Ansible client to interact with the Spotify API
 ### Documentation
 Documentation about all Ansible modules can be found under the directory **docs**.
 
-Examples can be found in the directory **exapmles**.
+Examples can be found in the directory **examples**.
 
 All Roles to use the Ansible Modules can be found in the directory **roles**.
 
