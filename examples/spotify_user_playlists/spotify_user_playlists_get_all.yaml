@@ -10,7 +10,7 @@
     user_playlists_state: get_all
     # user_playlists_limit: 20
     user_playlists_output: short
-    # user_playlists_dest_file: "{{ playbook_dir }}/files/{{ username }}_playlists.json"
+    # user_playlists_dest_file: "{{ playbook_dir }}/../files/{{ username }}_playlists.json"
   roles:
     - authentication
     - user_playlists

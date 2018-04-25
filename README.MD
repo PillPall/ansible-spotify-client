@@ -27,6 +27,8 @@ Examples can be found in the directory **examples**.
 
 All Roles to use the Ansible Modules can be found in the directory **roles**.
 
+An example HTML File for your own redirect_uri can be found in **examples/callback**. Use this file as your redirect_uri to make it easier to copy/paste the API User code. See this example: [link example](http://mbloch.s3-website-ap-southeast-2.amazonaws.com/?code=AQDFYVg0pC7YF4rZ1bMApVXNrhbjQn9QPJWRJxs6HmE8eksQgZpyXdKiQIXHgN_5j7lfE6BEZ_asdfasfdMo4Ps0fwep98GZvcvbczvasdfQOPNLx71mA0bmlA3IveCmKLs61qIO_OjAYa8P8a4DSKdtN123123123s6cGCRZ_JElumBELi-aa6e0QQ5hsEX5s1Md9OTf2tO_n5Wy7MUXP-jJBwMUNLUSeP_KG09LCaokpUHXtN5D__-q-S9NJbmYFiCrd8M6J9Cv6EzxcvzxcvzxcvLc8CeCCeQSAuJnl7ZaYY9DYNlZyvYOaoCXM2Ooo7NEtXxvLG-suC3hiMq-siK0hntGbG_1yRWa1jtGAdHOp-Nst9xEMKxvnOKtwOnq_g1Pd7asdfasdft_nioWT9KRL8ooIw2hwSrzhAG4L0y79vu9_KI1mGvQPaYpwQ).
+
 ### Using the example playbooks
 
 Have a look to the example folder. Here are some example commands:
@@ -78,10 +80,7 @@ User client authentication:
 
 
  For User Authentication you need to define all parameters in `ansible/inventory/group_vars/user.yaml` and run a role.
- If no user authentication happens before Ansible is going to `pause and wait for input` and opens your default Browser directing to the Spotify authentication page. Next you need to login to spotify and allow the application access. After allowing, you will be redirected to the URL specified in `redirect_uri` similar to
- `https://example.com/callback/?code=AQCe4xO4qobzsv2zfF5MfvNrk5Etq3QA-hljy40wMoy3PGQwCYR3wVdrYS9a2jC8gqKbjRXvw5-8ooV9RI8WrNp0m6bseWNB0TCjMyAhF-4mXg13sjx42Y468KB5BNAsSptj7ekG5gRYNHQ9CAE74tt89izbtMlYZ0D_tSPw7xbTHhKtM7gYusA9F4yep0RfhiYSJs6O1nD7rfrNfN2KOqRKw_kP86DTNaZVFQ`
-
- Now you need to copy the Part of the URL after `code=` e.g. `AQCe4xO4qobzsv2zfF5MfvNrk5Etq3QA-hljy40wMoy3PGQwCYR3wVdrYS9a2jC8gqKbjRXvw5-8ooV9RI8WrNp0m6bseWNB0TCjMyAhF-4mXg13sjx42Y468KB5BNAsSptj7ekG5gRYNHQ9CAE74tt89izbtMlYZ0D_tSPw7xbTHhKtM7gYusA9F4yep0RfhiYSJs6O1nD7rfrNfN2KOqRKw_kP86DTNaZVFQ` and paste it to the command line, which waits for your input. Ansible will then create a cache file with your credentials `/tmp/.cache-USERNAME` e.g. `/tmp/.cache-bloch-m`. Once your credentials are cached there is no need to redo the authentication unless your credentials are expired.
+ If no user authentication happens before Ansible is going to `pause and wait for input` and opens your default Browser directing to the Spotify authentication page. Next thing to do is you need to login to spotify and allow the application access. After allowing, you will be redirected to the URL specified in `redirect_uri`. Now you need to copy the API User code and paste it to the command line, which waits for your input. For an example `redirect_uri` see the **example section** above. Ansible will then create a cache file with your credentials `/tmp/.cache-USERNAME` e.g. `/tmp/.cache-bloch-m`. Once your credentials are cached there is no need to redo the authentication unless your credentials are expired.
 
 
 Public client authentication:

@@ -70,7 +70,7 @@ EXAMPLES = '''
     api_user_code: 987654321ZYXWVUTSR
     client_id: 0123456789ABCDEFGHI
     client_secret: JKLMNOPQRSTUVWXZY
-    redirect_uri: https://example.com/callback/
+    redirect_uri: http://mbloch.s3-website-ap-southeast-2.amazonaws.com
     scope: user-top-read,playlist-read-private
 
 # Get generated user authentication token with configuration file
@@ -89,7 +89,7 @@ EXAMPLES = '''
     username: spotify_user
     client_id: 0123456789ABCDEFGHI
     client_secret: JKLMNOPQRSTUVWXZY
-    redirect_uri: https://example.com/callback/
+    redirect_uri: http://mbloch.s3-website-ap-southeast-2.amazonaws.com
     scope: user-top-read,playlist-read-private
   register: sp_user_auth
 
@@ -211,7 +211,7 @@ def main():
         client_id=dict(required=False, type='str'),
         client_secret=dict(required=False, type='str'),
         config_file=dict(required=False, type='str'),
-        redirect_uri=dict(defualt='https://example.com/callback/', required=False, type='str'),
+        redirect_uri=dict(defualt='http://mbloch.s3-website-ap-southeast-2.amazonaws.com', required=False, type='str'),
         scope=dict(defualt='', required=False, type='str'),
         username=dict(required=True, type='str')
     ))

@@ -10,7 +10,7 @@
     search_for_albums_name: Coexist
     search_result_output: short
     search_result_limit: 20
-    search_dest_file: "{{ playbook_dir }}/files/search_result_{{ search_for }}.json"
+    search_dest_file: "{{ playbook_dir }}/../files/search_result_{{ search_for }}.json"
   roles:
     - authentication
     - search

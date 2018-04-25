@@ -9,7 +9,7 @@
     search_for_playlists_name: Colombia*
     search_result_output: long
     search_result_limit: 40
-    search_dest_file: "{{ playbook_dir }}/files/search_result_{{ search_for }}.json"
+    search_dest_file: "{{ playbook_dir }}/../files/search_result_{{ search_for }}.json"
   roles:
     - authentication
     - search

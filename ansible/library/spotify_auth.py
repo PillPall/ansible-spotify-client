@@ -16,7 +16,7 @@ description:
 
     When generating a new Spotify API Code, Ansible opens your default browser calling the redirect_uri e.g.
 
-    https://example.com/callback/?code=AQBxUXgKcv3n6y3EAto3GZqFxWZkMk5m_wbt0AuTDDeA9gkyeeeydVYb6vmz-dabjsoCXE5uSh3o_NFaZFsXejs5Wr3nP4qIqQwP0wuzUDQEdqbbt8cftSLZznYHj3lhGi-UCbGgToLI00xxxslp1c6xAShITOIpjw-KdwAqCmEBMxBW8TIqavSFyur52cHDz9Ew3dD23RY-RYZOOI8VzMNs0jMtOvj6gboAF44Lesvf-1uEqr7uh239C5kjD2jE9f3l72nFXSdcT29_-kVLwQaX8jVtKW1VwYAuNe8YjzwRdNytnIP2gOqFWCM4AXuBc-9LupeHn2vkxenQ2JRPFJOiTZtFemmUWTHUE5o7juekzpAlZiZCG-IcXBV34X06NWA6GnyZYNVBXH9KIDMZck9HvL4ax5eyuha1hslLcZvgzl99YDN6orOfKXT3ewVvxiTDDIK5Mj0
+    http://mbloch.s3-website-ap-southeast-2.amazonaws.com?code=AQBxUXgKcv3n6y3EAto3GZqFxWZkMk5m_wbt0AuTDDeA9gkyeeeydVYb6vmz-dabjsoCXE5uSh3o_NFaZFsXejs5Wr3nP4qIqQwP0wuzUDQEdqbbt8cftSLZznYHj3lhGi-UCbGgToLI00xxxslp1c6xAShITOIpjw-KdwAqCmEBMxBW8TIqavSFyur52cHDz9Ew3dD23RY-RYZOOI8VzMNs0jMtOvj6gboAF44Lesvf-1uEqr7uh239C5kjD2jE9f3l72nFXSdcT29_-kVLwQaX8jVtKW1VwYAuNe8YjzwRdNytnIP2gOqFWCM4AXuBc-9LupeHn2vkxenQ2JRPFJOiTZtFemmUWTHUE5o7juekzpAlZiZCG-IcXBV34X06NWA6GnyZYNVBXH9KIDMZck9HvL4ax5eyuha1hslLcZvgzl99YDN6orOfKXT3ewVvxiTDDIK5Mj0
 
     The spotify_auth_create_user_token only accepts the API Code which is
 
@@ -85,7 +85,7 @@ EXAMPLES = '''
     api_user_code: 987654321ZYXWVUTSR
     client_id: 0123456789ABCDEFGHI
     client_secret: JKLMNOPQRSTUVWXZY
-    redirect_uri: https://example.com/callback/
+    redirect_uri: http://mbloch.s3-website-ap-southeast-2.amazonaws.com
     scope: user-top-read,playlist-read-private
 
 # Get generated user authentication token with configuration file from cache
@@ -104,7 +104,7 @@ EXAMPLES = '''
     username: spotify_user
     client_id: 0123456789ABCDEFGHI
     client_secret: JKLMNOPQRSTUVWXZY
-    redirect_uri: https://example.com/callback/
+    redirect_uri: http://mbloch.s3-website-ap-southeast-2.amazonaws.com
     scope: user-top-read,playlist-read-private
   register: sp_user_auth
 
@@ -270,7 +270,7 @@ def main():
         client_id=dict(required=False, type='str'),
         client_secret=dict(required=False, type='str'),
         config_file=dict(required=False, type='str'),
-        redirect_uri=dict(default='https://example.com/callback/', required=False, type='str'),
+        redirect_uri=dict(default='http://mbloch.s3-website-ap-southeast-2.amazonaws.com/', required=False, type='str'),
         scope=dict(default='', required=False, type='str'),
         username=dict(required=False, type='str')
     ))

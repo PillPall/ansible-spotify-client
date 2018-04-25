@@ -8,7 +8,7 @@
     username: bloch-m
     user_tracks_output: short
     user_tracks_limit: 5
-    # user_tracks_dest_file: "{{ playbook_dir }}/files/{{ username }}_user_info.json"
+    # user_tracks_dest_file: "{{ playbook_dir }}/../files/{{ username }}_recently_played.json"
     user_tracks_state: recently_played
   roles:
     - authentication

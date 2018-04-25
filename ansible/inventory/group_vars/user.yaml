@@ -1,4 +1,4 @@
-client_id: 550ccd7bc5504fa29542d26bc1848822
-client_secret:
-redirect_uri: https://example.com/callback/
-scope: playlist-modify-private,user-read-currently-playing,user-read-recently-played,user-top-read,user-read-playback-state,user-modify-playback-state
+client_id: a430d21d72594499a3aaee8dc9636a3f
+client_secret: 7660b5c77ed34df48bac67beed2e100c
+redirect_uri: http://mbloch.s3-website-ap-southeast-2.amazonaws.com
+scope: playlist-modify-private,playlist-modify-public,user-read-currently-playing,user-read-recently-played,user-top-read,user-read-playback-state,user-modify-playback-state,playlist-read-private

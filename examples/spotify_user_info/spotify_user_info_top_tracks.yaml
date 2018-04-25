@@ -8,7 +8,7 @@
     username: bloch-m
     user_tracks_output: short
     user_tracks_limit: 20
-    # user_tracks_dest_file: "{{ playbook_dir }}/files/{{ username }}_user_info.json"
+    user_tracks_dest_file: "{{ playbook_dir }}/../files/{{ username }}_top_tracks.json"
     user_tracks_state: top_tracks
     user_tracks_time_range: medium_term
   roles:

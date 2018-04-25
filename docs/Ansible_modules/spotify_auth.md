@@ -13,11 +13,13 @@ Ansible module to generate a public authentication token, get a cached user auth
 
 When generating a new Spotify API Code, Ansible opens your default browser calling the `redirect_uri` e.g.
 
-`https://example.com/callback/?code=AQBxUXgKcv3n6y3EAto3GZqFxWZkMk5m_wbt0AuTDDeA9gkyeeeydVYb6vmz-dabjsoCXE5uSh3o_NFaZFsXejs5Wr3nP4qIqQwP0wuzUDQEdqbbt8cftSLZznYHj3lhGi-UCbGgToLI00xxxslp1c6xAShITOIpjw-KdwAqCmEBMxBW8TIqavSFyur52cHDz9Ew3dD23RY-RYZOOI8VzMNs0jMtOvj6gboAF44Lesvf-1uEqr7uh239C5kjD2jE9f3l72nFXSdcT29_-kVLwQaX8jVtKW1VwYAuNe8YjzwRdNytnIP2gOqFWCM4AXuBc-9LupeHn2vkxenQ2JRPFJOiTZtFemmUWTHUE5o7juekzpAlZiZCG-IcXBV34X06NWA6GnyZYNVBXH9KIDMZck9HvL4ax5eyuha1hslLcZvgzl99YDN6orOfKXT3ewVvxiTDDIK5Mj0`
+`http://mbloch.s3-website-ap-southeast-2.amazonaws.com/?code=AQDFYVg0pC7YF4rZ1bMApVXNrhbjQn9QPJWRJxs6HmE8eksQgZpyXdKiQIXHgN_5j7lfE6BEZ_asdfasfdMo4Ps0fwep98GZvcvbczvasdfQOPNLx71mA0bmlA3IveCmKLs61qIO_OjAYa8P8a4DSKdtN123123123s6cGCRZ_JElumBELi-aa6e0QQ5hsEX5s1Md9OTf2tO_n5Wy7MUXP-jJBwMUNLUSeP_KG09LCaokpUHXtN5D__-q-S9NJbmYFiCrd8M6J9Cv6EzxcvzxcvzxcvLc8CeCCeQSAuJnl7ZaYY9DYNlZyvYOaoCXM2Ooo7NEtXxvLG-suC3hiMq-siK0hntGbG_1yRWa1jtGAdHOp-Nst9xEMKxvnOKtwOnq_g1Pd7asdfasdft_nioWT9KRL8ooIw2hwSrzhAG4L0y79vu9_KI1mGvQPaYpwQ`
 
 The `spotify_auth_create_user_token` only accepts the API Code which is in this case
 
-`AQBxUXgKcv3n6y3EAto3GZqFxWZkMk5m_wbt0AuTDDeA9gkyeeeydVYb6vmz-dabjsoCXE5uSh3o_NFaZFsXejs5Wr3nP4qIqQwP0wuzUDQEdqbbt8cftSLZznYHj3lhGi-UCbGgToLI00xxxslp1c6xAShITOIpjw-KdwAqCmEBMxBW8TIqavSFyur52cHDz9Ew3dD23RY-RYZOOI8VzMNs0jMtOvj6gboAF44Lesvf-1uEqr7uh239C5kjD2jE9f3l72nFXSdcT29_-kVLwQaX8jVtKW1VwYAuNe8YjzwRdNytnIP2gOqFWCM4AXuBc-9LupeHn2vkxenQ2JRPFJOiTZtFemmUWTHUE5o7juekzpAlZiZCG-IcXBV34X06NWA6GnyZYNVBXH9KIDMZck9HvL4ax5eyuha1hslLcZvgzl99YDN6orOfKXT3ewVvxiTDDIK5Mj0`.
+`AQDFYVg0pC7YF4rZ1bMApVXNrhbjQn9QPJWRJxs6HmE8eksQgZpyXdKiQIXHgN_5j7lfE6BEZ_asdfasfdMo4Ps0fwep98GZvcvbczvasdfQOPNLx71mA0bmlA3IveCmKLs61qIO_OjAYa8P8a4DSKdtN123123123s6cGCRZ_JElumBELi-aa6e0QQ5hsEX5s1Md9OTf2tO_n5Wy7MUXP-jJBwMUNLUSeP_KG09LCaokpUHXtN5D__-q-S9NJbmYFiCrd8M6J9Cv6EzxcvzxcvzxcvLc8CeCCeQSAuJnl7ZaYY9DYNlZyvYOaoCXM2Ooo7NEtXxvLG-suC3hiMq-siK0hntGbG_1yRWa1jtGAdHOp-Nst9xEMKxvnOKtwOnq_g1Pd7asdfasdft_nioWT9KRL8ooIw2hwSrzhAG4L0y79vu9_KI1mGvQPaYpwQ`.
+
+Open this link to see an example [link example](http://mbloch.s3-website-ap-southeast-2.amazonaws.com/?code=AQDFYVg0pC7YF4rZ1bMApVXNrhbjQn9QPJWRJxs6HmE8eksQgZpyXdKiQIXHgN_5j7lfE6BEZ_asdfasfdMo4Ps0fwep98GZvcvbczvasdfQOPNLx71mA0bmlA3IveCmKLs61qIO_OjAYa8P8a4DSKdtN123123123s6cGCRZ_JElumBELi-aa6e0QQ5hsEX5s1Md9OTf2tO_n5Wy7MUXP-jJBwMUNLUSeP_KG09LCaokpUHXtN5D__-q-S9NJbmYFiCrd8M6J9Cv6EzxcvzxcvzxcvLc8CeCCeQSAuJnl7ZaYY9DYNlZyvYOaoCXM2Ooo7NEtXxvLG-suC3hiMq-siK0hntGbG_1yRWa1jtGAdHOp-Nst9xEMKxvnOKtwOnq_g1Pd7asdfasdft_nioWT9KRL8ooIw2hwSrzhAG4L0y79vu9_KI1mGvQPaYpwQ)
 
 See section **Examples** for a full example with how to pass the API Code to the module `spotify_auth_create_user_token`.
 
@@ -30,7 +32,7 @@ See section **Examples** for a full example with how to pass the API Code to the
 | username      | String      | Yes     |  null         | null     | Spotify Username |
 | client_id     | String      | No     | null       | null     | Spotify API Client ID |
 | client_secret | String      | No     | null       | null     | Spotify API Client Secret |
-| redirect_uri  | String      | No     | null       | null     | Spotify redirect URL |
+| redirect_uri  | String      | No     | http://mbloch.s3-website-ap-southeast-2.amazonaws.com       | null     | Spotify redirect URL |
 | scope         | String      | No     | ""         | null     | Spotify API user scope |
 | config_file | String        | No     | null       | null     | Configuration file containing client_id, client_secret, redirect_uri and scope |
 
@@ -61,7 +63,7 @@ See section **Examples** for a full example with how to pass the API Code to the
     api_user_code: 987654321ZYXWVUTSR
     client_id: 0123456789ABCDEFGHI
     client_secret: JKLMNOPQRSTUVWXZY
-    redirect_uri: https://example.com/callback/
+    redirect_uri: http://mbloch.s3-website-ap-southeast-2.amazonaws.com
     scope: user-top-read,playlist-read-private
 
 # Get generated user authentication token with configuration file from cache
@@ -80,7 +82,7 @@ See section **Examples** for a full example with how to pass the API Code to the
     username: spotify_user
     client_id: 0123456789ABCDEFGHI
     client_secret: JKLMNOPQRSTUVWXZY
-    redirect_uri: https://example.com/callback/
+    redirect_uri: http://mbloch.s3-website-ap-southeast-2.amazonaws.com
     scope: user-top-read,playlist-read-private
   register: sp_user_auth
 

@@ -1,10 +1,12 @@
-# 0.0.6 - 04-21-2018
+# 0.0.6 - 04-25-2018
+### ADDED
+* New redirect URL
+* Example HTML file to use for your redirect_url
+
 ### MODIFIED
 * Improved Documentation for each Ansible Module.
 * Relocated example playbooks.
 * Made the Ansible modules Ansible PEP8 friendly.
-
-
 
 # 0.0.5 - 04-21-2018
 ### ADDED

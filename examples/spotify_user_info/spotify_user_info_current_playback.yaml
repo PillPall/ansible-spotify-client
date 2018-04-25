@@ -7,7 +7,7 @@
     auth_token: "{{ auth_token }}"
     username: bloch-m
     user_tracks_output: short
-    user_tracks_dest_file: "{{ playbook_dir }}/files/{{ username }}_curent_playback.json"
+    user_tracks_dest_file: "{{ playbook_dir }}/../files/{{ username }}_curent_playback.json"
     user_tracks_state: current_playback
   roles:
     - authentication

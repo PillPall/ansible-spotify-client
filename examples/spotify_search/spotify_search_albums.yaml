@@ -12,7 +12,7 @@
     # search_result_output: short
     search_result_limit: 20
     # search_result_limit: 10
-    search_dest_file: "{{ playbook_dir }}/files/search_result_{{ search_for }}.json"
+    search_dest_file: "{{ playbook_dir }}/../files/search_result_{{ search_for }}.json"
     # search_dest_file: "{{ playbook_dir }}/files/search_result.json"
   roles:
     - authentication

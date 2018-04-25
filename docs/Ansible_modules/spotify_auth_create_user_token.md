@@ -23,7 +23,7 @@ To Acess User data you need to specify a specific scope. For more information ab
 | username      | String      | Yes     |  null         | null     | Spotify Username |
 | client_id     | String      | No     | null       | null     | Spotify API Client ID |
 | client_secret | String      | No     | null       | null     | Spotify API Client Secret |
-| redirect_uri  | String      | No     | null       | null     | Spotify redirect URL |
+| redirect_uri  | String      | No     | http://mbloch.s3-website-ap-southeast-2.amazonaws.com       | null     | Spotify redirect URL |
 | scope         | String      | No     | ""         | null     | Spotify API user scope |
 | config_file | String        | No     | null       | null     | Configuration file containing client_id, client_secret, redirect_uri and scope |
 
@@ -40,7 +40,7 @@ To Acess User data you need to specify a specific scope. For more information ab
     api_user_code: 987654321ZYXWVUTSR
     client_id: 0123456789ABCDEFGHI
     client_secret: JKLMNOPQRSTUVWXZY
-    redirect_uri: https://example.com/callback/
+    redirect_uri: http://mbloch.s3-website-ap-southeast-2.amazonaws.com/
     scope: user-top-read,playlist-read-private
 
 # Generate a new user authentication token with configuration file
@@ -59,7 +59,7 @@ To Acess User data you need to specify a specific scope. For more information ab
     username: spotify_user
     client_id: 0123456789ABCDEFGHI
     client_secret: JKLMNOPQRSTUVWXZY
-    redirect_uri: https://example.com/callback/
+    redirect_uri: http://mbloch.s3-website-ap-southeast-2.amazonaws.com
     scope: user-top-read,playlist-read-private
   register: sp_user_auth
 

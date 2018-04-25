@@ -9,7 +9,7 @@
     search_for_tracks_name: Trib*
     search_result_output: short
     search_result_limit: 2
-    search_dest_file: "{{ playbook_dir }}/files/search_result_{{ search_for }}.json"
+    search_dest_file: "{{ playbook_dir }}/../files/search_result_{{ search_for }}.json"
   roles:
     - authentication
     - search

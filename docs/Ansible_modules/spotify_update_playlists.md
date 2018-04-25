@@ -16,7 +16,7 @@ You can only define one of the `playlist_id` and `playlist-file` options.
 
 You can only define one of the `track_file` and `track_file` options.
 
-You can combine the options for **playlist** and **track**.
+You can combine these options for **playlist** and **track**.
 
 The option `dest_file` can be combined with all states.
 

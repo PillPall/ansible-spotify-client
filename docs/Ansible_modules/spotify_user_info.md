@@ -18,7 +18,7 @@ Ansible module to get different informations about the current user. Following i
 * Top Artists
 * User informations
 
-The options **limit** and **time_range** can only defined together with the state `recently_played`, `top_tracks` and `top_artists`.
+The options `limit` and ``time_range`` can only defined together with the state `recently_played`, `top_tracks` and `top_artists`.
 
 The options `dest_file` and `output_format` can be combined with all states.
 
