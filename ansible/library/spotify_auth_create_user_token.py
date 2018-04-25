@@ -10,7 +10,7 @@ ANSIBLE_METADATA = {
 DOCUMENTATION = '''
 ---
 module: spotify_auth_create_user_token
-short_description: Ansible module for authentication with the Spotify API
+short_description: Ansible module to create user authenticatio token
 description:
     - "Ansible module for authentication with the Spotify API."
 
@@ -80,8 +80,9 @@ EXAMPLES = '''
     api_user_code: 987654321ZYXWVUTSR
     config_file: "{{ inventory_dir}}/user.yaml"
 
-An example of how to get a user authenticaton token from Cache or a generated one:
-
+#
+# A full example of how to get a user authenticaton token from Cache or a generate a new one:
+#
 # Get user authentication token
 - name: Provide all options for user authentication token
   spotify_auth:
@@ -148,6 +149,7 @@ try:
 except ImportError as e:
     module.fail_json(msg="Error: Can't import required libraries - " + str(e))
 
+
 class UserTokenCreation:
     def __init__(self, module):
         self.module = module
@@ -201,17 +203,18 @@ class UserTokenCreation:
 
         return self.token_dict
 
+
 def main():
     argument_spec = {}
     argument_spec.update(dict(
-            api_user_code=dict(required=True, type='str' ),
-            client_id=dict(required=False, type='str' ),
-            client_secret=dict(required=False, type='str'),
-            config_file=dict(required=False, type='str'),
-            redirect_uri=dict(defualt='https://example.com/callback/',required=False, type='str'),
-            scope=dict(defualt='',required=False, type='str'),
-            username=dict(required=True, type='str')
-            ))
+        api_user_code=dict(required=True, type='str'),
+        client_id=dict(required=False, type='str'),
+        client_secret=dict(required=False, type='str'),
+        config_file=dict(required=False, type='str'),
+        redirect_uri=dict(defualt='https://example.com/callback/', required=False, type='str'),
+        scope=dict(defualt='', required=False, type='str'),
+        username=dict(required=True, type='str')
+    ))
 
     module = AnsibleModule(argument_spec=argument_spec)
 

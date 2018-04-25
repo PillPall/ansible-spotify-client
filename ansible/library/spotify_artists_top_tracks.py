@@ -34,13 +34,12 @@ options:
 
     artists_file:
         description:
-          - JSON File containing a dict of track names. Fore more information about the JSON structure
-            see https://beta.developer.spotify.com/documentation/web-api/reference/artists/get-artists-top-tracks/.
+          - JSON File containing a dict of track names.
         type: String
 
     auth_token:
         description:
-          - Authentication token for Spotify API.
+          - Spotify authentication token generated from the module spotify_auth and spotify_auth_create_user_token
         required: true
         type: String
 
@@ -126,24 +125,28 @@ try:
 except ImportError as e:
     module.fail_json(msg="Error: Can't import required libraries - " + str(e))
 
+
 class ArtistsTopTracks:
+
     def __init__(self, module):
         self.module = module
 
         self.client = spotipy.Spotify(self.module.params.get("auth_token"))
 
-    def get_artists_uri(self, artists_name = None):
+    def get_artists_uri(self, artists_name=None):
         if artists_name is None:
             artists_name = self.module.params.get("artists_name")
 
         result = self.client.search(q='artist:' + artists_name, type='artist')
 
         try:
-          artists_uri = result['artists']['items'][0]['uri']
-          self.module.params.update(artists_uri=artists_uri)
+            if 'artists' in result:
+                if 'uri' in ['items'][0]:
+                    artists_uri = result['artists']['items'][0]['uri']
+                    self.module.params.update(artists_uri=artists_uri)
 
         except Exception as e:
-          self.module.fail_json(msg="Error: Getting URI for artist" + artist_name + " - " + str(e))
+            self.module.fail_json(msg="Error: Getting URI for artist" + artist_name + " - " + str(e))
 
     def get_top_tracks_from_file(self):
         artists_file = self.module.params.get("artists_file")
@@ -152,30 +155,21 @@ class ArtistsTopTracks:
         try:
             artists_from_file = json.load(open(artists_file))
         except Exception as e:
-          self.module.fail_json(msg="Error: Can't load artists file" + artists_file + " - " + str(e))
+            self.module.fail_json(msg="Error: Can't load artists file" + artists_file + " - " + str(e))
 
         if isinstance(artists_from_file, dict):
             if 'uri' in artists_from_file['artists'][0]:
                 for artist in artists_from_file['artists']:
-                    result = self.get_top_tracks(artists_uri = artist['uri'])
+                    result = self.get_top_tracks(artists_uri=artist['uri'])
                     tracks_dict = self.append_to_dict(result, tracks_dict)
             else:
-                self.module.fail_json(msg="Error: Can't read dict in T file. See https://developer.spotify.com/web-api/get-related-artists/ for a correct dict structure." )
-
-        elif isinstance(artists_from_file, list):
-            try:
-                for artist in artists_from_file:
-                    artists_uri = get_artists_uri(artists_name = artist)
-                    result = self.get_top_tracks(artists_uri = artists_uri)
-                    tracks_dict = self.append_to_dict(result, tracks_dict)
-            except Exception as e:
-              self.module.fail_json(msg="Error: Can't read list in artists file. List can only contain artists name - " + str(e))
+                self.module.fail_json(msg="Error: Can't read dict in file.")
         else:
             self.module.fail_json(msg="Error: Can't file does not type of dict or list.")
 
         return tracks_dict
 
-    def get_top_tracks(self, artists_uri = None, country_code = None):
+    def get_top_tracks(self, artists_uri=None, country_code=None):
         if artists_uri is None:
             artists_uri = self.module.params.get("artists_uri")
         if country_code is None:
@@ -185,7 +179,7 @@ class ArtistsTopTracks:
             result = self.client.artist_top_tracks(artists_uri, country_code)
             return result
         except Exception as e:
-          self.module.fail_json(msg="Error: Can't get artists top tracks - " + str(e))
+            self.module.fail_json(msg="Error: Can't get artists top tracks - " + str(e))
 
     def append_to_dict(self, top_tracks, tracks_dict):
         for artists_top_tracks_list in top_tracks['tracks']:
@@ -196,8 +190,9 @@ class ArtistsTopTracks:
     def output_shortener(self, track_list):
         output_shortener_dict = {'tracks': []}
         for track in track_list['tracks']:
-          output_shortener_dict['tracks'].append({'track': track['name'], 'uri': track['uri']})
+            output_shortener_dict['tracks'].append({'track': track['name'], 'uri': track['uri']})
         return output_shortener_dict
+
 
 def main():
     argument_spec = {}
@@ -216,7 +211,7 @@ def main():
 
     top_tracks = ArtistsTopTracks(module)
 
-    if  module.params.get("artists_name"):
+    if module.params.get("artists_name"):
         top_tracks.get_artists_uri()
 
     if module.params.get("artists_file"):

@@ -10,9 +10,18 @@ ANSIBLE_METADATA = {
 DOCUMENTATION = '''
 ---
 module: spotify_user_playlists
-short_description: Get information about users playlist or create one.
+short_description: Ansible module to get all users playlists, create a playlist or search for a playlist.
 description:
-    - "Get information about the current User."
+    - "Ansible module to get all users playlists, create a playlist or search for a playlist.
+
+    The options playlist_description, public and username are only necessary for creating a playlist. The parameter username has to be the same like the one used for authentication.
+
+    playlist_name has to be defined for search and create a playlist.
+
+    limit is only a valid option for search and get_all.
+
+    The options dest_file and output_format can be combined with all states."
+
 version_added: "2.5"
 
 author:
@@ -56,7 +65,7 @@ options:
 
    public:
        description:
-         - Parameter to make a created playlist public or non-public
+         - Create a playlist as public or non-public playlist
        default: no
        choices: ['yes', 'no']
        type: String
@@ -115,8 +124,8 @@ EXAMPLES = '''
 RETURN = '''
 ---
 output:
-  description: "returns a dict with the snapshot_ids of the updated playlists"
-  returned: on success
+  description: "returns a dict with informations about a created playlist"
+  returned: on success with state create and output_format long
   sample:
     changed: True
     result:
@@ -128,7 +137,7 @@ output:
           href: https://api.spotify.com/v1/users/USER/playlists/ABCDEFGHIJKL
           id: ABCDEFGHIJKL
           images: []
-          name: Ansible integration test nonpublic3
+          name: Ansible 3
           owner:
             display_name:
             external_urls:
@@ -146,6 +155,19 @@ output:
           type: playlist
           uri: spotify:user:USER:playlist:ABCDEFGHIJKL
   type: dict
+
+output:
+  description: "returns a dict with informations about a"
+  returned: on success for state get_all with output_format short
+  sample:
+    changed: True
+    result:
+        playlists:
+        - name: Ansible non public playlist
+          uri: spotify:user:USER-m:playlist:ABCDEFGHIJKL
+        - name: Ansible public playlist
+          uri: spotify:user:USER-m:playlist:ABCDEFGHIJKL
+  type: dict
 '''
 
 import sys
@@ -158,6 +180,7 @@ try:
     import spotipy
 except ImportError as e:
     module.fail_json(msg="Error: Can't import required libraries - " + str(e))
+
 
 class UserPlaylist:
     def __init__(self, module):
@@ -172,7 +195,7 @@ class UserPlaylist:
             result = self.client.current_user_playlists(limit=limit)
             return result
         except Exception as e:
-          self.module.fail_json(msg="Error: Can't get user playlists - " + str(e))
+            self.module.fail_json(msg="Error: Can't get user playlists - " + str(e))
 
     def search(self, playlists_dict):
         playlist_name = self.module.params.get("playlist_name")
@@ -199,13 +222,14 @@ class UserPlaylist:
             result = self.client.user_playlist_create(username, playlist_name, public, playlist_description)
             return result
         except Exception as e:
-          self.module.fail_json(msg="Error: Can't create playlists for user" + username + " - " + str(e))
+            self.module.fail_json(msg="Error: Can't create playlists for user" + username + " - " + str(e))
 
     def output_shortener(self, playlists_dict):
         output_shortener_dict = {'playlists': []}
         for playlist in playlists_dict['items']:
-          output_shortener_dict['playlists'].append({'name': playlist['name'], 'uri': playlist['uri']})
+            output_shortener_dict['playlists'].append({'name': playlist['name'], 'uri': playlist['uri']})
         return output_shortener_dict
+
 
 def main():
     argument_spec = {}
@@ -231,7 +255,7 @@ def main():
         results = playlists.get_all()
     elif state == 'create':
         results = playlists.create()
-    elif state =='search':
+    elif state == 'search':
         playlists_get_all = playlists.get_all()
         results = playlists.search(playlists_get_all)
 

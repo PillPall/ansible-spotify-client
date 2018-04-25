@@ -1,56 +1,39 @@
-> SPOTIFY_AUTH_CREATE_USER_TOKEN    (./ansible/library/spotify_auth_create_user_token.py)
+# Spotify authentication create user token
 
-        Ansible module for authentication with the Spotify API.
+#### Modules
+spotify_auth_create_user_token - Ansible module to create user authentication token for Spotify API
 
-OPTIONS (= is mandatory):
+* Synopsis
+* Options
+* Examples
+* Return value
 
-= api_user_code
-        Spotify API User Code
+#### Synopsis
+Ansible module to create a User authentication token generated from the Ansible module `spotify_auth`.
 
-        type: String
+Option `api_user_code` & `username` has to be defined **everytime**. Options `client_id, client_secret, redirect_uri, and scope` has to be provided via option parameter in the task or the configuration file option `config_file`.
 
-- client_id
-        Spotify API Client ID
-        [Default: (null)]
-        type: String
+To Acess User data you need to specify a specific scope. For more information about available scopes visit this site  [link](https://beta.developer.spotify.com/documentation/general/guides/scopes/).
 
-- client_secret
-        Spotify API Client Secret Key
-        [Default: (null)]
-        type: String
+#### Options
 
-- config_file
-        Configuration file containing Spotify API Authentication parameters
-        [Default: (null)]
-        type: String
+| Parameter     | type        |required    | default  | choices  | comments |
+| ------------- |-------------| ---------|----------- |--------- | -------- |
+| api_user_code | String      | True     | null       | null     | Spotify API User code |
+| username      | String      | True     |  null         | null     | Spotify Username |
+| client_id     | String      | False     | null       | null     | Spotify API Client ID |
+| client_secret | String      | False     | null       | null     | Spotify API Client Secret |
+| redirect_uri  | String      | False     | null       | null     | Spotify redirect URL |
+| scope         | String      | False     | ""         | null     | Spotify API user scope |
+| config_file | String        | False     | null       | null     | Configuration file containing client_id, client_secret, redirect_uri and scope |
 
-- redirect_uri
-        Redirect URL, required for user authentication
-        [Default: (null)]
-        type: String
+#### Requirements  
+* python >= 2.7.10
+* spotipy >= 2.4.4
 
-- scope
-        Scope, required for User authentication. For avaiable scopes visit https://beta.developer.spotify.com/documentation/general/guides/scopes/.
-        [Default: (null)]
-        type: String
-
-- username
-        Spotify Username required for user authentication
-        [Default: (null)]
-        type: String
-
-
-REQUIREMENTS:  python >= 2.7.10, spotipy >= 2.4.4
-
-AUTHOR: Michael Bloch (github@mbloch.de)
-        METADATA:
-          status:
-          - preview
-          supported_by: community
-
-
-EXAMPLES:
-# Get generated user authentication token
+#### Examples
+```
+# Generate a new user authentication token
 - name: Get generated user authentication token
   spotify_auth_create_user_token:
     username: spotify_user
@@ -60,15 +43,16 @@ EXAMPLES:
     redirect_uri: https://example.com/callback/
     scope: user-top-read,playlist-read-private
 
-# Get generated user authentication token with configuration file
+# Generate a new user authentication token with configuration file
 - name: Provide all configuration parameters via config file
   spotify_auth_create_user_token:
     username: spotify_user
     api_user_code: 987654321ZYXWVUTSR
     config_file: "{{ inventory_dir}}/user.yaml"
 
-An example of how to get a user authenticaton token from Cache or a generated one:
-
+# 
+# A full example of how to get a user authenticaton token from Cache or a generate a new one:
+#
 # Get user authentication token
 - name: Provide all options for user authentication token
   spotify_auth:
@@ -110,11 +94,9 @@ An example of how to get a user authenticaton token from Cache or a generated on
   set_fact:
     auth_token: "{{ _sp_user_auth.results.token }}"
   when: _sp_user_auth.skipped is undefined
-
-RETURN VALUES:
-
-
----
+```
+#### RETURN VALUES:
+```  
 output:
   description: "returns a dict type with the authentication token for the Spotify API."
   returned: on success
@@ -124,3 +106,4 @@ output:
       client: "user"
       token: "0123456789ABCDEFGHI"
   type: dict
+  ```

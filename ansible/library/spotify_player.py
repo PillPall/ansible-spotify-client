@@ -12,7 +12,7 @@ DOCUMENTATION = '''
 module: spotify_player
 short_description: Ansible module for controlling your spotify.
 description:
-    - "Ansible module for controlling your spotify. Play or pause a song, toggle shuffle on/off or set the volume."
+    - "Ansible module for controlling your spotify. Play or pause a song, toggle repeat or shuffle, set volume, set transfer playback to a different device."
 
 version_added: "2.5"
 
@@ -22,38 +22,38 @@ author:
 options:
     auth_token:
        description:
-         - Authentication token for Spotify API
+          - Spotify authentication token generated from the module spotify_auth and spotify_auth_create_user_token
        required: True
        type: String
 
-    device_Id:
+    device_id:
        description:
-         - Device ID to transfer a User's Playback
-       required: True
+         - Device ID you want to transfer the playback to.
+       required: False
        type: String
 
     repeat_mode:
        description:
-          - Set shuffle on or off
+          - Set repeat mode.
        type: String
        choices: ['track', 'context', 'off']
 
     state:
        description:
-         - Player action to execute
+         - Action to trigger.
        required: True
        type: String
-       choices: ['play', 'pause', 'next', 'previous', 'repeat', 'shuffle', 'volume']
+       choices: ['play', 'pause', 'next', 'previous', 'repeat', 'shuffle', 'transfer_playback', 'volume']
 
     toggle_shuffle:
        description:
-          - Set shuffle on or off
+          - Set shuffle mode.
        type: String
        choices: ['on', 'off']
 
     volume_level:
        description:
-          - Set volume level in percent
+          - Volume level in percent.
        type: int
 
 requirements:
@@ -77,11 +77,29 @@ EXAMPLES = '''
     auth_token: 0123456789ABCDEFGHI
     state: next
 
+- name: Set repeat to repeat a single track
+  spotify_player:
+    auth_token: 0123456789ABCDEFGHI
+    repeat_mode: track
+    state: repeat
+
+- name: Turn on shuffle
+  spotify_player:
+    auth_token: 0123456789ABCDEFGHI
+    toggle_shuffle: on
+    state: shuffle
+
 - name: Transfer playback to a new device
   spotify_player:
     auth_token: 0123456789ABCDEFGHI
     device_id: 0123456789ABCDEFGHI
     state: transfer_playback
+
+- name: Set playback volume on device to 80%
+  spotify_player:
+    auth_token: 0123456789ABCDEFGHI
+    volume_level: 80
+    state: volume
 '''
 RETURN = '''
 ---
@@ -104,11 +122,13 @@ try:
 except ImportError as e:
     module.fail_json(msg="Error: Can't import required libraries - " + str(e))
 
+
 class SpotifyPlayer:
     def __init__(self, module):
         self.module = module
 
         self.client = spotipy.Spotify(self.module.params.get("auth_token"))
+
     def play(self):
         self.client.start_playback()
 
@@ -141,6 +161,8 @@ class SpotifyPlayer:
 
     def volume(self):
         self.client.volume(self.module.params.get("volume_level"))
+
+
 def main():
     argument_spec = {}
     argument_spec.update(dict(

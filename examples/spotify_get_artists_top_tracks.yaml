@@ -8,8 +8,8 @@
     get_top_tracks_for_artists_name: Young the Giant
     get_top_tracks_for_country: AU
     get_top_tracks_output: short
-    get_top_tracks_dest_file: "{{ playbook_dir }}/files/artists_top_tracks.json"
-    # get_top_tracks_from_artists_file: "{{ playbook_dir }}/files/related_artists.json"
+    get_top_tracks_dest_file: "{{ playbook_dir }}/../files/artists_top_tracks.json"
+    # get_top_tracks_from_artists_file: "{{ playbook_dir }}/../files/related_artists.json"
   roles:
     - authentication
     - get_artists_top_tracks

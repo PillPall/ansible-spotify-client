@@ -1,52 +1,46 @@
-> SPOTIFY_AUTH    (./ansible/library/spotify_auth.py)
+# Spotify create authentication token
 
-        Ansible module for authentication with the Spotify API. This module Connects to the Spotify API and response with an Authentiaction token. To get a new
-        generated User token you need to provide the generated API Code to the Ansible Module spotify_auth_create_user_token. You will get this API Code from your
-        Browser which this Ansible module will open for you. Visit https://github.com/PillPall/ansible-spotify-client for an example.
+#### Modules
+spotify_auth - Ansible module to creating authentication token
 
-OPTIONS (= is mandatory):
+* Synopsis
+* Options
+* Examples
+* Return value
 
-- client_id
-        Spotify API Client ID
-        [Default: (null)]
-        type: String
+#### Synopsis
+Ansible module to generate a public authentication token, get a cached user authentication token from the cache file `/tmp/.cache-USER` or generate a Spotify API Code to generate a new user authentication token with the Ansible module `spotify_auth_create_user_token`.
 
-- client_secret
-        Spotify API Client Secret Key
-        [Default: (null)]
-        type: String
+When generating a new Spotify API Code, Ansible opens your default browser calling the `redirect_uri` e.g.
 
-- config_file
-        Configuration file containing Spotify API Authentication parameters
-        [Default: (null)]
-        type: String
+`https://example.com/callback/?code=AQBxUXgKcv3n6y3EAto3GZqFxWZkMk5m_wbt0AuTDDeA9gkyeeeydVYb6vmz-dabjsoCXE5uSh3o_NFaZFsXejs5Wr3nP4qIqQwP0wuzUDQEdqbbt8cftSLZznYHj3lhGi-UCbGgToLI00xxxslp1c6xAShITOIpjw-KdwAqCmEBMxBW8TIqavSFyur52cHDz9Ew3dD23RY-RYZOOI8VzMNs0jMtOvj6gboAF44Lesvf-1uEqr7uh239C5kjD2jE9f3l72nFXSdcT29_-kVLwQaX8jVtKW1VwYAuNe8YjzwRdNytnIP2gOqFWCM4AXuBc-9LupeHn2vkxenQ2JRPFJOiTZtFemmUWTHUE5o7juekzpAlZiZCG-IcXBV34X06NWA6GnyZYNVBXH9KIDMZck9HvL4ax5eyuha1hslLcZvgzl99YDN6orOfKXT3ewVvxiTDDIK5Mj0`
 
-- redirect_uri
-        Redirect URL, required for user authentication
-        [Default: (null)]
-        type: String
+The `spotify_auth_create_user_token` only accepts the API Code which is in this case
 
-- scope
-        Scope, required for User authentication.
-        [Default: (null)]
-        type: String
+`AQBxUXgKcv3n6y3EAto3GZqFxWZkMk5m_wbt0AuTDDeA9gkyeeeydVYb6vmz-dabjsoCXE5uSh3o_NFaZFsXejs5Wr3nP4qIqQwP0wuzUDQEdqbbt8cftSLZznYHj3lhGi-UCbGgToLI00xxxslp1c6xAShITOIpjw-KdwAqCmEBMxBW8TIqavSFyur52cHDz9Ew3dD23RY-RYZOOI8VzMNs0jMtOvj6gboAF44Lesvf-1uEqr7uh239C5kjD2jE9f3l72nFXSdcT29_-kVLwQaX8jVtKW1VwYAuNe8YjzwRdNytnIP2gOqFWCM4AXuBc-9LupeHn2vkxenQ2JRPFJOiTZtFemmUWTHUE5o7juekzpAlZiZCG-IcXBV34X06NWA6GnyZYNVBXH9KIDMZck9HvL4ax5eyuha1hslLcZvgzl99YDN6orOfKXT3ewVvxiTDDIK5Mj0`.
 
-- username
-        Spotify Username, required for user authentication
-        [Default: (null)]
-        type: String
+See section **Examples** for an full example with how to pass the API Code to the module `spotify_auth_create_user_token`.
 
 
-REQUIREMENTS:  python >= 2.7.10, spotipy >= 2.4.4
 
-AUTHOR: Michael Bloch (github@mbloch.de)
-        METADATA:
-          status:
-          - preview
-          supported_by: community
+#### Options
+
+| Parameter     | type        |required    | default  | choices  | comments |
+| ------------- |-------------| ---------|----------- |--------- | -------- |
+| username      | String      | True     |  null         | null     | Spotify Username |
+| client_id     | String      | False     | null       | null     | Spotify API Client ID |
+| client_secret | String      | False     | null       | null     | Spotify API Client Secret |
+| redirect_uri  | String      | False     | null       | null     | Spotify redirect URL |
+| scope         | String      | False     | ""         | null     | Spotify API user scope |
+| config_file | String        | False     | null       | null     | Configuration file containing client_id, client_secret, redirect_uri and scope |
 
 
-EXAMPLES:
+#### Requirements  
+* python >= 2.7.10
+* spotipy >= 2.4.4
+
+#### Examples
+```
 # Get public Authentication token
 - name: Provide client ID and client secret for Public authentication token
   spotify_auth:
@@ -59,8 +53,27 @@ EXAMPLES:
     username: spotify_user
     config_file: "{{ inventory_dir}}/user.yaml"
 
-An example of how to get a user authenticaton token from Cache or a generated one:
 
+# Get generated user authentication token from cache
+- name: Get generated user authentication token
+  spotify_auth_create_user_token:
+    username: spotify_user
+    api_user_code: 987654321ZYXWVUTSR
+    client_id: 0123456789ABCDEFGHI
+    client_secret: JKLMNOPQRSTUVWXZY
+    redirect_uri: https://example.com/callback/
+    scope: user-top-read,playlist-read-private
+
+# Get generated user authentication token with configuration file from cache
+- name: Provide all configuration parameters via config file
+  spotify_auth_create_user_token:
+    username: spotify_user
+    api_user_code: 987654321ZYXWVUTSR
+    config_file: "{{ inventory_dir}}/user.yaml"
+
+#
+# A full example of how to get a user authenticaton token from Cache or a generate a new one:
+#
 # Get user authentication token
 - name: Provide all options for user authentication token
   spotify_auth:
@@ -102,19 +115,39 @@ An example of how to get a user authenticaton token from Cache or a generated on
   set_fact:
     auth_token: "{{ _sp_user_auth.results.token }}"
   when: _sp_user_auth.skipped is undefined
+```
 
-RETURN VALUES:
-
-
----
+#### RETURN VALUES:
+```
 output:
-  description: "returns a dict type with the authentication token for the Spotify API.
-  When requesting a user authentication token it additional displays if it used a cached token or not."
+  description: "returns a dict for a generated public authentication token"
   returned: on success
   sample:
     changed: True
     result:
-      cached: True
+      client: "public"
+      token: "0123456789ABCDEFGHI"
+  type: dict
+
+output:
+  description: "returns a dict for a cached user authentication token"
+  returned: on success
+  sample:
+    changed: True
+    result:
+      cached: true
       client: "user"
       token: "0123456789ABCDEFGHI"
   type: dict
+
+  output:
+    description: "returns a dict for a non cached user authentication token"
+    returned: on success
+    sample:
+      changed: True
+      result:
+        cached: false
+        client: "user"
+        token: "null
+    type: dict
+```

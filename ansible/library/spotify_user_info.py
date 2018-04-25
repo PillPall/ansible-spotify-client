@@ -10,9 +10,20 @@ ANSIBLE_METADATA = {
 DOCUMENTATION = '''
 ---
 module: spotify_user_info
-short_description: Get information about the current User.
+short_description: Ansible module to get informations about the current User.
 description:
-    - "Get information about the current User."
+    - "Ansible module to get different informations about the current user. Following information can you get with this module:
+    * current playback
+    * Devices
+    * Recently played tracks
+    * Top Tracks
+    * Top Artists
+    * User informations
+
+    The options limit and time_range can only defined together with the state recently_played, top_tracks and top_artists.
+
+    The options dest_file and output_format can be combined."
+
 version_added: "2.5"
 
 author:
@@ -53,7 +64,7 @@ options:
        description:
          - Time range for seeing users top artists and top tracks
        choices: ['short_term', 'medium_term', 'long_term']
-       default: short
+       default: medium_term
        type: String
 '''
 
@@ -64,7 +75,7 @@ EXAMPLES = '''
     dest_file: "{{ playbook_dir }}/files/current_user_playback.json"
     state: current_playback
 
-- name: Get all available devies for a user
+- name: Get all available devices for a user
   spotify_user_info:
     auth_token: 0123456789ABCDEFGHI
     output_format: short
@@ -105,7 +116,68 @@ EXAMPLES = '''
 RETURN = '''
 ---
 output:
-  description: "returns a dict with the result for each state"
+  description: "returns a dict with the result for state top_artists"
+  returned: on success for state top_artists
+  sample:
+    changed: True
+    result:
+        items:
+        - genres:
+          - folk-pop
+          - indie folk
+          - neo mellow
+          - south african pop
+          name: Mumford & Sons
+          external_urls:
+            spotify: https://open.spotify.com/artist/3gd8FJtBJtkRxdfbTu19U2
+          popularity: 78
+          uri: spotify:artist:3gd8FJtBJtkRxdfbTu19U2
+          href: https://api.spotify.com/v1/artists/3gd8FJtBJtkRxdfbTu19U2
+          followers:
+            total: 4160683
+            href:
+          images:
+          - url: https://i.scdn.co/image/8dff0f92819275feabea7fb4c65d1409a1a99127
+            width: 1000
+            height: 1000
+          - url: https://i.scdn.co/image/d6104bcaabe6854be406e5743d9bde6716e7d0fe
+            width: 640
+            height: 640
+          - url: https://i.scdn.co/image/ed2faba8c2ec01a4d8418905fa3f96f3b8e7cc9d
+            width: 200
+            height: 200
+          - url: https://i.scdn.co/image/b6628e4a0d426b3d1d93bbe49fc5ab9a2a9a9301
+            width: 64
+            height: 64
+          type: artist
+          id: 3gd8FJtBJtkRxdfbTu19U2
+  type: dict
+
+output:
+  description: "returns a dict with the result for state recently_played with defined output_format short"
+  returned: on success for state recently_played
+  sample:
+    changed: True
+    result:
+      tracks:
+       album: Riot On An Empty Street
+        artists: Kings of Convenience
+        track: Know-How
+        uri: spotify:track:4xqowxjJ03RWog4teL6oqG
+
+output:
+  description: "returns a dict with the result for state devices with defined output_format short"
+  returned: on success for state recently_played
+  sample:
+    changed: True
+    result:
+        devices:
+        - name: Device1
+          device_id: ABC6363f1d95BBCCCDDa95cc67f6307
+  type: dict
+
+output:
+  description: "returns a dict with the result for state user_info"
   returned: on success for state user_info
   sample:
     changed: True
@@ -121,6 +193,7 @@ output:
         images: []
         type: user
         uri: spotify:user:USER
+  type: dict
 '''
 
 import sys
@@ -133,6 +206,7 @@ try:
     import spotipy
 except ImportError as e:
     module.fail_json(msg="Error: Can't import required libraries - " + str(e))
+
 
 class UserTracks:
     def __init__(self, module):
@@ -174,24 +248,44 @@ class UserTracks:
         elif self.module.params.get("state") == 'recently_played':
             output_dict = ({'tracks': []})
             for tracks in results['items']:
-                output_dict['tracks'].append({'album': tracks['track']['album']['name'], 'artists': tracks['track']['artists'][0]['name'], 'track': tracks['track']['name'], 'uri': tracks['track']['uri']})
+                album = tracks['track']['album']['name']
+                artist = tracks['track']['artists'][0]['name']
+                track = tracks['track']['name']
+                uri = tracks['track']['uri']
+
+                output_dict['tracks'].append({'album': album, 'artists': artist, 'track': track, 'uri': uri})
         elif self.module.params.get("state") == 'top_tracks':
             output_dict = ({'tracks': []})
             for tracks in results['items']:
-                output_dict['tracks'].append({'album': tracks['album']['name'], 'artists': tracks['artists'][0]['name'], 'track': tracks['name'], 'uri': tracks['uri']})
+                album = tracks['album']['name']
+                artist = tracks['artists'][0]['name']
+                track = tracks['name']
+                uri = tracks['uri']
+
+                output_dict['tracks'].append({'album': album, 'artists': artist, 'track': track, 'uri': uri})
         elif self.module.params.get("state") == 'top_artists':
             output_dict = ({'artists': []})
             for artists in results['items']:
-                output_dict['artists'].append({'artists': artists['name'], 'uri': artists['uri']})
+                artist = artists['name']
+                uri = nartists['uri']
+
+                output_dict['artists'].append({'artists': artist, 'uri': uri})
         elif self.module.params.get("state") == 'user_info':
             output_dict = ({'user_info': []})
-            output_dict['user_info'].append({'user_id': results['id'], 'user_uri': results['uri']})
-        elif self.module.params.get("state") =='devices':
+            id = results['id']
+            uri = results['uri']
+
+            output_dict['user_info'].append({'user_id': id, 'user_uri': uri})
+        elif self.module.params.get("state") == 'devices':
             output_dict = ({'devices': []})
             for devices in results['devices']:
-                output_dict['devices'].append({'name': devices['name'], 'device_id': devices['id']})
+                name = devices['name']
+                id = devices['id']
+
+                output_dict['devices'].append({'name': name, 'device_id': id})
 
         return output_dict
+
 
 def main():
     argument_spec = {}
@@ -200,7 +294,7 @@ def main():
         output_format=dict(required=False, default='long', choices=['short', 'long'], type='str'),
         dest_file=dict(required=False, type='str'),
         limit=dict(required=False, default=50, type='int'),
-        time_range=dict(required=False, default='medium_term', choices=['short_term', 'medium_term', 'long_term'] , type='str'),
+        time_range=dict(required=False, default='medium_term', choices=['short_term', 'medium_term', 'long_term'], type='str'),
         state=dict(required=True, choices=['current_playback', 'devices', 'recently_played', 'top_tracks', 'top_artists', 'user_info'])
     ))
 

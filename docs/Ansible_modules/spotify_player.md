@@ -1,50 +1,35 @@
-> SPOTIFY_PLAYER    (./ansible/library/spotify_player.py)
+# Spotify player
 
-        Ansible module for controlling your spotify. Play or pause a song, toggle shuffle on/off or set the volume.
+#### Modules
+spotify_player - Ansible module for controlling your spotify
 
-OPTIONS (= is mandatory):
+* Synopsis
+* Options
+* Examples
+* Return value
 
-= auth_token
-        Authentication token for Spotify API
+#### Synopsis
 
-        type: String
+Ansible module for controlling your spotify. Play or pause a song, toggle repeat or shuffle, set volume, set transfer playback to a different device.
 
-= device_Id
-        Device ID to transfer a User's Playback
+#### Options
 
-        type: String
-
-- repeat_mode
-        Set shuffle on or off
-        (Choices: track, context, off)[Default: (null)]
-        type: String
-
-= state
-        Player action to execute
-        (Choices: play, pause, next, previous, repeat, shuffle, volume)
-        type: String
-
-- toggle_shuffle
-        Set shuffle on or off
-        (Choices: on, off)[Default: (null)]
-        type: String
-
-- volume_level
-        Set volume level in percent
-        [Default: (null)]
-        type: int
+| Parameter     | type        |required    | default  | choices  | comments |
+| ------------- |-------------| ---------|----------- |--------- | -------- |
+| auth_token  | String       | True     | null       | null     | Spotify authentication token generated from the module `spotify_auth` and `spotify_auth_create_user_token` |
+| state         | String      | True       | null       | play, pause, next, previous, repeat, shuffle, transfer_playback, volume     | Action to trigger. |
+| device_id     | String      | False       | null       |        | Device ID you want to transfer the playback to. |
+| repeat_mode   | String      | False       | null       | track, context, off | Set repeat mode. |
+| toggle_shuffle | String      | False       | null       | on, off | Set shuffle mode. |
+| volume_level | Integer      | False       | null       | null | Volume level in percent. |
 
 
-REQUIREMENTS:  python >= 2.7.10, spotipy >= 2.4.4
+#### Requirements  
+* python >= 2.7.10
+* spotipy >= 2.4.4
 
-AUTHOR: Michael Bloch (github@mbloch.de)
-        METADATA:
-          status:
-          - preview
-          supported_by: community
-
-
-EXAMPLES:
+#### Examples
+```
 - name: Play track
   spotify_player:
     auth_token: 0123456789ABCDEFGHI
@@ -60,16 +45,33 @@ EXAMPLES:
     auth_token: 0123456789ABCDEFGHI
     state: next
 
+- name: Set repeat to repeat a single track
+  spotify_player:
+    auth_token: 0123456789ABCDEFGHI
+    repeat_mode: track
+    state: repeat
+
+- name: Turn on shuffle
+  spotify_player:
+    auth_token: 0123456789ABCDEFGHI
+    toggle_shuffle: on
+    state: shuffle
+
 - name: Transfer playback to a new device
   spotify_player:
     auth_token: 0123456789ABCDEFGHI
     device_id: 0123456789ABCDEFGHI
     state: transfer_playback
 
-RETURN VALUES:
+- name: Set playback volume on device to 80%
+  spotify_player:
+    auth_token: 0123456789ABCDEFGHI
+    volume_level: 80
+    state: volume
+```    
 
-
----
+#### RETURN VALUES:
+```
 output:
   description: "Returns null."
   returned: on success
@@ -77,3 +79,4 @@ output:
     changed: True
     result: null
   type: null
+```

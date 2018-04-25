@@ -10,7 +10,7 @@
     user_playlists_state: search
     user_playlist_name: Like
     user_playlists_limit: 40
-    user_playlists_output: full
+    user_playlists_output: long
     user_playlists_dest_file: "{{ playbook_dir }}/files/{{ username }}_playlists.json"
   roles:
     - authentication

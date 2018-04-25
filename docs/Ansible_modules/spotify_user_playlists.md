@@ -1,63 +1,45 @@
-> SPOTIFY_USER_PLAYLISTS    (./ansible/library/spotify_user_playlists.py)
+# Spotify user informations
 
-        Get information about the current User.
+#### Modules
+spotify_user_playlists - Ansible module to get all users playlists, create a playlist or search for a playlist.
 
-OPTIONS (= is mandatory):
+* Synopsis
+* Options
+* Examples
+* Return value
 
-= auth_token
-        Authentication token for Spotify API.
+#### Synopsis
 
-        type: String
+Ansible module to get all users playlists, create a playlist or search for a playlist.
 
-- dest_file
-        Destination file to save the output to.
-        [Default: (null)]
-        type: String
+The options `playlist_description`, `public` and `username` are only necessary for creating a playlist. The parameter `username` has to be the same like the one used for authentication.
 
-- limit
-        Limit the amount of the user playlists to get or to search for.
-        [Default: 50]
-        type: String
+`playlist_name` has to be defined for `search` and `create` a playlist.
 
-- output_format
-        Control Ansible output.
-        (Choices: short, long)[Default: long]
-        type: String
+`limit` is only a valid option for `search` and `get_all`.
 
-- playlist_description
-        Playlist description for creating a new playlist.
-        [Default: ]
-        type: String
+The options `dest_file` and `output_format` can be combined with all states.
 
-- playlist_name
-        Name of the playlist to search for or to create.
-        [Default: (null)]
-        type: String
+#### Options
 
-- public
-        Parameter to make a created playlist public or non-public
-        (Choices: yes, no)[Default: False]
-        type: String
+| Parameter     | type        |required    | default  | choices  | comments |
+| ------------- |-------------| ---------  |--------- |--------- | -------- |
+| auth_token    | String      | Yes        | null     | null     | Spotify authentication token generated from
+| state         | String      | Yes        | null     | get_all, create, search | Action to trigger. |
+| dest_file     | String      | No         | null     | null     |  Destination file to save the output to. |
+| output_format | String      | No         | long     | short, long |  Control Ansible output format. |
+| limit         | integer     | No         | 50       | null     | Limit the amount of the user playlists to get or to search for. |
+| playlist_description   | String      | No         | null     | null     |  Playlist description for creating a new playlist |
+| playlist_name | String      | No         | null     | null     |  Name of the playlist to search for or to create. |
+| public   | String      | No         | no     | yes, no     | Create a playlist as public or non-public playlist |
+| username      | String      | No        | null     | null     | Spotify Username for creating a playlist|
 
-- state
-        Playlist action.
-        (Choices: get_all, create, search)[Default: (null)]
-        type: String
+#### Requirements  
+* python >= 2.7.10
+* spotipy >= 2.4.4
 
-- username
-        Create the playlist for the user defined in username.
-        [Default: (null)]
-        type: String
-
-
-AUTHOR: Michael Bloch (github@mbloch.de)
-        METADATA:
-          status:
-          - preview
-          supported_by: community
-
-
-EXAMPLES:
+#### Examples
+```
 - name: Get the first 20 user playlists for user muster and save the output to dest_file
   spotify_get_user_playlist:
     auth_token: 0123456789ABCDEFGHI
@@ -83,8 +65,8 @@ EXAMPLES:
 - name: Create a pbulic playlist with defined playlist_description
   spotify_get_user_playlist:
     auth_token: 0123456789ABCDEFGHI
-    playlist_description: Playlist created with Ansible
-    playlist_name: Ansible_Playlist
+    playlist_description: Public playlist created with Ansible
+    playlist_name: Ansible_public_Playlist
     public: yes
     state: create
 
@@ -94,14 +76,13 @@ EXAMPLES:
     limit: 20
     playlist_name: Ansible_Playlist
     state: search
-
-RETURN VALUES:
-
-
+```
+#### RETURN VALUES:
+```
 ---
 output:
-  description: "returns a dict with the snapshot_ids of the updated playlists"
-  returned: on success
+  description: "returns a dict with informations about a created playlist"
+  returned: on success with state create and output_format long
   sample:
     changed: True
     result:
@@ -113,7 +94,7 @@ output:
           href: https://api.spotify.com/v1/users/USER/playlists/ABCDEFGHIJKL
           id: ABCDEFGHIJKL
           images: []
-          name: Ansible integration test nonpublic3
+          name: Ansible 3
           owner:
             display_name:
             external_urls:
@@ -131,3 +112,17 @@ output:
           type: playlist
           uri: spotify:user:USER:playlist:ABCDEFGHIJKL
   type: dict
+
+output:
+  description: "returns a dict with informations about a"
+  returned: on success for state get_all with output_format short
+  sample:
+    changed: True
+    result:
+        playlists:
+        - name: Ansible non public playlist
+          uri: spotify:user:USER-m:playlist:ABCDEFGHIJKL
+        - name: Ansible public playlist
+          uri: spotify:user:USER-m:playlist:ABCDEFGHIJKL
+  type: dict
+```

@@ -22,13 +22,13 @@ author:
 options:
     auth_token:
         description:
-          - Spotify API authentication token
+          - Spotify authentication token generated from the module spotify_auth and spotify_auth_create_user_token
         required: True
         type: String
 
     dest_file:
         description:
-          - Path to file to save the search result.
+          - Destination file to save the output to.
         type: String
 
     playlist_id:
@@ -38,8 +38,7 @@ options:
 
     playlist_file:
         description:
-          - JSON File containing a dict of Playlist ID or URI to update. Fore more information about the JSON structure
-            visit https://beta.developer.spotify.com/documentation/web-api/reference/playlists/get-playlist/.
+          - JSON File containing a dict of Playlist ID or URI to update.
         type: String
 
     state:
@@ -56,8 +55,7 @@ options:
 
     track_file:
         description:
-          - JSON File containing a dict of Track IDs or URIs to update. Fore more information about the JSON structure
-            visit https://beta.developer.spotify.com/documentation/web-api/reference/artists/get-artists-top-tracks/.
+          - JSON File containing a dict of Track IDs or URIs to update.
         type: String
 
     username:
@@ -144,13 +142,13 @@ try:
 except ImportError as e:
     module.fail_json(msg="Error: Can't import required libraries - " + str(e))
 
+
 class UpdatePlaylist:
     def __init__(self, module):
         self.module = module
         self.playlists_list = []
 
         self.client = spotipy.Spotify(self.module.params.get("auth_token"))
-
 
     def add(self):
         method_to_call = self.client.user_playlist_add_tracks
@@ -180,14 +178,14 @@ class UpdatePlaylist:
         for playlist in playlist_dict['playlists']:
             while not done:
                 if track_dict_list_length == 1:
-                   iii = track_dict_list_length - 1
-                   track = [tracks_dict['tracks'][iii]]
-                   try:
-                       result = method_caller(username, playlist, track)
-                       results['result'].append(result)
-                   except Exception as e:
-                       self.module.fail_json(msg="Error: Can't update playlist  - " + str(e))
-                   done = True
+                    iii = track_dict_list_length - 1
+                    track = [tracks_dict['tracks'][iii]]
+                    try:
+                        result = method_caller(username, playlist, track)
+                        results['result'].append(result)
+                    except Exception as e:
+                        self.module.fail_json(msg="Error: Can't update playlist  - " + str(e))
+                    done = True
                 elif ii == track_dict_list_length:
                     iii = track_dict_list_length - 1
                     track = tracks_dict['tracks'][i:iii]
@@ -207,15 +205,15 @@ class UpdatePlaylist:
                         self.module.fail_json(msg="Error: Can't update playlist  - " + str(e))
                     done = True
                 while ii < track_dict_list_length:
-                     track = tracks_dict['tracks'][i:ii]
-                     try:
-                         result = method_caller(username, playlist, track)
-                         results['result'].append(result)
-                     except Exception as e:
-                       self.module.fail_json(msg="Error: Can't update playlist  - " + str(e))
-                     i = i + 49
-                     ii = ii + 49
-                     done = False
+                    track = tracks_dict['tracks'][i:ii]
+                    try:
+                        result = method_caller(username, playlist, track)
+                        results['result'].append(result)
+                    except Exception as e:
+                        self.module.fail_json(msg="Error: Can't update playlist  - " + str(e))
+                    i = i + 49
+                    ii = ii + 49
+                    done = False
 
         return results
 
@@ -250,21 +248,21 @@ class UpdatePlaylist:
         try:
             playlists_from_file = json.load(open(playlist_file))
         except Exception as e:
-          self.module.fail_json(msg="Error: Can't load playlist file" + playlist_file + " - " + str(e))
+            self.module.fail_json(msg="Error: Can't load playlist file" + playlist_file + " - " + str(e))
 
-        if playlists_from_file.has_key('playlists'):
+        if 'playlists' in playlists_from_file:
             if ['playlists'][0]:
                 for playlist in playlists_from_file['playlists']:
                     playlists_dict['playlists'].append(playlist['uri'])
-        elif playlists_from_file.has_key('items'):
+        elif 'items' in playlists_from_file:
             if playlists_from_file['items'][0]:
                 for playlist in playlists_from_file['items']:
                     playlists_dict['playlists'].append(playlist['uri'])
-        elif playlists_from_file.has_key('type'):
+        elif 'type' in playlists_from_file:
             if playlists_from_file['type'] == 'playlist':
                     playlists_dict['playlists'].append(playlists_from_file['uri'])
         else:
-            self.module.fail_json(msg="Error: Can't read dict in artists file. See https://developer.spotify.com/web-api/get-related-artists/ for a correct dict structure." )
+            self.module.fail_json(msg="Error: Can't read dict in playlists file.")
 
         return playlists_dict
 
@@ -274,23 +272,24 @@ class UpdatePlaylist:
         try:
             track_from_file = json.load(open(track_file))
         except Exception as e:
-          self.module.fail_json(msg="Error: Can't load track file" + track_file + " - " + str(e))
+            self.module.fail_json(msg="Error: Can't load track file" + track_file + " - " + str(e))
 
-        if track_from_file.has_key('tracks'):
+        if 'tracks' in track_from_file:
             if track_from_file['tracks'][0]:
                 for track in track_from_file['tracks']:
                     tracks_dict['tracks'].append(track['uri'])
-        elif track_from_file.has_key('items'):
+        elif 'items' in track_from_file:
             if track_from_file['items'][0]:
                 for track in track_from_file['items']:
                     tracks_dict['tracks'].append(track['uri'])
-        elif track_from_file.has_key('type'):
+        elif 'type' in track_from_file:
             if track_from_file['type'] == 'track':
                     tracks_dict['tracks'].append(track_from_file['uri'])
         else:
-            self.module.fail_json(msg="Error: Can't read dict in artists file. See https://developer.spotify.com/web-api/get-related-artists/ for a correct dict structure." )
+            self.module.fail_json(msg="Error: Can't read dict in tracks file.")
 
         return tracks_dict
+
 
 def main():
     argument_spec = {}

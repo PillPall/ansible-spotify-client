@@ -12,7 +12,19 @@ DOCUMENTATION = '''
 module: spotify_search
 short_description: Searching Spotify via Spotify API.
 description:
-    - "Ansible module to search in Spotify for Artists, Tracks, Albums, Artists & Track, Artists & Album or public Playlists via the Spotify API."
+    - "Ansible module to search in Spotify for Artists, Tracks, Albums, Artists & Track, Artists & Album or public Playlists via the Spotify API.
+
+    Except for the states artists_and_albums and artists_and_tracks you can only define one of the options albums_name, artists_name, playlists_name or tracks_name.
+
+    To search for artists_and_albums you need to define albums_name and artists_name.
+
+    To Search for artists_and_tracks you need to define albums_name and tracks_name.
+
+    The playlist search only allows you to search through public playlists. If you want to search through your personal playlists use the module spotify_user_playlists.
+
+    The options dest_file, limit and output_format can be combined.
+
+    Informations about the output format can be found here https://developer.spotify.com/web-api/search-item/."
 
 version_added: "2.5"
 
@@ -23,28 +35,28 @@ options:
 
     albums_name:
         description:
-          - Album name to search for.
+          - Name of an album.
         type: String
 
     artists_name:
         description:
-          - Artists name to search for.
+          - Name of an artist.
         type: String
 
     auth_token:
         description:
-          - Spotify API authentication token
+          - Spotify authentication token generated from the module spotify_auth and spotify_auth_create_user_token
         required: True
         type: String
 
     dest_file:
         description:
-          - Path to file to save the search result.
+          - Destination file to save the output to.
         type: String
 
     limit:
         description:
-          - Limit the playlist get_all to
+          - Limit the search output
         default: 10
         type: Integer
 
@@ -57,19 +69,19 @@ options:
 
     playlists_name:
         description:
-          - Playlist name to search for.
+          - Name of an public playlist.
         type: String
 
     state:
         description:
-          - Parameter to define what to search for.
+          - Search to trigger.
         choices: ['artists', 'tracks', 'playlists', 'albums', 'artists_and_albums', 'artists_and_tracks']
         required: true
         type: String
 
     tracks_name:
         description:
-          - Track name to search for.
+          - Name of an track.
         type: String
 
 requirements:
@@ -87,32 +99,11 @@ EXAMPLES = '''
     limit: 10
   register: artists_search_result
 
-- name: Search for artists start with Young maximum 50 search results
+- name: Search for track containing Coug*
   spotify_search:
     auth_token: 0123456789ABCDEFGHI
-    output_format: long
-    state: artists
-    artists_name: Young
-    limit: 50
-  register: artists_search_result
-
-- name: Search for track cough syrup, return maximum 20 search results and save it to search_result_tracks.json
-  spotify_search:
-    auth_token: 0123456789ABCDEFGHI
-    dest_file: search_result_tracks.json
-    output_format: short
-    state: tracks
-    tracks_name: cough syrup
-    limit: 20
-
-- name: Search for track containing Coug*, return maximum 20 search results and save it to search_result_tracks.json
-  spotify_search:
-    auth_token: 0123456789ABCDEFGHI
-    dest_file: search_result_tracks.json
-    output_format: short
     state: tracks
     tracks_name: Coug*
-    limit: 20
 
 - name: Search for playlist Colombia with wildcard at the end and return maximum 20 search results
   spotify_search:
@@ -122,30 +113,84 @@ EXAMPLES = '''
     playlists_name: Colombia*
     limit: 20
 
-- name: Search for Albums Arrival and return maximum 20 search results
+- name: Search for Albums Arrival and return maximum 20 search results and save the output to a file
   spotify_search:
     auth_token: 0123456789ABCDEFGHI
     dest_file: search_result_albums.json
     output_format: long
-    state: tracks
+    state: album
     albums_name: Arrival
     limit: 20
 
-- name: Search for Artists starts with Ab* and all Albums Start with Arr and return maximum 20 search results
+- name: Search for artists and album in combination
   spotify_search:
     auth_token: 0123456789ABCDEFGHI
-    dest_file: search_result_albums.json
-    output_format: long
-    state: tracks
-    artists_name: Ab*
-    albums_name: Arr*
+    output_format: short
+    state: artists_and_albums
+    albums_name: Coexist
+    artists_name: The xx
+    limit: 20
+
+- name: Search for artists and tracks in combination
+  spotify_search:
+    auth_token: 0123456789ABCDEFGHI
+    output_format: short
+    state: artists_and_albums
+    tracks_name: Fiction
+    artists_name: The xx
     limit: 20
 '''
 RETURN = '''
 ---
 output:
-  description: "returns a dict with the search result.
-  More information about the search result output can be found here https://developer.spotify.com/web-api/search-item/"
+  description: "returns a dict with the search result for artists and album in output_format short."
+  returned: on success
+  sample:
+    changed: True
+    result:
+        albums:
+        - album: Coexist
+          artist: The xx
+          uri: spotify:album:2cRMVS71c49Pf5SnIlJX3U
+  type: dict
+
+output:
+  description: "returns a dict with the search result for playlists in output_format long."
+  returned: on success
+  sample:
+    changed: True
+    result:
+        playlists:
+          items:
+          - name: Éxitos Colombia
+            collaborative: false
+            external_urls:
+              spotify: https://open.spotify.com/user/spotify/playlist/37i9dQZF1DXbvPjXfc8G9S
+            uri: spotify:user:spotify:playlist:37i9dQZF1DXbvPjXfc8G9S
+            public:
+            owner:
+              display_name: Spotify
+              external_urls:
+                spotify: https://open.spotify.com/user/spotify
+              uri: spotify:user:spotify
+              href: https://api.spotify.com/v1/users/spotify
+              type: user
+              id: spotify
+            tracks:
+              total: 50
+              href: https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DXbvPjXfc8G9S/tracks
+            href: https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DXbvPjXfc8G9S
+            snapshot_id: yBnt8hL8bFyoPN+8/MHVPC2CkSi5haDTCspx9821mGoNpNavK/gqauQlyoyl868VnUTf4ruylv0=
+            images:
+            - url: https://i.scdn.co/image/36d98030a7d4651025b385433a839d260e399b9f
+              width: 300
+              height: 300
+            type: playlist
+            id: 37i9dQZF1DXbvPjXfc8G9S
+  type: dict
+
+output:
+  description: "returns a dict with the search result for an artists."
   returned: on success
   sample:
     changed: True
@@ -188,6 +233,22 @@ output:
           previous:
           total: 1
   type: dict
+
+
+output:
+  description: "returns a dict with the search result for artists and tracks in output_format short."
+  returned: on success
+  sample:
+    changed: True
+    result:
+        tracks:
+        - track: Cough Syrup
+          uri: spotify:track:1UqhkbzB1kuFwt2iy4h29Q
+          artist: Young the Giant
+        - track: Cough Syrup
+          uri: spotify:track:4Tfe8Uu9faFdWRiZbpvpXd
+          artist: Young the Giant
+  type: dict
 '''
 
 import sys
@@ -200,6 +261,7 @@ try:
     import spotipy
 except ImportError as e:
     module.fail_json(msg="Error: Can't import required libraries - " + str(e))
+
 
 class SpotifySearch:
     def __init__(self, module):
@@ -214,7 +276,7 @@ class SpotifySearch:
         try:
             results = self.sp_search(q='artist:' + artists_name, limit=limit, type='artist')
         except Exception as e:
-          self.module.fail_json(msg="Error: Search for artists: " + artists_name + " failed - " + str(e))
+            self.module.fail_json(msg="Error: Search for artists: " + artists_name + " failed - " + str(e))
 
         return results
 
@@ -225,7 +287,7 @@ class SpotifySearch:
         try:
             results = self.sp_search(q='track:' + tracks_name, limit=limit, type='track')
         except Exception as e:
-          self.module.fail_json(msg="Error: Search for Track: " + tracks_name + " failed - " + str(e))
+            self.module.fail_json(msg="Error: Search for Track: " + tracks_name + " failed - " + str(e))
 
         return results
 
@@ -236,7 +298,7 @@ class SpotifySearch:
         try:
             results = self.sp_search(q=playlists_name, limit=limit, type='playlist')
         except Exception as e:
-          self.module.fail_json(msg="Error: Search for Playlist: " + playlists_name + " failed - " + str(e))
+            self.module.fail_json(msg="Error: Search for Playlist: " + playlists_name + " failed - " + str(e))
 
         return results
 
@@ -247,7 +309,7 @@ class SpotifySearch:
         try:
             results = self.sp_search(q='album:' + albums_name, limit=limit, type='album')
         except Exception as e:
-          self.module.fail_json(msg="Error: Search for Album: " + albums_name + " failed - " + str(e))
+            self.module.fail_json(msg="Error: Search for Album: " + albums_name + " failed - " + str(e))
 
         return results
 
@@ -259,7 +321,7 @@ class SpotifySearch:
         try:
             results = self.sp_search(q=artists_name + ' ' + albums_name, limit=limit, type='artists_and_album')
         except Exception as e:
-          self.module.fail_json(msg="Error: Search for artists: " + artists_name + "and Album: " + albums_name + " failed - " + str(e))
+            self.module.fail_json(msg="Error: Search for artists: " + artists_name + "and Album: " + albums_name + " failed - " + str(e))
 
         return results
 
@@ -271,14 +333,14 @@ class SpotifySearch:
         try:
             results = self.sp_search(q=artists_name + ' ' + tracks_name, limit=limit, type='artists_and_tracks')
         except Exception as e:
-          self.module.fail_json(msg="Error: Search for artists: " + artists_name + "and Track: " + tracks_name + " failed - " + str(e))
+            self.module.fail_json(msg="Error: Search for artists: " + artists_name + "and Track: " + tracks_name + " failed - " + str(e))
 
         return results
 
     def output_shortener(self, results):
         if self.module.params.get("state") == 'artists_and_albums':
             output_shortener_dict = {}
-            if results.has_key('albums'):
+            if 'albums' in results:
                 if results['albums']['items'][0]:
                     output_shortener_dict.update({'albums': []})
                     for result in results['albums']['items']:
@@ -287,16 +349,16 @@ class SpotifySearch:
                         for album_result in result['artists']:
                             artists_name = album_result['name']
                         output_shortener_dict['albums'].append({'artist': artists_name, 'album': album_name, 'uri': album_uri})
-            elif results.has_key('artists'):
+            elif 'artists' in results:
                 if results['artists']['items'][0]:
                     output_shortener_dict.update({'artists': []})
                     for result in results['artists']['items']:
-                      output_shortener_dict['artists'].append({'artist': result['name'], 'uri': result['uri']})
+                        output_shortener_dict['artists'].append({'artist': result['name'], 'uri': result['uri']})
 
             result = output_shortener_dict
         elif self.module.params.get("state") == 'artists_and_tracks':
             output_shortener_dict = {}
-            if results.has_key('tracks'):
+            if 'tracks' in results:
                 if results['tracks']['items'][0]:
                     output_shortener_dict.update({'tracks': []})
                     for result in results['tracks']['items']:
@@ -305,17 +367,17 @@ class SpotifySearch:
                         for tracks_result in result['artists']:
                             artists_name = tracks_result['name']
                         output_shortener_dict['tracks'].append({'artist': artists_name, 'track': tracks_name, 'uri': tracks_uri})
-            elif results.has_key('artists'):
+            elif 'artists' in results:
                 if results['artists']['items'][0]:
                     output_shortener_dict.update({'artists': []})
                     for result in results['artists']['items']:
-                      output_shortener_dict['artists'].append({'artist': result['name'], 'uri': result['uri']})
+                        output_shortener_dict['artists'].append({'artist': result['name'], 'uri': result['uri']})
 
             result = output_shortener_dict
         else:
             search_result_list = {self.module.params.get("state"): []}
             for result in results[self.module.params.get("state")]['items']:
-              search_result_list[self.module.params.get("state")].append({self.module.params.get("state"): result['name'], 'uri': result['uri']})
+                search_result_list[self.module.params.get("state")].append({self.module.params.get("state"): result['name'], 'uri': result['uri']})
             result = search_result_list
 
         return result
@@ -333,6 +395,7 @@ class SpotifySearch:
             return self.client.search(q=q, limit=limit, offset=offset, type='artist,album', market=market)
         elif type is 'artists_and_tracks':
             return self.client.search(q=q, limit=limit, offset=offset, type='artist,track', market=market)
+
 
 def main():
     argument_spec = {}
