@@ -28,13 +28,13 @@ Informations about the output format can be found here [link](https://developer.
 
 | Parameter     | type        |required    | default  | choices  | comments |
 | ------------- |-------------| ---------|----------- |--------- | -------- |
-| auth_token  | String       | True     | null       | null     | Spotify authentication token generated from the module `spotify_auth` and `spotify_auth_create_user_token` |
-| state | String | True | null | artists, tracks, playlists, albums, artists_and_albums, artists_and_tracks | Search to trigger. |
-| albums_name | String | False | null | null | Name of an album. |
-| artists_name | String | False | null | null | Name of an artist. |
-| playlists_name | String | False | null | null | Name of an public playlist. |
-| tracks_name | String | False | null | null | Name of an track. |
-| limit | String | False | null | null | Limit the search output. |
+| auth_token  | String       | Yes     | null       | null     | Spotify authentication token generated from the module `spotify_auth` and `spotify_auth_create_user_token` |
+| state | String | Yes | null | artists, tracks, playlists, albums, artists_and_albums, artists_and_tracks | Search to trigger. |
+| albums_name | String | No | null | null | Name of an album. |
+| artists_name | String | No | null | null | Name of an artist. |
+| playlists_name | String | No | null | null | Name of an public playlist. |
+| tracks_name | String | No | null | null | Name of an track. |
+| limit | String | No | null | null | Limit the search output. |
 | dest_file     | String       | No     | null       | null     |  Destination file to save the output to. |
 | output_format  | String      | No     | long       | short, long |  Control Ansible output format. |
 

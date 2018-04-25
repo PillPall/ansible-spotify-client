@@ -16,12 +16,12 @@ Ansible module for controlling your spotify. Play or pause a song, toggle repeat
 
 | Parameter     | type        |required    | default  | choices  | comments |
 | ------------- |-------------| ---------|----------- |--------- | -------- |
-| auth_token  | String       | True     | null       | null     | Spotify authentication token generated from the module `spotify_auth` and `spotify_auth_create_user_token` |
-| state         | String      | True       | null       | play, pause, next, previous, repeat, shuffle, transfer_playback, volume     | Action to trigger. |
-| device_id     | String      | False       | null       |        | Device ID you want to transfer the playback to. |
-| repeat_mode   | String      | False       | null       | track, context, off | Set repeat mode. |
-| toggle_shuffle | String      | False       | null       | on, off | Set shuffle mode. |
-| volume_level | Integer      | False       | null       | null | Volume level in percent. |
+| auth_token  | String       | Yes     | null       | null     | Spotify authentication token generated from the module `spotify_auth` and `spotify_auth_create_user_token` |
+| state         | String      | Yes       | null       | play, pause, next, previous, repeat, shuffle, transfer_playback, volume     | Action to trigger. |
+| device_id     | String      | No       | null       |        | Device ID you want to transfer the playback to. |
+| repeat_mode   | String      | No       | null       | track, context, off | Set repeat mode. |
+| toggle_shuffle | String      | No       | null       | on, off | Set shuffle mode. |
+| volume_level | Integer      | No       | null       | null | Volume level in percent. |
 
 
 #### Requirements  

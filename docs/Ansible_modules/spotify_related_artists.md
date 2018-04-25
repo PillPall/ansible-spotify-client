@@ -20,7 +20,7 @@ The options `dest_file` and `output_format` can be combined with all other optio
 
 | Parameter     | type        |required    | default  | choices  | comments |
 | ------------- |-------------| ---------|----------- |--------- | -------- |
-| auth_token  | String       | True     | null       | null     | Spotify authentication token generated from the module `spotify_auth` and `spotify_auth_create_user_token` |
+| auth_token  | String       | Yes     | null       | null     | Spotify authentication token generated from the module `spotify_auth` and `spotify_auth_create_user_token` |
 | artists_file  | String       | No     | null       | null     | JSON File containing a dict of track names.|
 | artists_name  | String       | No     | null       | null     | Artists name to get the related artists for. |
 | dest_file     | String       | No     | null       | null     |  Destination file to save the output to. |

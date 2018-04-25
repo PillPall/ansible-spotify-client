@@ -19,13 +19,13 @@ To Acess User data you need to specify a specific scope. For more information ab
 
 | Parameter     | type        |required    | default  | choices  | comments |
 | ------------- |-------------| ---------|----------- |--------- | -------- |
-| api_user_code | String      | True     | null       | null     | Spotify API User code |
-| username      | String      | True     |  null         | null     | Spotify Username |
-| client_id     | String      | False     | null       | null     | Spotify API Client ID |
-| client_secret | String      | False     | null       | null     | Spotify API Client Secret |
-| redirect_uri  | String      | False     | null       | null     | Spotify redirect URL |
-| scope         | String      | False     | ""         | null     | Spotify API user scope |
-| config_file | String        | False     | null       | null     | Configuration file containing client_id, client_secret, redirect_uri and scope |
+| api_user_code | String      | Yes     | null       | null     | Spotify API User code |
+| username      | String      | Yes     |  null         | null     | Spotify Username |
+| client_id     | String      | No     | null       | null     | Spotify API Client ID |
+| client_secret | String      | No     | null       | null     | Spotify API Client Secret |
+| redirect_uri  | String      | No     | null       | null     | Spotify redirect URL |
+| scope         | String      | No     | ""         | null     | Spotify API user scope |
+| config_file | String        | No     | null       | null     | Configuration file containing client_id, client_secret, redirect_uri and scope |
 
 #### Requirements  
 * python >= 2.7.10
@@ -50,7 +50,7 @@ To Acess User data you need to specify a specific scope. For more information ab
     api_user_code: 987654321ZYXWVUTSR
     config_file: "{{ inventory_dir}}/user.yaml"
 
-# 
+#
 # A full example of how to get a user authenticaton token from Cache or a generate a new one:
 #
 # Get user authentication token

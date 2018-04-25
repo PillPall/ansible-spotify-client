@@ -19,7 +19,7 @@ The `spotify_auth_create_user_token` only accepts the API Code which is in this 
 
 `AQBxUXgKcv3n6y3EAto3GZqFxWZkMk5m_wbt0AuTDDeA9gkyeeeydVYb6vmz-dabjsoCXE5uSh3o_NFaZFsXejs5Wr3nP4qIqQwP0wuzUDQEdqbbt8cftSLZznYHj3lhGi-UCbGgToLI00xxxslp1c6xAShITOIpjw-KdwAqCmEBMxBW8TIqavSFyur52cHDz9Ew3dD23RY-RYZOOI8VzMNs0jMtOvj6gboAF44Lesvf-1uEqr7uh239C5kjD2jE9f3l72nFXSdcT29_-kVLwQaX8jVtKW1VwYAuNe8YjzwRdNytnIP2gOqFWCM4AXuBc-9LupeHn2vkxenQ2JRPFJOiTZtFemmUWTHUE5o7juekzpAlZiZCG-IcXBV34X06NWA6GnyZYNVBXH9KIDMZck9HvL4ax5eyuha1hslLcZvgzl99YDN6orOfKXT3ewVvxiTDDIK5Mj0`.
 
-See section **Examples** for an full example with how to pass the API Code to the module `spotify_auth_create_user_token`.
+See section **Examples** for a full example with how to pass the API Code to the module `spotify_auth_create_user_token`.
 
 
 
@@ -27,12 +27,12 @@ See section **Examples** for an full example with how to pass the API Code to th
 
 | Parameter     | type        |required    | default  | choices  | comments |
 | ------------- |-------------| ---------|----------- |--------- | -------- |
-| username      | String      | True     |  null         | null     | Spotify Username |
-| client_id     | String      | False     | null       | null     | Spotify API Client ID |
-| client_secret | String      | False     | null       | null     | Spotify API Client Secret |
-| redirect_uri  | String      | False     | null       | null     | Spotify redirect URL |
-| scope         | String      | False     | ""         | null     | Spotify API user scope |
-| config_file | String        | False     | null       | null     | Configuration file containing client_id, client_secret, redirect_uri and scope |
+| username      | String      | Yes     |  null         | null     | Spotify Username |
+| client_id     | String      | No     | null       | null     | Spotify API Client ID |
+| client_secret | String      | No     | null       | null     | Spotify API Client Secret |
+| redirect_uri  | String      | No     | null       | null     | Spotify redirect URL |
+| scope         | String      | No     | ""         | null     | Spotify API user scope |
+| config_file | String        | No     | null       | null     | Configuration file containing client_id, client_secret, redirect_uri and scope |
 
 
 #### Requirements  

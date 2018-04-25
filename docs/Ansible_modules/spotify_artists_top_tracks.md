@@ -20,10 +20,10 @@ The options `country_code`, `dest_file` and `output_format` can be combined with
 
 | Parameter     | type        |required    | default  | choices  | comments |
 | ------------- |-------------| ---------|----------- |--------- | -------- |
+| auth_token    | String       | Yes    | null       | null     |  Authentication token for Spotify API. Taken from the module spotify_auth |
 | artists_file  | String       | No     | null       | null     | JSON File containing a dict of track names.|
 | artists_name  | String       | No     | null       | null     | Artists name to get the related artists for. |
 | artists_uri   | String       | No     | null       | null     |  Artists URI to get top tracks for. |
-| auth_token    | String       | Yes    | null       | null     |  Authentication token for Spotify API. Taken from the module spotify_auth |
 | country_code  | String       | No     | AU         | null     |  Artists URI to get top tracks for. |
 | dest_file     | String       | No     | null       | null     |  Destination file to save the output to. |
 | output_format  | String      | No     | long       | short, long |  Control Ansible output format. |
