@@ -4,7 +4,8 @@ An Ansible client to interact with the Spotify API
 # Prerequisites:
 * Ansible 2.5
 * Python 2.7.10
-* Spotipy 2.4.4 from [Spotipy](https://github.com/plamere/spotipy)
+* Spotipy 2.4.4 from [Github/Spotipy](https://github.com/plamere/spotipy)
+`pip install git+https://github.com/plamere/spotipy.git --upgrade`
 * Spotify Account [Spotify](https://spotify.com)
 * Spotify API Client ID [Developer Spotify](https://developer.spotify.com/dashboard/login)
 
@@ -13,7 +14,7 @@ An Ansible client to interact with the Spotify API
 * Modify variables in 'ansible/inventory/group_vars/all.yaml' and or 'ansible/inventory/group_vars/user.yaml'  to own needs.
   - client_id = Spotify API Client ID
   - client_secret = Spotify API Client secret
-  - redirect_uri: For testing purpose use https://example.com/callback/
+  - redirect_uri: For testing purpose use http://mbloch.s3-website-ap-southeast-2.amazonaws.com
   - scope: Depends on role using[More information](https://developer.spotify.com/web-api/using-scopes/)
   - Update Ansible Playbooks to your own need
 
