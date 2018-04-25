@@ -1,3 +1,11 @@
+# 0.0.6 - 04-21-2018
+### MODIFIED
+* Improved Documentation for each Ansible Module.
+* Relocated example playbooks.
+* Made the Ansible modules Ansible PEP8 friendly.
+
+
+
 # 0.0.5 - 04-21-2018
 ### ADDED
 * New Ansible module to update a user playlist (Add & remove tracks)
