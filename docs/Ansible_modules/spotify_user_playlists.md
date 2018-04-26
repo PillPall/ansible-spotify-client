@@ -1,4 +1,4 @@
-# Spotify user informations
+# Spotify user playlist
 
 #### Modules
 spotify_user_playlists - Ansible module to get all users playlists, create a playlist or search for a playlist.

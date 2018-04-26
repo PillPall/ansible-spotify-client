@@ -1,4 +1,4 @@
-# Spotify search
+# Spotify update user playlist
 
 #### Modules
 spotify_update_playlists - Ansible module to update user playlists
