@@ -1,2 +1,5 @@
 ---
 - import_tasks: player.yaml
+  when: spotify_player_state != "play"
+- import_tasks: play.yaml
+  when: spotify_player_state == "play"

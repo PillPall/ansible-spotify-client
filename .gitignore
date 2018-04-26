@@ -1,6 +1,5 @@
 
 stage/
-/files/
-test/integration/files
+files
 *.retry
 *.pyc

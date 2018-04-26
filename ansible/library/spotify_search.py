@@ -341,37 +341,41 @@ class SpotifySearch:
         if self.module.params.get("state") == 'artists_and_albums':
             output_shortener_dict = {}
             if 'albums' in results:
-                if results['albums']['items'][0]:
-                    output_shortener_dict.update({'albums': []})
-                    for result in results['albums']['items']:
-                        album_name = result['name']
-                        album_uri = result['uri']
-                        for album_result in result['artists']:
-                            artists_name = album_result['name']
-                        output_shortener_dict['albums'].append({'artist': artists_name, 'album': album_name, 'uri': album_uri})
+                if 'items' in results['albums']:
+                    if results['albums']['items']:
+                        output_shortener_dict.update({'albums': []})
+                        for result in results['albums']['items']:
+                            album_name = result['name']
+                            album_uri = result['uri']
+                            for album_result in result['artists']:
+                                artists_name = album_result['name']
+                            output_shortener_dict['albums'].append({'artist': artists_name, 'album': album_name, 'uri': album_uri})
             elif 'artists' in results:
-                if results['artists']['items'][0]:
-                    output_shortener_dict.update({'artists': []})
-                    for result in results['artists']['items']:
-                        output_shortener_dict['artists'].append({'artist': result['name'], 'uri': result['uri']})
+                if 'items' in results['artists']:
+                    if results['artists']['items']:
+                        output_shortener_dict.update({'artists': []})
+                        for result in results['artists']['items']:
+                            output_shortener_dict['artists'].append({'artist': result['name'], 'uri': result['uri']})
 
             result = output_shortener_dict
         elif self.module.params.get("state") == 'artists_and_tracks':
             output_shortener_dict = {}
             if 'tracks' in results:
-                if results['tracks']['items'][0]:
-                    output_shortener_dict.update({'tracks': []})
-                    for result in results['tracks']['items']:
-                        tracks_name = result['name']
-                        tracks_uri = result['uri']
-                        for tracks_result in result['artists']:
-                            artists_name = tracks_result['name']
-                        output_shortener_dict['tracks'].append({'artist': artists_name, 'track': tracks_name, 'uri': tracks_uri})
+                if 'items' in results['tracks']:
+                    if results['tracks']['items']:
+                        output_shortener_dict.update({'tracks': []})
+                        for result in results['tracks']['items']:
+                            tracks_name = result['name']
+                            tracks_uri = result['uri']
+                            for tracks_result in result['artists']:
+                                artists_name = tracks_result['name']
+                            output_shortener_dict['tracks'].append({'artist': artists_name, 'track': tracks_name, 'uri': tracks_uri})
             elif 'artists' in results:
-                if results['artists']['items'][0]:
-                    output_shortener_dict.update({'artists': []})
-                    for result in results['artists']['items']:
-                        output_shortener_dict['artists'].append({'artist': result['name'], 'uri': result['uri']})
+                if 'items' in results['artists']:
+                    if results['artists']['items']:
+                        output_shortener_dict.update({'artists': []})
+                        for result in results['artists']['items']:
+                            output_shortener_dict['artists'].append({'artist': result['name'], 'uri': result['uri']})
 
             result = output_shortener_dict
         else:

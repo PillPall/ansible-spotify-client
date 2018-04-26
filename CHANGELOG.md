@@ -1,3 +1,12 @@
+# 0.0.7 - 04-26-2018
+### ADDED
+* Extend functionallity of the Ansible module spotify_player. It now supports to play tracks, albums, playlist or tracks from an artist. See Documentation and examples for how to use.
+
+### MODIFIED
+* Improved file/dict handling in several Ansible modules
+* Update spotify_player module documentation
+* Update spotify_player roles
+
 # 0.0.6 - 04-25-2018
 ### ADDED
 * New redirect URL

@@ -267,7 +267,7 @@ class UserTracks:
             output_dict = ({'artists': []})
             for artists in results['items']:
                 artist = artists['name']
-                uri = nartists['uri']
+                uri = artists['uri']
 
                 output_dict['artists'].append({'artists': artist, 'uri': uri})
         elif self.module.params.get("state") == 'user_info':

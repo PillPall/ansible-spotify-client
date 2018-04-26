@@ -141,7 +141,7 @@ class ArtistsTopTracks:
 
         try:
             if 'artists' in result:
-                if 'uri' in ['items'][0]:
+                if result['items']:
                     artists_uri = result['artists']['items'][0]['uri']
                     self.module.params.update(artists_uri=artists_uri)
 
@@ -158,10 +158,11 @@ class ArtistsTopTracks:
             self.module.fail_json(msg="Error: Can't load artists file" + artists_file + " - " + str(e))
 
         if isinstance(artists_from_file, dict):
-            if 'uri' in artists_from_file['artists'][0]:
-                for artist in artists_from_file['artists']:
-                    result = self.get_top_tracks(artists_uri=artist['uri'])
-                    tracks_dict = self.append_to_dict(result, tracks_dict)
+            if 'artists' artists_from_file:
+                if artists_from_file['artists']:
+                    for artist in artists_from_file['artists']:
+                        result = self.get_top_tracks(artists_uri=artist['uri'])
+                        tracks_dict = self.append_to_dict(result, tracks_dict)
             else:
                 self.module.fail_json(msg="Error: Can't read dict in file.")
         else:

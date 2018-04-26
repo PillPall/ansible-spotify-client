@@ -6,6 +6,14 @@
     config_file: "{{inventory_dir}}/group_vars/user.yaml"
     auth_token: "{{ auth_token }}"
     device_id: 29faf1376363f1d9559f99ea65a4a95cc67f6307
+    playlist_file: "{{ playbook_dir }}/files/create_public_playlist_integration_test.json"
+    playlist_uri: spotify:user:sonymusiccol:playlist:4hAmaWPsntG17RJPZbAENM
+    artist_file: "{{ playbook_dir }}/files/search_result_artists_integration_test_short.json"
+    artist_uri: spotify:artist:7oaSITFPadI3fnIxbv7hTa
+    album_file: "{{ playbook_dir }}/files/search_result_albums_integration_test.json"
+    album_uri: spotify:album:4HDqXJvheEra3d0FtRBNvM
+    track_file: "{{ playbook_dir }}/files/artists_top_tracks_integration_tests.json"
+    track_uri: spotify:track:1ZJfXmUfrfP2p6v9TzWWiL
   tasks:
   - include_role:
       name: authentication
@@ -14,11 +22,11 @@
   - include_role:
       name: player
     vars:
-      spotify_player_state: play
+      spotify_player_state: pause
   - include_role:
       name: player
     vars:
-      spotify_player_state: pause
+      spotify_player_state: play
   - include_role:
       name: player
     vars:
@@ -57,3 +65,47 @@
     vars:
       spotify_player_state: transfer_playback
       spotify_player_device_id: "{{ device_id }}"
+  - include_role:
+      name: player
+    vars:
+      spotify_player_state: play
+      spotify_playlist_uri: "{{ playlist_uri }}"
+  - include_role:
+      name: player
+    vars:
+      spotify_player_state: play
+      spotify_playlist_file: "{{ playlist_file }}"
+  - include_role:
+      name: player
+    vars:
+      spotify_player_state: play
+      spotify_artist_uri: "{{ artist_uri }}"
+  - include_role:
+      name: player
+    vars:
+      spotify_player_state: play
+      spotify_artist_file: "{{ artist_file }}"
+  - include_role:
+      name: player
+    vars:
+      spotify_player_state: pause
+  - include_role:
+      name: player
+    vars:
+      spotify_player_state: play
+      spotify_album_uri: "{{ album_uri }}"
+  - include_role:
+      name: player
+    vars:
+      spotify_player_state: play
+      spotify_album_file: "{{ album_file }}"
+  - include_role:
+      name: player
+    vars:
+      spotify_player_state: play
+      spotify_player_track_uri: "{{ track_uri }}"
+  - include_role:
+      name: player
+    vars:
+      spotify_player_state: play
+      spotify_track_file:  "{{ track_file }}"

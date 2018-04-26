@@ -170,7 +170,7 @@ class RelatedArtists:
 
         self.client = spotipy.Spotify(self.module.params.get("auth_token"))
 
-    def get_related_from_file(self):
+    def get_artists_from_file(self):
         artists_file = self.module.params.get("artists_file")
         artists_dict = {'artists': []}
 
@@ -179,22 +179,31 @@ class RelatedArtists:
         except Exception as e:
             self.module.fail_json(msg="Error: Can't load artists file" + artists_file + " - " + str(e))
         if isinstance(artists_from_file, dict):
-            if 'name' in artists_from_file['artists']:
-                for artist in artists_from_file['artists']:
-                    result_related_artists = self.get_related_for_artists(artist['name'])
-                    artists_dict = self.append_to_dict(result_related_artists, artists_dict)
-            elif 'artist' in artists_from_file['artists']:
-                for artist in artists_from_file['artists']:
-                    result_related_artists = self.get_related_for_artists(artist['artist'])
-                    artists_dict = self.append_to_dict(result_related_artists, artists_dict)
-            elif 'artists' in artists_from_file['artists']:
-                for artist in artists_from_file['artists']:
-                    result_related_artists = self.get_related_for_artists(artist['artists'])
-                    artists_dict = self.append_to_dict(result_related_artists, artists_dict)
-            elif 'items' in artists_from_file['artists']:
-                for artist in artists_from_file['artists']['items']:
-                    result_related_artists = self.get_related_for_artists(artist['name'])
-                    artists_dict = self.append_to_dict(result_related_artists, artists_dict)
+            if 'artists' in artists_from_file:
+                if 'name' in artists_from_file['artists']:
+                    if artists_from_file['artists']['name']:
+                        for artist in artists_from_file['artists']:
+                            result_related_artists = self.get_related_for_artists(artist['name'])
+                            artists_dict = self.append_to_dict(result_related_artists, artists_dict)
+                elif 'artist' in artists_from_file['artists']:
+                    if artists_from_file['artists']['artist']:
+                        for artist in artists_from_file['artists']:
+                            result_related_artists = self.get_related_for_artists(artist['artist'])
+                            artists_dict = self.append_to_dict(result_related_artists, artists_dict)
+                elif 'artists' in artists_from_file['artists']:
+                    if artists_from_file['artists']['artists']:
+                        for artist in artists_from_file['artists']:
+                            result_related_artists = self.get_related_for_artists(artist['artists'])
+                            artists_dict = self.append_to_dict(result_related_artists, artists_dict)
+                elif 'items' in artists_from_file['artists']:
+                    if artists_from_file['artists']['items']:
+                        for artist in artists_from_file['artists']['items']:
+                            result_related_artists = self.get_related_for_artists(artist['name'])
+                            artists_dict = self.append_to_dict(result_related_artists, artists_dict)
+                elif artists_from_file['artists']:
+                    for artist in artists_from_file['artists']:
+                        result_related_artists = self.get_related_for_artists(artist['artists'])
+                        artists_dict = self.append_to_dict(result_related_artists, artists_dict)
             else:
                 self.module.fail_json(msg="Error: Can't read dict in artists file.")
 
@@ -255,7 +264,7 @@ def main():
     artists = RelatedArtists(module)
 
     if module.params.get("artists_file"):
-        results = artists.get_related_from_file()
+        results = artists.get_artists_from_file()
     else:
         results = artists.get_related_for_artists()
 

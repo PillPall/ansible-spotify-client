@@ -11,7 +11,7 @@
     user_info_output: short
     # user_info_time_range: long_term
     # user_info_limit: 2
-    # user_info_dest_file: "{{ playbook_dir }}/../files/{{ username }}_user_info.json"
+    user_info_dest_file: "{{ playbook_dir }}/../files/{{ username }}_user_info.json"
   roles:
     - authentication
     - user_info

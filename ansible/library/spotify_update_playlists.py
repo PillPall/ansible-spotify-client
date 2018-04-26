@@ -250,19 +250,20 @@ class UpdatePlaylist:
         except Exception as e:
             self.module.fail_json(msg="Error: Can't load playlist file" + playlist_file + " - " + str(e))
 
-        if 'playlists' in playlists_from_file:
-            if ['playlists'][0]:
-                for playlist in playlists_from_file['playlists']:
-                    playlists_dict['playlists'].append(playlist['uri'])
-        elif 'items' in playlists_from_file:
-            if playlists_from_file['items'][0]:
-                for playlist in playlists_from_file['items']:
-                    playlists_dict['playlists'].append(playlist['uri'])
-        elif 'type' in playlists_from_file:
-            if playlists_from_file['type'] == 'playlist':
-                    playlists_dict['playlists'].append(playlists_from_file['uri'])
-        else:
-            self.module.fail_json(msg="Error: Can't read dict in playlists file.")
+        try:
+            if 'playlists' in playlists_from_file:
+                if playlists_from_file['playlists']:
+                    for playlist in playlists_from_file['playlists']:
+                        playlists_dict['playlists'].append(playlist['uri'])
+            elif 'items' in playlists_from_file:
+                if playlists_from_file['items']:
+                    for playlist in playlists_from_file['items']:
+                        playlists_dict['playlists'].append(playlist['uri'])
+            elif 'type' in playlists_from_file:
+                if playlists_from_file['type'] == 'playlist':
+                        playlists_dict['playlists'].append(playlists_from_file['uri'])
+        except Exception as e:
+            self.module.fail_json(msg="Error: Can't read dict in playlists file. - " + str(e))
 
         return playlists_dict
 
@@ -274,19 +275,20 @@ class UpdatePlaylist:
         except Exception as e:
             self.module.fail_json(msg="Error: Can't load track file" + track_file + " - " + str(e))
 
-        if 'tracks' in track_from_file:
-            if track_from_file['tracks'][0]:
-                for track in track_from_file['tracks']:
-                    tracks_dict['tracks'].append(track['uri'])
-        elif 'items' in track_from_file:
-            if track_from_file['items'][0]:
-                for track in track_from_file['items']:
-                    tracks_dict['tracks'].append(track['uri'])
-        elif 'type' in track_from_file:
-            if track_from_file['type'] == 'track':
-                    tracks_dict['tracks'].append(track_from_file['uri'])
-        else:
-            self.module.fail_json(msg="Error: Can't read dict in tracks file.")
+        try:
+            if 'tracks' in track_from_file:
+                if track_from_file['tracks']:
+                    for track in track_from_file['tracks']:
+                        tracks_dict['tracks'].append(track['uri'])
+            elif 'items' in track_from_file:
+                if track_from_file['items']:
+                    for track in track_from_file['items']:
+                        tracks_dict['tracks'].append(track['uri'])
+            elif 'type' in track_from_file:
+                if track_from_file['type'] == 'track':
+                        tracks_dict['tracks'].append(track_from_file['uri'])
+        except Exception as e:
+            self.module.fail_json(msg="Error: Can't read dict in tracks file. - " + str(e))
 
         return tracks_dict
 

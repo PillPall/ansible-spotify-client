@@ -1,0 +1,62 @@
+---
+- name: "Ansible Spotify Player {{ spotify_player_state }}"
+  spotify_player:
+    auth_token: "{{ auth_token }}"
+    state: "{{ spotify_player_state }}"
+  when: spotify_player_track_uri is undefined and spotify_artist_uri is undefined and spotify_playlist_uri is undefined and spotify_track_file is undefined and spotify_artist_file is undefined and spotify_playlist_file is undefined and spotify_album_file is undefined and spotify_album_uri is undefined
+
+- name: "Ansible Spotify Play specific track"
+  spotify_player:
+    auth_token: "{{ auth_token }}"
+    state: "{{ spotify_player_state }}"
+    track_uri: "{{ spotify_player_track_uri }}"
+  when: spotify_player_track_uri is defined
+
+- name: "Ansible Spotify Play songs from specific artist "
+  spotify_player:
+    auth_token: "{{ auth_token }}"
+    state: "{{ spotify_player_state }}"
+    artist_uri: "{{ spotify_artist_uri }}"
+  when: spotify_artist_uri is defined
+
+- name: "Ansible Spotify Play specific playlist"
+  spotify_player:
+    auth_token: "{{ auth_token }}"
+    state: "{{ spotify_player_state }}"
+    playlist_uri: "{{ spotify_playlist_uri }}"
+  when: spotify_playlist_uri is defined
+
+- name: "Ansible Spotify Play specific album"
+  spotify_player:
+    auth_token: "{{ auth_token }}"
+    state: "{{ spotify_player_state }}"
+    album_uri: "{{ spotify_album_uri }}"
+  when: spotify_album_uri is defined
+
+- name: "Ansible Spotify Play specific track from file"
+  spotify_player:
+    auth_token: "{{ auth_token }}"
+    state: "{{ spotify_player_state }}"
+    track_file: "{{ spotify_track_file }}"
+  when: spotify_track_file is defined
+
+- name: "Ansible Spotify Play specific artist from file"
+  spotify_player:
+    auth_token: "{{ auth_token }}"
+    state: "{{ spotify_player_state }}"
+    artists_file: "{{ spotify_artist_file }}"
+  when: spotify_artist_file is defined
+
+- name: "Ansible Spotify Play specific playlist from file"
+  spotify_player:
+    auth_token: "{{ auth_token }}"
+    state: "{{ spotify_player_state }}"
+    playlist_file: "{{ spotify_playlist_file }}"
+  when: spotify_playlist_file is defined
+
+- name: "Ansible Spotify Play specific album from file"
+  spotify_player:
+    auth_token: "{{ auth_token }}"
+    state: "{{ spotify_player_state }}"
+    album_file: "{{ spotify_album_file }}"
+  when: spotify_album_file is defined

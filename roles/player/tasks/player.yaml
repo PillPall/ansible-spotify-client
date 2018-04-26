@@ -1,11 +1,9 @@
 ---
-# Get related artists from artists_name
-
 - name: "Ansible Spotify Player {{ spotify_player_state }}"
   spotify_player:
     auth_token: "{{ auth_token }}"
     state: "{{ spotify_player_state }}"
-  when: volume_level_percent is undefined and spotify_player_toggle_shuffle is undefined and spotify_player_repeat is undefined and spotify_player_device_id is undefined
+  when: spotify_player_state is defined and volume_level_percent is undefined and spotify_player_toggle_shuffle is undefined and spotify_player_repeat is undefined and spotify_player_device_id is undefined
 
 - name: Ansible Spotify Player set Volume
   spotify_player:

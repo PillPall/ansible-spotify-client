@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    config_file: "{{inventory_dir}}/group_vars/user.yaml"
+    auth_token: "{{ auth_token }}"
+    username: bloch-m
+    spotify_player_state: play
+    spotify_playlist_file: "{{ playbook_dir }}/../files/search_result_playlists_integration_test.json"
+    # spotify_playlist_uri: spotify:user:bloch-m:playlist:68DDfsA5cDcHOrKQEvO1wK
+  roles:
+    - authentication
+    - player
