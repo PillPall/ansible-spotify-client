@@ -35,7 +35,7 @@ The options `country_code`, `dest_file` and `output_format` can be combined with
 #### Examples
 ```
 - name: Get top tracks for an named artist in australia and save it to file
-  spotify_artits_top_tracks:
+  spotify_artists_top_tracks:
     auth_token: 0123456789ABCDEFGHI
     artist_name: young the giant
     country_code: au

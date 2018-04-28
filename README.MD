@@ -81,19 +81,14 @@ Example of getting top tracks of related artists, create a new playlist and add 
 
 User client authentication:
 
-
  For User Authentication you need to define all parameters in `ansible/inventory/group_vars/user.yaml` and run a role.
-
-
- If no user authentication happens before, Ansible is going to **pause the playbook and waits for input** during it tries to open your default Browser directing to the Spotify authentication page.
-
- Next thing to do is you need to login to Spotify and allow the application access. After allowing, you will be redirected to the URL specified in `redirect_uri`. Now you need to copy the API User code and paste it to the command line, which waits for your input. For an example `redirect_uri` see the **example section** above. Ansible will then create a cache file with your credentials `/tmp/.cache-USERNAME` e.g. `/tmp/.cache-bloch-m`. Once your credentials are cached there is no need to redo the authentication unless your credentials are expired.
 
 
 Public client authentication:
 
+ For User Authentication you need to define all parameters in `ansible/inventory/group_vars/public.yaml` and run a role.
 
-You only need to provide a Client ID and Secret Key. Since we connect here to the Public interface there is no need for extra authentication.
+More detail information about the authenticatino process can be found here [(link)](https://pillpall.github.io/ansible/2018/04/28/Use-Ansible-to-automate-Spotify-part-I.html).
 
 
 # TO-DOs:

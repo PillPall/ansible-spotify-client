@@ -1,5 +1,6 @@
-
-stage/
-files
 *.retry
 *.pyc
+*.swp
+stage/
+files
+test/integration/files/

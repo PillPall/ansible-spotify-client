@@ -48,8 +48,7 @@ options:
 
     scope:
        description:
-         - Scope, required for User authentication. For avaiable scopes
-           visit https://beta.developer.spotify.com/documentation/general/guides/scopes/.
+         - Scope, required for User authentication.
        type: String
 
     username:

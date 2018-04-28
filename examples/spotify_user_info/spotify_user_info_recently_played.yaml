@@ -6,10 +6,10 @@
     config_file: "{{inventory_dir}}/group_vars/user.yaml"
     auth_token: "{{ auth_token }}"
     username: bloch-m
-    user_tracks_output: short
-    user_tracks_limit: 5
-    # user_tracks_dest_file: "{{ playbook_dir }}/../files/{{ username }}_recently_played.json"
-    user_tracks_state: recently_played
+    user_info_output: short
+    user_info_limit: 5
+    # user_info_dest_file: "{{ playbook_dir }}/../files/{{ username }}_recently_played.json"
+    user_info_state: recently_played
   roles:
     - authentication
-    - user_tracks
+    - user_info

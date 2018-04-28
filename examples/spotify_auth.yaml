@@ -3,7 +3,7 @@
   connection: local
   gather_facts: false
   vars:
-    config_file: "{{inventory_dir}}/group_vars/public.yaml"
     username: bloch-m
+    config_file: "{{inventory_dir}}/group_vars/user.yaml"
   roles:
     - authentication

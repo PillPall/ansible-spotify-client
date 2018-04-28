@@ -1,6 +1,11 @@
+# 0.0.8 - 04-29-2018
+### MODIFIED
+* Update Readme
+* Update user_info examples variable names
+
 # 0.0.7 - 04-26-2018
 ### ADDED
-* Extend functionallity of the Ansible module spotify_player. It now supports to play tracks, albums, playlist or tracks from an artist. See Documentation and examples for how to use.
+* Extend functionality of the Ansible module spotify_player. It now supports to play tracks, albums, playlist or tracks from an artist. See Documentation and examples for how to use.
 
 ### MODIFIED
 * Improved file/dict handling in several Ansible modules
@@ -23,7 +28,6 @@
 * Feature to transfer playback to a different device with module spotify_player
 * Added Ansible module documentation
 * Integration test of all roles and states
-
 
 ### MODIFIED
 * Renamed Ansible module sp_auth to sptify_auth
