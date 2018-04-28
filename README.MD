@@ -22,16 +22,6 @@ An Ansible client to interact with the Spotify API
 
 * Modify example playbooks to own need
 
-
-### Documentation
-Documentation about all Ansible modules can be in the directory **docs**.
-
-Examples can be found in the directory **examples**.
-
-All Roles for using the Ansible Modules can be found in the directory **roles**.
-
-An example HTML File for your own redirect_uri can be found in **examples/callback**. Use this file as your redirect_uri to make it easier to copy/paste the API User code. See this example: [link example](http://mbloch.s3-website-ap-southeast-2.amazonaws.com/?code=AQDFYVg0pC7YF4rZ1bMApVXNrhbjQn9QPJWRJxs6HmE8eksQgZpyXdKiQIXHgN_5j7lfE6BEZ_asdfasfdMo4Ps0fwep98GZvcvbczvasdfQOPNLx71mA0bmlA3IveCmKLs61qIO_OjAYa8P8a4DSKdtN123123123s6cGCRZ_JElumBELi-aa6e0QQ5hsEX5s1Md9OTf2tO_n5Wy7MUXP-jJBwMUNLUSeP_KG09LCaokpUHXtN5D__-q-S9NJbmYFiCrd8M6J9Cv6EzxcvzxcvzxcvLc8CeCCeQSAuJnl7ZaYY9DYNlZyvYOaoCXM2Ooo7NEtXxvLG-suC3hiMq-siK0hntGbG_1yRWa1jtGAdHOp-Nst9xEMKxvnOKtwOnq_g1Pd7asdfasdft_nioWT9KRL8ooIw2hwSrzhAG4L0y79vu9_KI1mGvQPaYpwQ).
-
 ### Using the example playbooks
 
 Have a look to the example folder. Here are some example using the roles:
@@ -77,7 +67,16 @@ Example of getting top tracks of related artists, create a new playlist and add 
 # ANSIBLE_CONFIG=ansible/config/ansible.cfg ansible-playbook examples/spotify_save_top_tracks_of_related_artists_to_create_playlist.yaml
 ```
 
-# Notes
+# Documentation:
+Documentation about all Ansible modules can be in the directory **docs**.
+
+Examples can be found in the directory **examples**.
+
+All Roles for using the Ansible Modules can be found in the directory **roles**.
+
+An example HTML File for your own redirect_uri can be found in **examples/callback**. Use this file as your redirect_uri to make it easier to copy/paste the API User code. See this example: [link example](http://mbloch.s3-website-ap-southeast-2.amazonaws.com/?code=AQDFYVg0pC7YF4rZ1bMApVXNrhbjQn9QPJWRJxs6HmE8eksQgZpyXdKiQIXHgN_5j7lfE6BEZ_asdfasfdMo4Ps0fwep98GZvcvbczvasdfQOPNLx71mA0bmlA3IveCmKLs61qIO_OjAYa8P8a4DSKdtN123123123s6cGCRZ_JElumBELi-aa6e0QQ5hsEX5s1Md9OTf2tO_n5Wy7MUXP-jJBwMUNLUSeP_KG09LCaokpUHXtN5D__-q-S9NJbmYFiCrd8M6J9Cv6EzxcvzxcvzxcvLc8CeCCeQSAuJnl7ZaYY9DYNlZyvYOaoCXM2Ooo7NEtXxvLG-suC3hiMq-siK0hntGbG_1yRWa1jtGAdHOp-Nst9xEMKxvnOKtwOnq_g1Pd7asdfasdft_nioWT9KRL8ooIw2hwSrzhAG4L0y79vu9_KI1mGvQPaYpwQ).
+
+### Authentication
 
 User client authentication:
 
