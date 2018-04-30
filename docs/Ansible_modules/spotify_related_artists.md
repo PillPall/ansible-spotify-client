@@ -11,7 +11,7 @@ spotify_related_artists - Ansible module to get 20 related artists for a given a
 #### Synopsis
 
 Ansible module to get 20 related artists for a given artists. Artists can be provided via **name or JSON File**.
-A JSON file can be generated using the Ansible module `spotify_search` or visit this site for more informations [Link](https://beta.developer.spotify.com/documentation/web-api/reference/artists/get-artist/).
+A JSON file can be generated using the Ansible module `spotify_search` or visit this site for more informations [(link)](https://beta.developer.spotify.com/documentation/web-api/reference/artists/get-artist/).
 
 You can only define one of the options at the same time: `artists_name` or `artists_file`.
 The options `dest_file` and `output_format` can be combined with all other options.

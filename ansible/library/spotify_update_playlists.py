@@ -12,8 +12,18 @@ DOCUMENTATION = '''
 module: spotify_update_playlists
 short_description: Update one or more user playlists.
 description:
-    - "Ansible module to add or remove tracks to/from a user playlist. Tracks and playlists can be provided via a JSON File.
-    Visit https://developer.spotify.com/documentation/web-api/reference/object-model/ for more informations."
+    - Ansible module to add or remove tracks to/from a user playlist. Tracks and playlists can be provided via URI or JSON File. 
+
+    A JSON file can be generated using the Ansible module spotify_search, spotify_user_playlists or spotify_artists_top_tracks or visit this site for more informations https://beta.developer.spotify.com/documentation/web-api/reference/playlists/create-playlist/ https://beta.developer.spotify.com/documentation/web-api/reference/tracks/get-several-tracks/.
+
+    You can only define one of the playlist_id and playlist-file options.
+
+    You can only define one of the track_id and track_file options.
+
+    You can combine these options for playlist and track.
+
+    The option dest_file can be combined with all states."
+
 version_added: "2.5"
 
 author:
@@ -178,8 +188,7 @@ class UpdatePlaylist:
         for playlist in playlist_dict['playlists']:
             while not done:
                 if track_dict_list_length == 1:
-                    iii = track_dict_list_length - 1
-                    track = [tracks_dict['tracks'][iii]]
+                    track = [tracks_dict['tracks'][track_dict_list_length]]
                     try:
                         result = method_caller(username, playlist, track)
                         results['result'].append(result)
@@ -187,8 +196,7 @@ class UpdatePlaylist:
                         self.module.fail_json(msg="Error: Can't update playlist  - " + str(e))
                     done = True
                 elif ii == track_dict_list_length:
-                    iii = track_dict_list_length - 1
-                    track = tracks_dict['tracks'][i:iii]
+                    track = tracks_dict['tracks'][i:track_dict_list_length]
                     try:
                         result = method_caller(username, playlist, track)
                         results['result'].append(result)
@@ -196,8 +204,7 @@ class UpdatePlaylist:
                         self.module.fail_json(msg="Error: Can't update playlist  - " + str(e))
                     done = True
                 elif ii > track_dict_list_length:
-                    iii = track_dict_list_length - 1
-                    track = tracks_dict['tracks'][i:iii]
+                    track = tracks_dict['tracks'][i:track_dict_list_length]
                     try:
                         result = method_caller(username, playlist, track)
                         results['result'].append(result)
@@ -306,7 +313,6 @@ def main():
         username=dict(required=True, type='str')
     ))
     module = AnsibleModule(argument_spec=argument_spec)
-    output_format = module.params.get("output_format")
     state = module.params.get("state")
 
     update_playlist = UpdatePlaylist(module)

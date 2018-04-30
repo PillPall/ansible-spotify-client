@@ -10,7 +10,7 @@ spotify_artists_top_tracks - Ansible module to get top tracks for artists
 
 #### Synopsis
 
-Ansible module to get the top tracks for an artists in a specific country. Artists can be provided via **name, URI or JSON File**. A JSON file can be generated using the Ansible module `spotify_search` or `spotify_related_artists` or visit this site for more informations [Link](https://beta.developer.spotify.com/documentation/web-api/reference/artists/get-artist/).
+Ansible module to get the top tracks for an artists in a specific country. Artists can be provided via **name, URI or JSON File**. A JSON file can be generated using the Ansible module `spotify_search` or `spotify_related_artists` or visit this site for more informations [(link)](https://beta.developer.spotify.com/documentation/web-api/reference/artists/get-artist/).
 
 You can only define one of the options at the same time: `artists_name`, `artists_file` or `artists_uri`.
 

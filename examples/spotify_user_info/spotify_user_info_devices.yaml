@@ -6,9 +6,9 @@
     config_file: "{{inventory_dir}}/group_vars/user.yaml"
     auth_token: "{{ auth_token }}"
     username: bloch-m
-    spotify_player_state: play
-    # spotify_player_track_uri: spotify:track:1ZJfXmUfrfP2p6v9TzWWiL
-    spotify_track_file:  "{{ playbook_dir }}/../files/search_result_tracks.json"
+    user_info_state: devices
+    user_info_output: short
+    user_info_dest_file: "{{ playbook_dir }}/../files/{{ username }}_user_info.json"
   roles:
     - authentication
-    - player
+    - user_info

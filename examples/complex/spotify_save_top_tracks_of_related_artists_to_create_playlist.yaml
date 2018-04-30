@@ -1,5 +1,18 @@
 ---
-# An Example of an more complicated playbook to use several roles for creating a new playlist.
+##################################################################
+#
+# An Example of an more complicated playbook to use several roles
+#
+# This Playbook will look up for related artists of Passion Pit and
+# save it to the file "{{ playbook_dir }}/files/related_artists.json".
+# Than it runs get_related_artists for all direct related artists
+# of Passion Pit and save them to the file
+# "{{ playbook_dir }}/files/related_artists.json". Once done
+# it will lookup the top tracks of all found related artists and
+# create a playlist called "ansible playlist". At the end it will
+# add all top tracks it found to the playlist.
+# 
+##################################################################
 - hosts: localhost
   connection: local
   gather_facts: false
@@ -8,7 +21,7 @@
     username: bloch-m
     user_playlists_for_user: "{{ username }}"
     get_related_artists_for: Passion Pit
-    get_related_dest_file: "{{ playbook_dir }}/files/related_artists2.json"
+    get_related_dest_file: "{{ playbook_dir }}/files/related_artists.json"
     get_related_artists_output: short
     get_top_tracks_dest_file: "{{ playbook_dir }}/files/artists_top_tracks.json"
     user_playlists_state: create

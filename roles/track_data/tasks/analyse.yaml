@@ -1,0 +1,30 @@
+---
+- name: Analyse track from track id
+  spotify_track_data:
+    auth_token: "{{ auth_token }}"
+    state: "{{ track_data_state }}"
+    track_id: "{{ track_data_track_id }}"
+  when: track_data_track_id is defined and track_data_track_file is undefined and track_data_dest_file is undefined
+
+- name: Analyse track from track id and defined dest_file
+  spotify_track_data:
+    auth_token: "{{ auth_token }}"
+    state: "{{ track_data_state }}"
+    track_id: "{{ track_data_track_id }}"
+    dest_file: "{{ track_data_dest_file }}"
+  when: track_data_track_id is defined and track_data_track_file is undefined and track_data_dest_file is defined
+
+- name: Analyse track from track file
+  spotify_track_data:
+    auth_token: "{{ auth_token }}"
+    state: "{{ track_data_state }}"
+    track_file: "{{ track_data_track_file }}"
+  when: track_data_track_id is undefined and track_data_track_file is defined and track_data_dest_file is undefined
+
+- name: Analyse track from track file with defined dest_file
+  spotify_track_data:
+    auth_token: "{{ auth_token }}"
+    state: "{{ track_data_state }}"
+    track_file: "{{ track_data_track_file }}"
+    dest_file: "{{ track_data_dest_file }}"
+  when: track_data_track_id is undefined and track_data_track_file is defined and track_data_dest_file is defined

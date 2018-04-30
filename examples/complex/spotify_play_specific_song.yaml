@@ -1,0 +1,50 @@
+---
+##################################################################
+#
+# An Example of an more complicated playbook to use several roles
+#
+# This Playbook will look up all User devices and if it found the
+# device with the paatern "MichaelBloch" it will play a song on
+# this device.
+#
+##################################################################
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    username: bloch-m
+  tasks:
+  - include_role:
+      name: authentication
+    vars:
+      config_file: "{{inventory_dir}}/group_vars/user.yaml"
+
+  - name: Get user devices
+    spotify_user_info:
+      auth_token: "{{ auth_token }}"
+      output_format: short
+      state: devices
+    register: sp_devices
+
+  - set_fact:
+      sp_device: "{{ item.device_id }}"
+    with_items: "{{ sp_devices.result.devices }}"
+    when: item.name == "MichaelBloch"
+
+  - name: Ansible Spotify Player transfer playback
+    spotify_player:
+      auth_token: "{{ auth_token }}"
+      state: transfer_playback
+      device_id: "{{ sp_device }}"
+
+  - name: Ansible Spotify Player set Volume
+    spotify_player:
+      auth_token: "{{ auth_token }}"
+      state: volume
+      volume_level: 80
+
+  - name: "Ansible Spotify Play specific track"
+    spotify_player:
+      auth_token: "{{ auth_token }}"
+      state: play
+      track_uri: spotify:track:2KH16WveTQWT6KOG9Rg6e2

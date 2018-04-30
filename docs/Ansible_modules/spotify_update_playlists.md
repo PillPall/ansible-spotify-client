@@ -10,11 +10,13 @@ spotify_update_playlists - Ansible module to update user playlists
 
 #### Synopsis
 
-Ansible module to add or remove tracks to/from a user playlist. Tracks and playlists can be provided via **URI or JSON File**. A JSON file can be generated using the Ansible module `spotify_search`, `spotify_user_playlists` or `spotify_artists_top_tracks` or visit this site for more informations [Link Playlists](https://beta.developer.spotify.com/documentation/web-api/reference/playlists/create-playlist/) [Link Tracks](https://beta.developer.spotify.com/documentation/web-api/reference/tracks/get-several-tracks/).
+Ansible module to add or remove tracks to/from a user playlist. Tracks and playlists can be provided via **URI or JSON File**. A JSON file can be generated using the Ansible module `spotify_search`, `spotify_user_playlists` or `spotify_artists_top_tracks`.
+
+For more informations about the JSON data structure visit these links [(link playlists)](https://beta.developer.spotify.com/documentation/web-api/reference/playlists/create-playlist/) & [(link tracks)](https://beta.developer.spotify.com/documentation/web-api/reference/tracks/get-several-tracks/).
 
 You can only define one of the `playlist_id` and `playlist-file` options.
 
-You can only define one of the `track_file` and `track_file` options.
+You can only define one of the `track_id` and `track_file` options.
 
 You can combine these options for **playlist** and **track**.
 

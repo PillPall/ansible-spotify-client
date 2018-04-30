@@ -1,0 +1,5 @@
+---
+- import_tasks: feature.yaml
+  when: track_data_state == "feature"
+- import_tasks: analyse.yaml
+  when: track_data_state == "analyse"

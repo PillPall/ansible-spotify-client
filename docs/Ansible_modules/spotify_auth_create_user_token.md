@@ -13,7 +13,7 @@ Ansible module to create a User authentication token generated from the Ansible 
 
 Option `api_user_code` & `username` has to be defined **everytime**. Options `client_id, client_secret, redirect_uri, and scope` has to be provided via option parameter in the task or the configuration file option `config_file`.
 
-To Acess User data you need to specify a specific scope. For more information about available scopes visit this site  [link](https://beta.developer.spotify.com/documentation/general/guides/scopes/).
+To Acess User data you need to specify a specific scope. For more information about available scopes visit this site [(link)](https://beta.developer.spotify.com/documentation/general/guides/scopes/).
 
 #### Options
 

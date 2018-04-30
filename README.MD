@@ -28,43 +28,51 @@ Have a look to the example folder. Here are some example using the roles:
 
 Control your Spotify with the Spotify Player( Play, Pause, Next, Previous, Toggle shuffle, toggle repeat or set the volume):
 ```
-# ANSIBLE_CONFIG=ansible/config/ansible.cfg ansible-playbook examples/spotify_player.yaml
+# ANSIBLE_CONFIG=ansible/config/ansible.cfg ansible-playbook -v examples/spotify_player.yaml
 ```
 
 Get Releated artists name:
 ```
-# ANSIBLE_CONFIG=ansible/config/ansible.cfg ansible-playbook examples/spotify_get_related_artists.yaml
+# ANSIBLE_CONFIG=ansible/config/ansible.cfg ansible-playbook -v examples/spotify_get_related_artists.yaml
 ```
 
 Get Artists top tracks:
 ```
-# ANSIBLE_CONFIG=ansible/config/ansible.cfg ansible-playbook examples/spotify_get_artists_top_tracks.yaml
+# ANSIBLE_CONFIG=ansible/config/ansible.cfg ansible-playbook -v examples/spotify_get_artists_top_tracks.yaml
 ```
 
+Get Audio features about a track:
+```
+ANSIBLE_CONFIG=ansible/config/ansible.cfg ansible-playbook -v examples/spotify_track_data/track_feature_from_track_id.yaml
+```
+
+Get Audio analyse data about a track:
+```
+ANSIBLE_CONFIG=ansible/config/ansible.cfg ansible-playbook -v examples/spotify_track_data/track_analyse_from_track_id.yaml
+```
 Create a user playlist:
 ```
-# ANSIBLE_CONFIG=ansible/config/ansible.cfg ansible-playbook examples/spotify_user_playlists/spotify_user_playlists_crete.yaml
+# ANSIBLE_CONFIG=ansible/config/ansible.cfg ansible-playbook -v examples/spotify_user_playlists/spotify_user_playlists_crete.yaml
 ```
-
 
 Search for an Album:
 ```
-# ANSIBLE_CONFIG=ansible/config/ansible.cfg ansible-playbook examples/spotify_search/spotify_search_albums.yaml
+# ANSIBLE_CONFIG=ansible/config/ansible.cfg ansible-playbook -v examples/spotify_search/spotify_search_albums.yaml
 ```
 
 Search for Artist and Album in combination:
 ```
-# ANSIBLE_CONFIG=ansible/config/ansible.cfg ansible-playbook examples/spotify_search/spotify_search_artists_and_albums.yaml
+# ANSIBLE_CONFIG=ansible/config/ansible.cfg ansible-playbook -v examples/spotify_search/spotify_search_artists_and_albums.yaml
 ```
 
 Get users top-tracks:
 ```
-# ANSIBLE_CONFIG=ansible/config/ansible.cfg ansible-playbook examples/spotify_user_info/spotify_user_info_top_tracks.yaml
+# ANSIBLE_CONFIG=ansible/config/ansible.cfg ansible-playbook -v examples/spotify_user_info/spotify_user_info_top_tracks.yaml
 ```
 
 Example of getting top tracks of related artists, create a new playlist and add the top tracks to it.
 ```
-# ANSIBLE_CONFIG=ansible/config/ansible.cfg ansible-playbook examples/spotify_save_top_tracks_of_related_artists_to_create_playlist.yaml
+# ANSIBLE_CONFIG=ansible/config/ansible.cfg ansible-playbook -v examples/spotify_save_top_tracks_of_related_artists_to_create_playlist.yaml
 ```
 
 # Documentation:
@@ -78,6 +86,8 @@ An example HTML File for your own redirect_uri can be found in **examples/callba
 
 ### Authentication
 
+Detail information about the authentication process can be found here [(link)](https://pillpall.github.io/ansible/2018/04/28/Use-Ansible-to-automate-Spotify-part-I.html).
+
 User client authentication:
 
  For User Authentication you need to define all parameters in `ansible/inventory/group_vars/user.yaml` and run a role.
@@ -86,8 +96,6 @@ User client authentication:
 Public client authentication:
 
  For User Authentication you need to define all parameters in `ansible/inventory/group_vars/public.yaml` and run a role.
-
-More detail information about the authenticatino process can be found here [(link)](https://pillpall.github.io/ansible/2018/04/28/Use-Ansible-to-automate-Spotify-part-I.html).
 
 
 # TO-DOs:

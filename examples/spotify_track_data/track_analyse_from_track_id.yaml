@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    config_file: "{{inventory_dir}}/group_vars/public.yaml"
+    auth_token: "{{ auth_token }}"
+    track_data_state: analyse
+    track_data_dest_file: "{{ playbook_dir }}/../files/track_data_{{ track_data_state }}.json"
+    track_data_track_id: spotify:track:4Sfa7hdVkqlM8UW5LsSY3F
+  roles:
+    - authentication
+    - track_data

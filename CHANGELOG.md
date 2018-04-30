@@ -1,3 +1,13 @@
+# 0.0.9 - 04-30-2018
+### ADDED
+* New module spotify_track_data to analyse songs and get audio features. See documentation fore detail information.
+* Add examples and role track_data for new Ansible module
+
+### MODIFIED
+* Update Readme
+* Improved documentation
+* Fixed logic error in spotify_update_playlists module
+
 # 0.0.8 - 04-29-2018
 ### MODIFIED
 * Update Readme
