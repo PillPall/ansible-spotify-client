@@ -180,30 +180,35 @@ class RelatedArtists:
             self.module.fail_json(msg="Error: Can't load artists file" + artists_file + " - " + str(e))
         if isinstance(artists_from_file, dict):
             if 'artists' in artists_from_file:
-                if 'name' in artists_from_file['artists']:
-                    if artists_from_file['artists']['name']:
+                if artists_from_file['artists']:
+                    if 'name' in artists_from_file['artists']:
+                        if artists_from_file['artists']['name']:
+                            for artist in artists_from_file['artists']:
+                                result_related_artists = self.get_related_for_artists(artist['name'])
+                                artists_dict = self.append_to_dict(result_related_artists, artists_dict)
+                    elif 'artist' in artists_from_file['artists']:
+                        if artists_from_file['artists']['artist']:
+                            for artist in artists_from_file['artists']:
+                                result_related_artists = self.get_related_for_artists(artist['artist'])
+                                artists_dict = self.append_to_dict(result_related_artists, artists_dict)
+                    elif 'artists' in artists_from_file['artists']:
+                        if artists_from_file['artists']['artists']:
+                            for artist in artists_from_file['artists']:
+                                result_related_artists = self.get_related_for_artists(artist['artists'])
+                                artists_dict = self.append_to_dict(result_related_artists, artists_dict)
+                    elif 'items' in artists_from_file['artists']:
+                        if artists_from_file['artists']['items']:
+                            for artist in artists_from_file['artists']['items']:
+                                result_related_artists = self.get_related_for_artists(artist['name'])
+                                artists_dict = self.append_to_dict(result_related_artists, artists_dict)
+                    else:
                         for artist in artists_from_file['artists']:
-                            result_related_artists = self.get_related_for_artists(artist['name'])
-                            artists_dict = self.append_to_dict(result_related_artists, artists_dict)
-                elif 'artist' in artists_from_file['artists']:
-                    if artists_from_file['artists']['artist']:
-                        for artist in artists_from_file['artists']:
-                            result_related_artists = self.get_related_for_artists(artist['artist'])
-                            artists_dict = self.append_to_dict(result_related_artists, artists_dict)
-                elif 'artists' in artists_from_file['artists']:
-                    if artists_from_file['artists']['artists']:
-                        for artist in artists_from_file['artists']:
-                            result_related_artists = self.get_related_for_artists(artist['artists'])
-                            artists_dict = self.append_to_dict(result_related_artists, artists_dict)
-                elif 'items' in artists_from_file['artists']:
-                    if artists_from_file['artists']['items']:
-                        for artist in artists_from_file['artists']['items']:
-                            result_related_artists = self.get_related_for_artists(artist['name'])
-                            artists_dict = self.append_to_dict(result_related_artists, artists_dict)
-                elif artists_from_file['artists']:
-                    for artist in artists_from_file['artists']:
-                        result_related_artists = self.get_related_for_artists(artist['artists'])
-                        artists_dict = self.append_to_dict(result_related_artists, artists_dict)
+                            if 'artist' in artist:
+                                if artist['artist']:
+                                    result_related_artists = self.get_related_for_artists(artist['artist'])
+                                    artists_dict = self.append_to_dict(result_related_artists, artists_dict)
+                            else:
+                                self.module.fail_json(msg="Error: Can't read dict in artists file.")
             else:
                 self.module.fail_json(msg="Error: Can't read dict in artists file.")
 

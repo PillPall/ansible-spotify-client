@@ -158,7 +158,7 @@ class ArtistsTopTracks:
             self.module.fail_json(msg="Error: Can't load artists file" + artists_file + " - " + str(e))
 
         if isinstance(artists_from_file, dict):
-            if 'artists' artists_from_file:
+            if 'artists' in artists_from_file:
                 if artists_from_file['artists']:
                     for artist in artists_from_file['artists']:
                         result = self.get_top_tracks(artists_uri=artist['uri'])
