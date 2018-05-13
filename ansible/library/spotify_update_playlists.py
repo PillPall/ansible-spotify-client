@@ -12,7 +12,7 @@ DOCUMENTATION = '''
 module: spotify_update_playlists
 short_description: Update one or more user playlists.
 description:
-    - Ansible module to add or remove tracks to/from a user playlist. Tracks and playlists can be provided via URI or JSON File. 
+    - Ansible module to add or remove tracks to/from a user playlist. Tracks and playlists can be provided via URI or JSON File.
 
     A JSON file can be generated using the Ansible module spotify_search, spotify_user_playlists or spotify_artists_top_tracks or visit this site for more informations https://beta.developer.spotify.com/documentation/web-api/reference/playlists/create-playlist/ https://beta.developer.spotify.com/documentation/web-api/reference/tracks/get-several-tracks/.
 
@@ -282,20 +282,35 @@ class UpdatePlaylist:
         except Exception as e:
             self.module.fail_json(msg="Error: Can't load track file" + track_file + " - " + str(e))
 
-        try:
-            if 'tracks' in track_from_file:
-                if track_from_file['tracks']:
-                    for track in track_from_file['tracks']:
+        if 'tracks' in track_from_file:
+            if track_from_file['tracks']:
+                for track in track_from_file['tracks']:
+                    if 'uri' in track:
                         tracks_dict['tracks'].append(track['uri'])
-            elif 'items' in track_from_file:
-                if track_from_file['items']:
-                    for track in track_from_file['items']:
-                        tracks_dict['tracks'].append(track['uri'])
-            elif 'type' in track_from_file:
-                if track_from_file['type'] == 'track':
-                        tracks_dict['tracks'].append(track_from_file['uri'])
-        except Exception as e:
-            self.module.fail_json(msg="Error: Can't read dict in tracks file. - " + str(e))
+                    elif 'items' in track:
+                        for items in track['items']:
+                            tracks_dict['tracks'].append(items['uri'])
+        elif 'items' in track_from_file:
+            if track_from_file['items']:
+                for track in track_from_file['items']:
+                    tracks_dict['tracks'].append(track['uri'])
+        elif 'type' in track_from_file:
+            if track_from_file['type'] == 'track':
+                    tracks_dict['tracks'].append(track_from_file['uri'])
+        elif 'albums' in track_from_file:
+            if track_from_file['albums']:
+                for albums in track_from_file['albums']:
+                    if 'tracks' in albums:
+                        if albums['tracks']:
+                            for tracks in albums['tracks']:
+                                if 'items' in tracks:
+                                    if albums['tracks']['items']:
+                                        for items in albums['tracks']['items']:
+                                            tracks_dict['tracks'].append(items['uri'])
+                                elif 'uri' in tracks:
+                                    tracks_dict['tracks'].append(tracks['uri'])
+        else:
+            self.module.fail_json(msg="Error: Can't read dict in tracks file.")
 
         return tracks_dict
 
