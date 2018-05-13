@@ -14,7 +14,7 @@ Ansible module to get audio features or analysis data from a track.
 For more informations see [Audio features](https://beta.developer.spotify.com/documentation/web-api/reference/tracks/get-audio-features/) &
 [Audio analysis](https://beta.developer.spotify.com/documentation/web-api/reference/tracks/get-audio-analysis/).
 
-Tracks can be provided via *URI or JSON File**. A JSON file can be generated using the Ansible module `spotify_search` or `spotify_artists_top_tracks`.
+Tracks can be provided via **URI or JSON File**. A JSON file can be generated using the Ansible module `spotify_search` or `spotify_artists_top_tracks`.
 
 For more informations about the JSON data structure visit this link [(link tracks)](https://beta.developer.spotify.com/documentation/web-api/reference/tracks/get-several-tracks/).
 

@@ -1,0 +1,27 @@
+---
+##################################################################
+#
+# An Example to get all informations about a given album
+# via album_file
+#
+##################################################################
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+  - name: Create user authentication token
+    include_role:
+      name: authentication
+    vars:
+      username: bloch-m
+      config_file: "{{inventory_dir}}/group_vars/public.yaml"
+
+  - name: Get album informations
+    include_role:
+      name: album
+    vars:
+      spotify_album_file: "{{playbook_dir}}/../files/search_result_albums_short.json"
+      spotify_album_dest_file: "{{ playbook_dir }}/../files/{{ spotify_album_state }}_informations.json"
+      spotify_album_limit: 1
+      spotify_album_output_format: short
+      spotify_album_state: album

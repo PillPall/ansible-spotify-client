@@ -1,0 +1,136 @@
+---
+- name: Get album data from album uri
+  spotify_album:
+    auth_token: "{{ auth_token }}"
+    album_uri: "{{ spotify_album_uri }}"
+    state: "{{ spotify_album_state }}"
+  when: spotify_album_uri is defined and spotify_album_file is undefined and spotify_album_limit is undefined and spotify_album_dest_file is undefined and spotify_album_output_format is undefined
+
+- name: Get album data from album file
+  spotify_album:
+    auth_token: "{{ auth_token }}"
+    album_file: "{{ spotify_album_file }}"
+    state: "{{ spotify_album_state }}"
+  when: spotify_album_uri is undefined and spotify_album_file is defined and spotify_album_limit is undefined and spotify_album_dest_file is undefined and spotify_album_output_format is undefined
+
+- name: Get album data from album uri with defined limit
+  spotify_album:
+    auth_token: "{{ auth_token }}"
+    album_uri: "{{ spotify_album_uri }}"
+    limit: "{{ spotify_album_limit }}"
+    state: "{{ spotify_album_state }}"
+  when: spotify_album_uri is defined and spotify_album_file is undefined and spotify_album_limit is defined and spotify_album_dest_file is undefined and spotify_album_output_format is undefined
+
+- name: Get album data from album file with defined limit
+  spotify_album:
+    auth_token: "{{ auth_token }}"
+    album_file: "{{ spotify_album_file }}"
+    limit: "{{ spotify_album_limit }}"
+    state: "{{ spotify_album_state }}"
+  when: spotify_album_uri is undefined and spotify_album_file is defined and spotify_album_limit is defined and spotify_album_dest_file is undefined and spotify_album_output_format is undefined
+
+- name: Get album data from album uri with defined dest_file
+  spotify_album:
+    auth_token: "{{ auth_token }}"
+    album_uri: "{{ spotify_album_uri }}"
+    dest_file: "{{ spotify_album_dest_file }}"
+    state: "{{ spotify_album_state }}"
+  when: spotify_album_uri is defined and spotify_album_file is undefined and spotify_album_limit is undefined and spotify_album_dest_file is defined and spotify_album_output_format is undefined
+
+- name: Get album data from album file with defined dest_file
+  spotify_album:
+    auth_token: "{{ auth_token }}"
+    album_file: "{{ spotify_album_file }}"
+    dest_file: "{{ spotify_album_dest_file }}"
+    state: "{{ spotify_album_state }}"
+  when: spotify_album_uri is undefined and spotify_album_file is defined and spotify_album_limit is undefined and spotify_album_dest_file is defined and spotify_album_output_format is undefined
+
+- name: Get album data from album uri with defined output_format
+  spotify_album:
+    auth_token: "{{ auth_token }}"
+    album_uri: "{{ spotify_album_uri }}"
+    output_format: "{{ spotify_album_output_format }}"
+    state: "{{ spotify_album_state }}"
+  when: spotify_album_uri is defined and spotify_album_file is undefined and spotify_album_limit is undefined and spotify_album_dest_file is undefined and spotify_album_output_format is defined
+
+- name: Get album data from album file with defined output_format
+  spotify_album:
+    auth_token: "{{ auth_token }}"
+    album_file: "{{ spotify_album_file }}"
+    output_format: "{{ spotify_album_output_format }}"
+    state: "{{ spotify_album_state }}"
+  when: spotify_album_uri is undefined and spotify_album_file is defined and spotify_album_limit is undefined and spotify_album_dest_file is undefined and spotify_album_output_format is defined
+
+- name: Get album data from album uri with defined limit and dest_file
+  spotify_album:
+    auth_token: "{{ auth_token }}"
+    album_uri: "{{ spotify_album_uri }}"
+    limit: "{{ spotify_album_limit }}"
+    dest_file: "{{ spotify_album_dest_file }}"
+    state: "{{ spotify_album_state }}"
+  when: spotify_album_uri is defined and spotify_album_file is undefined and spotify_album_limit is defined and spotify_album_dest_file is defined and spotify_album_output_format is undefined
+
+- name: Get album data from album file with defined limit and dest_file
+  spotify_album:
+    auth_token: "{{ auth_token }}"
+    album_file: "{{ spotify_album_file }}"
+    limit: "{{ spotify_album_limit }}"
+    dest_file: "{{ spotify_album_dest_file }}"
+    state: "{{ spotify_album_state }}"
+  when: spotify_album_uri is undefined and spotify_album_file is defined and spotify_album_limit is defined and spotify_album_dest_file is defined and spotify_album_output_format is undefined
+
+- name: Get album data from album uri with defined limit and output_format
+  spotify_album:
+    auth_token: "{{ auth_token }}"
+    album_uri: "{{ spotify_album_uri }}"
+    limit: "{{ spotify_album_limit }}"
+    output_format: "{{ spotify_album_output_format }}"
+    state: "{{ spotify_album_state }}"
+  when: spotify_album_uri is defined and spotify_album_file is undefined and spotify_album_limit is defined and spotify_album_dest_file is undefined and spotify_album_output_format is defined
+
+- name: Get album data from album file with defined limit and output_format
+  spotify_album:
+    auth_token: "{{ auth_token }}"
+    album_file: "{{ spotify_album_file }}"
+    limit: "{{ spotify_album_limit }}"
+    output_format: "{{ spotify_album_output_format }}"
+    state: "{{ spotify_album_state }}"
+  when: spotify_album_uri is undefined and spotify_album_file is defined and spotify_album_limit is defined and spotify_album_dest_file is undefined and spotify_album_output_format is defined
+
+- name: Get album data from album uri with defined dest_file and output_format
+  spotify_album:
+    auth_token: "{{ auth_token }}"
+    album_uri: "{{ spotify_album_uri }}"
+    dest_file: "{{ spotify_album_dest_file }}"
+    output_format: "{{ spotify_album_output_format }}"
+    state: "{{ spotify_album_state }}"
+  when: spotify_album_uri is defined and spotify_album_file is undefined and spotify_album_limit is undefined and spotify_album_dest_file is defined and spotify_album_output_format is defined
+
+- name: Get album data from album file with defined dest_file and output_format
+  spotify_album:
+    auth_token: "{{ auth_token }}"
+    album_file: "{{ spotify_album_file }}"
+    dest_file: "{{ spotify_album_dest_file }}"
+    output_format: "{{ spotify_album_output_format }}"
+    state: "{{ spotify_album_state }}"
+  when: spotify_album_uri is undefined and spotify_album_file is defined and spotify_album_limit is undefined and spotify_album_dest_file is defined and spotify_album_output_format is defined
+
+- name: Get album data from album uri with defined limit and dest_file and output_format
+  spotify_album:
+    auth_token: "{{ auth_token }}"
+    album_uri: "{{ spotify_album_uri }}"
+    dest_file: "{{ spotify_album_dest_file }}"
+    limit: "{{ spotify_album_limit }}"
+    output_format: "{{ spotify_album_output_format }}"
+    state: "{{ spotify_album_state }}"
+  when: spotify_album_uri is defined and spotify_album_file is undefined and spotify_album_limit is defined and spotify_album_dest_file is defined and spotify_album_output_format is defined
+
+- name: Get album data from album file with defined limit and dest_file and output_format
+  spotify_album:
+    auth_token: "{{ auth_token }}"
+    album_file: "{{ spotify_album_file }}"
+    dest_file: "{{ spotify_album_dest_file }}"
+    limit: "{{ spotify_album_limit }}"
+    output_format: "{{ spotify_album_output_format }}"
+    state: "{{ spotify_album_state }}"
+  when: spotify_album_uri is undefined and spotify_album_file is defined and spotify_album_limit is defined and spotify_album_dest_file is defined and spotify_album_output_format is defined

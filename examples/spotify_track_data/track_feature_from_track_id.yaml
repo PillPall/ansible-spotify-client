@@ -7,7 +7,7 @@
     auth_token: "{{ auth_token }}"
     track_data_state: feature
     track_data_dest_file: "{{ playbook_dir }}/../files/track_data_{{ track_data_state }}.json"
-    track_data_track_id: spotify:track:4Sfa7hdVkqlM8UW5LsSY3F
+    track_data_track_id: spotify:track:5eG8mKV70BVABCSqSy4tKp
   roles:
     - authentication
     - track_data

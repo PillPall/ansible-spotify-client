@@ -1,0 +1,331 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    config_file: "{{inventory_dir}}/group_vars/public.yaml"
+    auth_token: "{{ auth_token }}"
+  tasks:
+  - include_role:
+      name: authentication
+    vars:
+  - include_role:
+      name: album
+    vars:
+      spotify_album_uri: spotify:album:4aawyAB9vmqN3uQ7FjRGTy
+      spotify_album_state: album
+  - include_role:
+      name: album
+    vars:
+      spotify_album_uri: spotify:album:4aawyAB9vmqN3uQ7FjRGTy
+      spotify_album_output_format: short
+      spotify_album_state: album
+  - include_role:
+      name: album
+    vars:
+      spotify_album_uri: spotify:album:4aawyAB9vmqN3uQ7FjRGTy
+      spotify_album_output_format: long
+      spotify_album_state: album
+  - include_role:
+      name: album
+    vars:
+      spotify_album_uri: spotify:album:4aawyAB9vmqN3uQ7FjRGTy
+      spotify_album_dest_file: "{{ playbook_dir }}/files/spotify_album_informations_integration_test.json"
+      spotify_album_state: album
+  - include_role:
+      name: album
+    vars:
+      spotify_album_uri: spotify:album:4aawyAB9vmqN3uQ7FjRGTy
+      spotify_album_limit: 1
+      spotify_album_state: album
+  - include_role:
+      name: album
+    vars:
+      spotify_album_uri: spotify:album:4aawyAB9vmqN3uQ7FjRGTy
+      spotify_album_dest_file: "{{ playbook_dir }}/files/spotify_album_informations_integration_test_short.json"
+      spotify_album_output_format: short
+      spotify_album_state: album
+  - include_role:
+      name: album
+    vars:
+      spotify_album_uri: spotify:album:4aawyAB9vmqN3uQ7FjRGTy
+      spotify_album_dest_file: "{{ playbook_dir }}/files/spotify_album_informations_integration_test_long.json"
+      spotify_album_output_format: long
+      spotify_album_state: album
+  - include_role:
+      name: album
+    vars:
+      spotify_album_uri: spotify:album:4aawyAB9vmqN3uQ7FjRGTy
+      spotify_album_dest_file: "{{ playbook_dir }}/files/spotify_album_informations_integration_test_limit.json"
+      spotify_album_limit: 1
+      spotify_album_state: album
+  - include_role:
+      name: album
+    vars:
+      spotify_album_uri: spotify:album:4aawyAB9vmqN3uQ7FjRGTy
+      spotify_album_output_format: short
+      spotify_album_limit: 1
+      spotify_album_state: album
+  - include_role:
+      name: album
+    vars:
+      spotify_album_uri: spotify:album:4aawyAB9vmqN3uQ7FjRGTy
+      spotify_album_output_format: long
+      spotify_album_limit: 1
+      spotify_album_state: album
+  - include_role:
+      name: album
+    vars:
+      spotify_album_uri: spotify:album:4aawyAB9vmqN3uQ7FjRGTy
+      spotify_album_dest_file: "{{ playbook_dir }}/files/spotify_album_informations_integration_test_short.json"
+      spotify_album_output_format: short
+      spotify_album_limit: 1
+      spotify_album_state: album
+  - include_role:
+      name: album
+    vars:
+      spotify_album_uri: spotify:album:4aawyAB9vmqN3uQ7FjRGTy
+      spotify_album_dest_file: "{{ playbook_dir }}/files/spotify_album_informations_integration_test_long.json"
+      spotify_album_output_format: long
+      spotify_album_limit: 1
+      spotify_album_state: album
+  - include_role:
+      name: album
+    vars:
+      spotify_album_uri: spotify:album:4aawyAB9vmqN3uQ7FjRGTy
+      spotify_album_state: album_tracks
+  - include_role:
+      name: album
+    vars:
+      spotify_album_uri: spotify:album:4aawyAB9vmqN3uQ7FjRGTy
+      spotify_album_output_format: short
+      spotify_album_state: album_tracks
+  - include_role:
+      name: album
+    vars:
+      spotify_album_uri: spotify:album:4aawyAB9vmqN3uQ7FjRGTy
+      spotify_album_output_format: long
+      spotify_album_state: album_tracks
+  - include_role:
+      name: album
+    vars:
+      spotify_album_uri: spotify:album:4aawyAB9vmqN3uQ7FjRGTy
+      spotify_album_dest_file: "{{ playbook_dir }}/files/spotify_album_informations_integration_test.json"
+      spotify_album_state: album_tracks
+  - include_role:
+      name: album
+    vars:
+      spotify_album_uri: spotify:album:4aawyAB9vmqN3uQ7FjRGTy
+      spotify_album_limit: 1
+      spotify_album_state: album_tracks
+  - include_role:
+      name: album
+    vars:
+      spotify_album_uri: spotify:album:4aawyAB9vmqN3uQ7FjRGTy
+      spotify_album_dest_file: "{{ playbook_dir }}/files/spotify_album_informations_integration_test_short.json"
+      spotify_album_output_format: short
+      spotify_album_state: album_tracks
+  - include_role:
+      name: album
+    vars:
+      spotify_album_uri: spotify:album:4aawyAB9vmqN3uQ7FjRGTy
+      spotify_album_dest_file: "{{ playbook_dir }}/files/spotify_album_informations_integration_test_long.json"
+      spotify_album_output_format: long
+      spotify_album_state: album_tracks
+  - include_role:
+      name: album
+    vars:
+      spotify_album_uri: spotify:album:4aawyAB9vmqN3uQ7FjRGTy
+      spotify_album_dest_file: "{{ playbook_dir }}/files/spotify_album_informations_integration_test_limit.json"
+      spotify_album_limit: 1
+      spotify_album_state: album_tracks
+  - include_role:
+      name: album
+    vars:
+      spotify_album_uri: spotify:album:4aawyAB9vmqN3uQ7FjRGTy
+      spotify_album_output_format: short
+      spotify_album_limit: 1
+      spotify_album_state: album_tracks
+  - include_role:
+      name: album
+    vars:
+      spotify_album_uri: spotify:album:4aawyAB9vmqN3uQ7FjRGTy
+      spotify_album_output_format: long
+      spotify_album_limit: 1
+      spotify_album_state: album_tracks
+  - include_role:
+      name: album
+    vars:
+      spotify_album_uri: spotify:album:4aawyAB9vmqN3uQ7FjRGTy
+      spotify_album_dest_file: "{{ playbook_dir }}/files/spotify_album_informations_integration_test_short.json"
+      spotify_album_output_format: short
+      spotify_album_limit: 1
+      spotify_album_state: album_tracks
+  - include_role:
+      name: album
+    vars:
+      spotify_album_uri: spotify:album:4aawyAB9vmqN3uQ7FjRGTy
+      spotify_album_dest_file: "{{ playbook_dir }}/files/spotify_album_informations_integration_test_long.json"
+      spotify_album_output_format: long
+      spotify_album_limit: 1
+      spotify_album_state: album_tracks
+  - include_role:
+      name: album
+    vars:
+      spotify_album_file: "{{ playbook_dir }}/files/search_result_albums_integration_test_short.json"
+      spotify_album_state: album
+  - include_role:
+      name: album
+    vars:
+      spotify_album_file: "{{ playbook_dir }}/files/search_result_albums_integration_test_short.json"
+      spotify_album_output_format: short
+      spotify_album_state: album
+  - include_role:
+      name: album
+    vars:
+      spotify_album_file: "{{ playbook_dir }}/files/search_result_albums_integration_test_short.json"
+      spotify_album_output_format: long
+      spotify_album_state: album
+  - include_role:
+      name: album
+    vars:
+      spotify_album_file: "{{ playbook_dir }}/files/search_result_albums_integration_test_short.json"
+      spotify_album_dest_file: "{{ playbook_dir }}/files/spotify_album_informations_integration_test.json"
+      spotify_album_state: album
+  - include_role:
+      name: album
+    vars:
+      spotify_album_file: "{{ playbook_dir }}/files/search_result_albums_integration_test_short.json"
+      spotify_album_limit: 1
+      spotify_album_state: album
+  - include_role:
+      name: album
+    vars:
+      spotify_album_file: "{{ playbook_dir }}/files/search_result_albums_integration_test_short.json"
+      spotify_album_dest_file: "{{ playbook_dir }}/files/spotify_album_informations_integration_test_short.json"
+      spotify_album_output_format: short
+      spotify_album_state: album
+  - include_role:
+      name: album
+    vars:
+      spotify_album_file: "{{ playbook_dir }}/files/search_result_albums_integration_test_short.json"
+      spotify_album_dest_file: "{{ playbook_dir }}/files/spotify_album_informations_integration_test_long.json"
+      spotify_album_output_format: long
+      spotify_album_state: album
+  - include_role:
+      name: album
+    vars:
+      spotify_album_file: "{{ playbook_dir }}/files/search_result_albums_integration_test_short.json"
+      spotify_album_dest_file: "{{ playbook_dir }}/files/spotify_album_informations_integration_test_limit.json"
+      spotify_album_limit: 1
+      spotify_album_state: album
+  - include_role:
+      name: album
+    vars:
+      spotify_album_file: "{{ playbook_dir }}/files/search_result_albums_integration_test_short.json"
+      spotify_album_output_format: short
+      spotify_album_limit: 1
+      spotify_album_state: album
+  - include_role:
+      name: album
+    vars:
+      spotify_album_file: "{{ playbook_dir }}/files/search_result_albums_integration_test_short.json"
+      spotify_album_output_format: long
+      spotify_album_limit: 1
+      spotify_album_state: album
+  - include_role:
+      name: album
+    vars:
+      spotify_album_file: "{{ playbook_dir }}/files/search_result_albums_integration_test_short.json"
+      spotify_album_dest_file: "{{ playbook_dir }}/files/spotify_album_informations_integration_test_short.json"
+      spotify_album_output_format: short
+      spotify_album_limit: 1
+      spotify_album_state: album
+  - include_role:
+      name: album
+    vars:
+      spotify_album_file: "{{ playbook_dir }}/files/search_result_albums_integration_test_short.json"
+      spotify_album_dest_file: "{{ playbook_dir }}/files/spotify_album_informations_integration_test_long.json"
+      spotify_album_output_format: long
+      spotify_album_limit: 1
+      spotify_album_state: album
+  - include_role:
+      name: album
+    vars:
+      spotify_album_file: "{{ playbook_dir }}/files/search_result_albums_integration_test_short.json"
+      spotify_album_state: album_tracks
+  - include_role:
+      name: album
+    vars:
+      spotify_album_file: "{{ playbook_dir }}/files/search_result_albums_integration_test_short.json"
+      spotify_album_output_format: short
+      spotify_album_state: album_tracks
+  - include_role:
+      name: album
+    vars:
+      spotify_album_file: "{{ playbook_dir }}/files/search_result_albums_integration_test_short.json"
+      spotify_album_output_format: long
+      spotify_album_state: album_tracks
+  - include_role:
+      name: album
+    vars:
+      spotify_album_file: "{{ playbook_dir }}/files/search_result_albums_integration_test_short.json"
+      spotify_album_dest_file: "{{ playbook_dir }}/files/spotify_album_tracks_integration_test.json"
+      spotify_album_state: album_tracks
+  - include_role:
+      name: album
+    vars:
+      spotify_album_file: "{{ playbook_dir }}/files/search_result_albums_integration_test_short.json"
+      spotify_album_limit: 1
+      spotify_album_state: album_tracks
+  - include_role:
+      name: album
+    vars:
+      spotify_album_file: "{{ playbook_dir }}/files/search_result_albums_integration_test_short.json"
+      spotify_album_dest_file: "{{ playbook_dir }}/files/spotify_album_track_integration_test_short.json"
+      spotify_album_output_format: short
+      spotify_album_state: album_tracks
+  - include_role:
+      name: album
+    vars:
+      spotify_album_file: "{{ playbook_dir }}/files/search_result_albums_integration_test_short.json"
+      spotify_album_dest_file: "{{ playbook_dir }}/files/spotify_album_track_integration_test_long.json"
+      spotify_album_output_format: long
+      spotify_album_state: album_tracks
+  - include_role:
+      name: album
+    vars:
+      spotify_album_file: "{{ playbook_dir }}/files/search_result_albums_integration_test_short.json"
+      spotify_album_dest_file: "{{ playbook_dir }}/files/spotify_album_track_integration_test_limit.json"
+      spotify_album_limit: 1
+      spotify_album_state: album_tracks
+  - include_role:
+      name: album
+    vars:
+      spotify_album_file: "{{ playbook_dir }}/files/search_result_albums_integration_test_short.json"
+      spotify_album_output_format: short
+      spotify_album_limit: 1
+      spotify_album_state: album_tracks
+  - include_role:
+      name: album
+    vars:
+      spotify_album_file: "{{ playbook_dir }}/files/search_result_albums_integration_test_short.json"
+      spotify_album_output_format: long
+      spotify_album_limit: 1
+      spotify_album_state: album_tracks
+  - include_role:
+      name: album
+    vars:
+      spotify_album_file: "{{ playbook_dir }}/files/search_result_albums_integration_test_short.json"
+      spotify_album_dest_file: "{{ playbook_dir }}/files/spotify_album_track_integration_test_short.json"
+      spotify_album_output_format: short
+      spotify_album_limit: 1
+      spotify_album_state: album_tracks
+  - include_role:
+      name: album
+    vars:
+      spotify_album_file: "{{ playbook_dir }}/files/search_result_albums_integration_test_short.json"
+      spotify_album_dest_file: "{{ playbook_dir }}/files/spotify_album_track_integration_test_long.json"
+      spotify_album_output_format: long
+      spotify_album_limit: 1
+      spotify_album_state: album_tracks
