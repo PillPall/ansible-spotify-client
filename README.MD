@@ -76,13 +76,6 @@ Example of getting top tracks of related artists, create a new playlist and add 
 ```
 
 # Documentation:
-Documentation about all Ansible modules can be in the directory **docs**.
-
-Examples can be found in the directory **examples**.
-
-All Roles for using the Ansible Modules can be found in the directory **roles**.
-
-An example HTML File for your own redirect_uri can be found in **examples/callback**. Use this file as your redirect_uri to make it easier to copy/paste the API User code. See this example: [link example](http://mbloch.s3-website-ap-southeast-2.amazonaws.com/?code=AQDFYVg0pC7YF4rZ1bMApVXNrhbjQn9QPJWRJxs6HmE8eksQgZpyXdKiQIXHgN_5j7lfE6BEZ_asdfasfdMo4Ps0fwep98GZvcvbczvasdfQOPNLx71mA0bmlA3IveCmKLs61qIO_OjAYa8P8a4DSKdtN123123123s6cGCRZ_JElumBELi-aa6e0QQ5hsEX5s1Md9OTf2tO_n5Wy7MUXP-jJBwMUNLUSeP_KG09LCaokpUHXtN5D__-q-S9NJbmYFiCrd8M6J9Cv6EzxcvzxcvzxcvLc8CeCCeQSAuJnl7ZaYY9DYNlZyvYOaoCXM2Ooo7NEtXxvLG-suC3hiMq-siK0hntGbG_1yRWa1jtGAdHOp-Nst9xEMKxvnOKtwOnq_g1Pd7asdfasdft_nioWT9KRL8ooIw2hwSrzhAG4L0y79vu9_KI1mGvQPaYpwQ).
 
 ### Authentication
 
@@ -97,6 +90,32 @@ Public client authentication:
 
  For User Authentication you need to define all parameters in `ansible/inventory/group_vars/public.yaml` and run a role.
 
+Callback URL:
+ An example HTML File for your own redirect_uri can be found in **examples/callback**. Use this file as your redirect_uri to make it easier to copy/paste the API User code. See this example: [link example](http://mbloch.s3-website-ap-southeast-2.amazonaws.com/?code=AQDFYVg0pC7YF4rZ1bMApVXNrhbjQn9QPJWRJxs6HmE8eksQgZpyXdKiQIXHgN_5j7lfE6BEZ_asdfasfdMo4Ps0fwep98GZvcvbczvasdfQOPNLx71mA0bmlA3IveCmKLs61qIO_OjAYa8P8a4DSKdtN123123123s6cGCRZ_JElumBELi-aa6e0QQ5hsEX5s1Md9OTf2tO_n5Wy7MUXP-jJBwMUNLUSeP_KG09LCaokpUHXtN5D__-q-S9NJbmYFiCrd8M6J9Cv6EzxcvzxcvzxcvLc8CeCCeQSAuJnl7ZaYY9DYNlZyvYOaoCXM2Ooo7NEtXxvLG-suC3hiMq-siK0hntGbG_1yRWa1jtGAdHOp-Nst9xEMKxvnOKtwOnq_g1Pd7asdfasdft_nioWT9KRL8ooIw2hwSrzhAG4L0y79vu9_KI1mGvQPaYpwQ).
+
+
+
+### Modules
+
+| Module name                    | Description                                | Documentation |
+| ------------------------------ | ------------------------------------------ | ------------- |
+| spotify_auth                   | Module for the authentication process      |[Link](https://github.com/PillPall/ansible-spotify-client/blob/master/docs/Ansible_modules/spotify_auth.md)|
+| spotify_auth_create_user_token | Module for the user authentication process |[Link](https://github.com/PillPall/ansible-spotify-client/blob/master/docs/Ansible_modules/spotify_auth_create_user_token.md)|
+| spotify_album     | Get information about one or multiple albums. |[Link](https://github.com/PillPall/ansible-spotify-client/blob/master/docs/Ansible_modules/spotify_album.md)|
+| spotify_artists_top_tracks     | Get the top tracks of an artist            |[Link](https://github.com/PillPall/ansible-spotify-client/blob/master/docs/Ansible_modules/spotify_artists_top_tracks.md)|
+| spotify_player                 | Spotify Player to play a song and more.    |[Link](https://github.com/PillPall/ansible-spotify-client/blob/master/docs/Ansible_modules/spotify_player.md)|
+| spotify_related_artists        | Get related artists                        | [Link](https://github.com/PillPall/ansible-spotify-client/blob/master/docs/Ansible_modules/spotify_related_artists.md)|
+| spotify_search                 | Search in Spotify                          | [Link](https://github.com/PillPall/ansible-spotify-client/blob/master/docs/Ansible_modules/spotify_search.md)|
+| spotify_track_data     | Get Audio features from a track or analyse tracks  | [Link](https://github.com/PillPall/ansible-spotify-client/blob/master/docs/Ansible_modules/spotify_artists_top_tracks.md)|
+| spotify_user_info              | Get user information                       | [Link](https://github.com/PillPall/ansible-spotify-client/blob/master/docs/Ansible_modules/spotify_user_info.md)|
+| spotify_user_playlists         | Search and create a user playlist          | [Link](https://github.com/PillPall/ansible-spotify-client/blob/master/docs/Ansible_modules/spotify_user_playlists.md)|
+| spotify_update_playlists       | Add or remove songs from a playlist        | [Link](https://github.com/PillPall/ansible-spotify-client/blob/master/docs/Ansible_modules/spotify_update_playlists.md)|
+
+### Examples
+Examples can be found in the directory **examples**.
+
+### Roles
+All Roles for using the Ansible Modules can be found in the directory **roles**.
 
 # TO-DOs:
 [TO-DOs](./TODO.md)

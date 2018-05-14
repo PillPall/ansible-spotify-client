@@ -1,3 +1,20 @@
+# 0.10.1 - 05-14-2018
+### ADDED
+* More complex playbook examples
+
+### MODIFIED
+* Improved documentation
+
+# 0.10.0 - 05-13-2018
+### ADDED
+* New module spotify_album get album informations & tracks. See documentation fore detail information.
+* Example, new role track_data and integration test for new Ansible module
+
+### MODIFIED
+* Update Readme
+* Improved documentation
+* Update module spotify_update_playlists
+
 # 0.0.9 - 04-30-2018
 ### ADDED
 * New module spotify_track_data to analyse songs and get audio features. See documentation fore detail information.

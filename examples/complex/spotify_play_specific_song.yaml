@@ -13,17 +13,27 @@
   gather_facts: false
   vars:
     username: bloch-m
+    temp_dest_file: "/tmp/tempfile.json"
   tasks:
   - include_role:
       name: authentication
     vars:
       config_file: "{{inventory_dir}}/group_vars/user.yaml"
 
-  - name: Get user devices
+  - include_role:
+      name: search
+    vars:
+      search_for: tracks
+      search_for_tracks_name: Eye of the Tiger
+      search_result_output: short
+      search_result_limit: 1
+      search_dest_file: "{{ temp_dest_file }}"
+
+  - name: Get User information with default settings
     spotify_user_info:
       auth_token: "{{ auth_token }}"
-      output_format: short
       state: devices
+      output_format: short
     register: sp_devices
 
   - set_fact:
@@ -31,20 +41,30 @@
     with_items: "{{ sp_devices.result.devices }}"
     when: item.name == "MichaelBloch"
 
-  - name: Ansible Spotify Player transfer playback
-    spotify_player:
-      auth_token: "{{ auth_token }}"
-      state: transfer_playback
-      device_id: "{{ sp_device }}"
+  - include_role:
+      name: player
+    vars:
+      spotify_player_state: transfer_playback
+      spotify_player_device_id: "{{ sp_device }}"
+    register: sp_devices
 
-  - name: Ansible Spotify Player set Volume
-    spotify_player:
-      auth_token: "{{ auth_token }}"
-      state: volume
-      volume_level: 80
+  - include_role:
+      name: player
+    vars:
+      spotify_player_state: volume
+      volume_level_percent: 80
+    register: sp_devices
+
+  - include_role:
+      name: player
+    vars:
+      spotify_player_state: pause
+    register: sp_devices
 
   - name: "Ansible Spotify Play specific track"
-    spotify_player:
-      auth_token: "{{ auth_token }}"
-      state: play
-      track_uri: spotify:track:2KH16WveTQWT6KOG9Rg6e2
+    include_role:
+      name: player
+    vars:
+      spotify_player_state: play
+      spotify_track_file: "{{ temp_dest_file }}"
+    register: sp_devices

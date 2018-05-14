@@ -1,0 +1,59 @@
+---
+##################################################################
+#
+# An Example of an more complicated playbook to use several roles
+#
+# This Playbook will search for the album name Tenacious D and
+# get all tracks from the album. The next step is to create a
+# new playlist and add all found tracks to it.
+#
+##################################################################
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    temp_dest_file: "/tmp/tempfile.json"
+    temp_playlist_file: "/tmp/temp_playlist.json"
+    username: bloch-m
+  tasks:
+  - name: Create user authentication token
+    include_role:
+      name: authentication
+    vars:
+      config_file: "{{inventory_dir}}/group_vars/user.yaml"
+
+  - name: search for album
+    include_role:
+      name: search
+    vars:
+      search_for: albums
+      search_for_albums_name: Tenacious D
+      search_result_output: short
+      search_result_limit: 1
+      search_dest_file: "{{ temp_dest_file }}"
+
+  - name: Get album informations
+    include_role:
+      name: album
+    vars:
+      spotify_album_file: "{{ temp_dest_file }}"
+      spotify_album_dest_file: "{{ temp_dest_file }}"
+      spotify_album_output_format: short
+      spotify_album_state: album_tracks
+
+  - name: Create user playlist
+    include_role:
+      name: user_playlists
+    vars:
+      user_playlists_for_user: "{{ username }}"
+      user_playlists_state: create
+      user_playlists_name: Tenacious D
+      user_playlists_dest_file: "{{ temp_playlist_file }}"
+
+  - name: Add tracks to playlist
+    include_role:
+      name: update_playlists
+    vars:
+      update_playlist_state: add
+      update_playlist_file: "{{ temp_playlist_file }}"
+      update_playlist_track_file: "{{ temp_dest_file }}"
